@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Restaurant_pages;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,5 +21,26 @@ namespace Restaurant
         {
             InitializeComponent();
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+
+            // Todo: implement the login logic
+            if (username == "admin" && password == "password")
+            {
+                MessageBox.Show("Login successful!");
+                main_menu mainMenuWindow = new main_menu();
+                mainMenuWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password.");
+            }
+        }
+
     }
+
 }

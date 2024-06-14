@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,30 @@ namespace Restaurant_pages
         {
             InitializeComponent();
         }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            string firstName = FirstNameTextBox.Text;
+            string lastName = LastNameTextBox.Text;
+            string mobileNumber = MobileNumberTextBox.Text;
+            string username = UsernameTextBox.Text;
+            string email = EmailTextBox.Text;
+
+            //
+            // TODO: implement the registeration logic
+            //
+
+            MessageBox.Show("Registration successful!");
+
+            MainWindow loginWindow = new MainWindow();
+            loginWindow.Show();
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
