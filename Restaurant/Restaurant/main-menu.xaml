@@ -1,0 +1,33 @@
+﻿<Window x:Class="Restaurant_pages.main_menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant_pages"
+        mc:Ignorable="d"
+        Title="main_menu" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions MinHeight="39.96" MinHeight="0">
+            <RowDefinition Height="91*" />
+            <RowDefinition Height="101*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="103*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*" />
+            <ColumnDefinition Width="201*" />
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition Width="200*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Profile" Width="100" Margin="0,10,0,10" Click="ProfileButton_Click" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" />
+        <Button Content="Search" Width="100" Margin="0,10,0,10" Click="SearchButton_Click" Grid.Row="0" HorizontalAlignment="Center" />
+        <Button Content="Orders" Width="100" Margin="0,10,0,10" Click="OrdersButton_Click" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"  />
+
+        <Button Content="Track" Width="100" Margin="0,10,0,10" Click="TrackButton_Click" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"  />
+        <Button Content="Complaint" Width="100" Margin="0,10,0,10" Click="ComplaintButton_Click" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center"  />
+
+
+    </Grid>
+</Window>
