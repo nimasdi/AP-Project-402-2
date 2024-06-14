@@ -1,5 +1,5 @@
 ﻿{
   "ConnectionStrings": {
-    "DefaultConnection": "@\"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\Taha\\Term 4\\Ap\\Project\\AP-Project-402-2\\RestaurantDB\\RestaurantDB.mdf;Integrated Security=True;Connect Timeout=30\""
+    "DefaultConnection": "@\"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Taha\Term 4\Ap\Project\AP-Project-402-2\RestaurantDB\RestaurantDB.mdf;Integrated Security=True;Connect Timeout=30""
   }
 }
