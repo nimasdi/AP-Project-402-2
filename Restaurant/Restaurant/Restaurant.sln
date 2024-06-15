@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBAccess", "..\DBAccess\DBA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckConsole", "..\CheckConsole\CheckConsole.csproj", "{4B9B1C9E-1B24-4C3D-BF0B-C78339871DBE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBAccess", "..\DBAccess\DBAccess.csproj", "{D81F6A5E-8589-4FCD-9F3F-7BA477AD1497}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckConsole", "..\CheckConsole\CheckConsole.csproj", "{4B9B1C9E-1B24-4C3D-BF0B-C78339871DBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
