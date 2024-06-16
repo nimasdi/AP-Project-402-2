@@ -8,19 +8,18 @@ namespace Project_s_classes
 {
     internal class Menu
     {
-        int MenuId;
-        int? RestaurantId;
-        string? Category;
-        string? ItemName;
-        string? Ingredients;
-        decimal? Price;
-        string? ImageURL;
-        float? AverageRating;
-        int? QuantityAvailable;
+        int MenuID {  get; set; }
+        int? RestaurantId {  get; set; }
+        string? Category {  get; set; }
+        string? ItemName {  get; set; }
+        string? Ingredients {  get; set; }
+        decimal? Price {  get; set; }
+        string? ImageURL {  get; set; }
+        float? AverageRating {  get; set; }
+        int? QuantityAvailable {  get; set; }
 
-        public Menu(int menuId, int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
+        public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
-            MenuId = menuId;
             RestaurantId = restaurantId;
             Category = category;
             ItemName = itemName;

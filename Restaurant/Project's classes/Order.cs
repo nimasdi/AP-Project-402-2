@@ -8,17 +8,16 @@ namespace Project_s_classes
 {
     internal class Order
     {
-        int OrderId;
-        int? UserId;
-        int? RestuarantId;
-        DateTime? OrderDate;
-        decimal? TotalAmount;
-        string? PaymentMethod;
-        string? status;
+        int OrderId {  get; set; }
+        int? UserId {  get; set; }
+        int? RestuarantId {  get; set; }
+        DateTime? OrderDate {  get; set; }
+        decimal? TotalAmount {  get; set; }
+        string? PaymentMethod {  get; set; }
+        string? status {  get; set; }
 
-        public Order(int orderId, int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
+        public Order(int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
         {
-            OrderId = orderId;
             UserId = userId;
             RestuarantId = restuarantId;
             OrderDate = orderDate;

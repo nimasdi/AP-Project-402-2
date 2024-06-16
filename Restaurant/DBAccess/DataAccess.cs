@@ -36,10 +36,31 @@ namespace DBAccess
             {
                 connection.Execute(sqlStatement, parameters); 
             }
-        } 
+        }
 
-        
+        public bool AdminLogin(string username, string password)
+        {
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT COUNT(1) FROM dbo.Admins WHERE UserName = @UserName AND Password = @Password";
+                var parameters = new { UserName = username, Password = password };
+                int count = connection.ExecuteScalar<int>(sql, parameters);
 
+                return count == 1;
+            }
+        }
+
+        public bool UserLogin(string username, string password)
+        {
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT COUNT(1) FROM dbo.Users WHERE UserName = @UserName AND Password = @Password";
+                var parameters = new { UserName = username, Password = password };
+                int count = connection.ExecuteScalar<int>(sql, parameters);
+
+                return count == 1;
+            }
+        }
     }
 }
   

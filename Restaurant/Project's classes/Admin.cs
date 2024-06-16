@@ -8,19 +8,18 @@ namespace Project_s_classes
 {
     internal class Admin
     {
-        int AdminId;
-        string FirstName;
-        string LastName;
-        string MobileNumber;
-        string Email;
-        string UserName;
-        string Password;
-        string Address;
-        string Gender;
+        int AdminId {  get; set; }
+        string FirstName {  get; set; }
+        string LastName {  get; set; }
+        string MobileNumber {  get; set; }
+        string Email {  get; set; }
+        string UserName {  get; set; }
+        string Password {  get; set; }
+        string Address {  get; set; }
+        string Gender {  get; set; }
 
-        public Admin(int adminId, string firstName, string lastName, string mobileNumber, string email, string userName, string password, string address, string gender)
+        public Admin(string firstName, string lastName, string mobileNumber, string email, string userName, string password, string address, string gender)
         {
-            AdminId = adminId;
             FirstName = firstName;
             LastName = lastName;
             MobileNumber = mobileNumber;

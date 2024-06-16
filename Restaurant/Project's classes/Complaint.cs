@@ -8,16 +8,15 @@ namespace Project_s_classes
 {
     internal class Complaint
     {
-        int ComplaintId;
-        int? UserId;
-        int? RestaurantId;
-        string? Title;
-        string? Description;
-        string? Status;
+        int ComplaintID {  get; set; }
+        int? UserId { get; set; }
+        int? RestaurantId  { get; set; }
+        string? Title {  get; set; }
+        string? Description {  get; set; }
+        string? Status {  get; set; }
 
-        public Complaint(int complaintId, int? userId, int? restaurantId, string? title, string? description, string? status)
+        public Complaint(int? userId, int? restaurantId, string? title, string? description, string? status)
         {
-            ComplaintId = complaintId;
             UserId = userId;
             RestaurantId = restaurantId;
             Title = title;
