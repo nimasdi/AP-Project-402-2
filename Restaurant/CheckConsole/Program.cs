@@ -32,7 +32,7 @@ class Program
         List<Sample> rows = dataAccess.LoadData<Sample, dynamic>(sqlStatement, new { });
         foreach(Sample row in rows)
         {
-            //Console.WriteLine(row.UserID + " " + row.FirstName + " " + row.LastName);
+            Console.WriteLine(row.UserID + " " + row.FirstName + " " + row.LastName);
         }
 
         //Sample for inserting into a table
