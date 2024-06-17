@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Dapper;
+using System.Net;
 
 
 
@@ -16,8 +17,7 @@ namespace DBAccess
     {
         string jsonFile = "appsetting.json";
         private readonly string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Taha\Term 4\Ap\Project\AP-Project-402-2\RestaurantDB\RestaurantDB.mdf;Integrated Security=True;Connect Timeout=30";
-        
-        //SqlConnection con;
+
 
         //Loading data from DB
         public List<T> LoadData<T, U>(string sqlStatement, U parameters)
@@ -29,16 +29,23 @@ namespace DBAccess
             }
         }
 
-        //Inserting data to DB
-        public void SaveData<T>(string sqlStatement, T parameters)
+        public int SaveData<T>(string sqlStatement, T parameters, bool returnId = false)
         {
-            using(IDbConnection connection = new SqlConnection(_connectionString))
+            using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                connection.Execute(sqlStatement, parameters); 
+                if (returnId) 
+                {
+                    return connection.QuerySingle<int>(sqlStatement, parameters);
+                }
+                else
+                {
+                    connection.Execute(sqlStatement, parameters);
+                    return 0;
+                }
             }
-        } 
+        }
 
-        
+
 
     }
 }
