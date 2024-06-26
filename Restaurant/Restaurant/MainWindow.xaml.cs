@@ -30,9 +30,32 @@ namespace Restaurant
             string password = PasswordBox.Password;
 
             string sqlStatement = "SELECT * FROM dbo.Users";
+            string sqlStatement2 = "SELECT * FROM dbo.Admins";
             DataAccess dataAccess = new DataAccess();
 
+
             List<Users> users = dataAccess.LoadData<Users, dynamic>(sqlStatement, new { });
+            List<Admin> admins = dataAccess.LoadData<Admin, dynamic>(sqlStatement2, new { });
+
+            bool admin = false;
+            foreach(Admin a in admins)
+            {
+                if(a.UserName == username)
+                {
+                    if(a.Password == password)
+                    {
+                        admin = true;
+                        break;
+                    }
+                }
+            }
+            if(admin)
+            {
+                MessageBox.Show("Admin's login successful");
+                // admin templamte = new admin template
+                this.Close();
+                //admintemp.show();
+            }
 
             bool user_available = false;
             bool password_available = false;
@@ -62,30 +85,27 @@ namespace Restaurant
 
             if(!password_available)
             {
-                MessageBox.Show("Password is wrong");
+                MessageBox.Show("Password is wrong, Try again!!");
             }
-            // Todo: implement the login logic
-            if (username == "admin" && password == "password")
-            {
-                MessageBox.Show("Login successful!");
-                main_menu mainMenuWindow = new main_menu();
-                mainMenuWindow.Show();
-                this.Close();
-            }
+
             else
             {
-                MessageBox.Show("Invalid username or password.");
+                MessageBox.Show("User's Login was succesfull");
+
+                //rederict to the user's template
+                //usertemp ut = new usertemp();
+                this.Close();
+                //ut.show();
             }
-        }
-
-        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //rederecting to the register panel
+            Register register = new Register();
+            this.Close();
+            register.Show();
         }
     }
 
