@@ -24,10 +24,10 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="0" Grid.Column="1" Name="FirstNameTextBox" Margin="5" />
+        <TextBox Grid.Row="0" Grid.Column="1" Name="FirstNameTextBox" Margin="5" TextChanged="FirstNameTextBox_TextChanged" />
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="1" Grid.Column="1" Name="LastNameTextBox" Margin="5" />
+        <TextBox Grid.Row="1" Grid.Column="1" Name="LastNameTextBox" Margin="5" TextChanged="LastNameTextBox_TextChanged" />
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Number:" VerticalAlignment="Center" />
         <TextBox Grid.Row="2" Grid.Column="1" Name="MobileNumberTextBox" Margin="5" />
@@ -39,7 +39,7 @@
         <TextBox Grid.Row="4" Grid.Column="1" Name="EmailTextBox" Margin="5" />
 
         <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="80,0,80,0">
-            <Button Content="Register" Width="100" Margin="10" Click="RegisterButton_Click" />
+            <Button Content="Verification Code" Width="100" Margin="10" Click="RegisterButton_Click" />
             <Button Content="Cancel" Width="100" Margin="10" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>

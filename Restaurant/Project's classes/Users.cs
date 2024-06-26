@@ -4,16 +4,16 @@ namespace Project_s_classes
 {
     public class Users
     {
-        int UserID { get; set; }
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        string MobileNumber { get; set; }
-        string Email { get; set; }
-        string UserName { get; set; }
-        string Password { get; set; }
-        string UserType {  get; set; }
-        string Address {  get; set; }
-        string Gender { get; set; }
+        public int UserID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MobileNumber { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string UserType {  get; set; }
+        public string Address {  get; set; }
+        public string Gender { get; set; }
         static DataAccess dataAccess = new DataAccess();
         
 
