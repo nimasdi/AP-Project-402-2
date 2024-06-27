@@ -27,6 +27,8 @@ namespace Restaurant_pages
     public partial class Register : Window
     {
         static DataAccess dataAccess = new DataAccess();
+
+
         public Register()
         {
             InitializeComponent();
@@ -111,28 +113,71 @@ namespace Restaurant_pages
 
         private bool ValidatePassword(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return false;
 
+            if (input.Length < 8 || input.Length > 32)
+                return false;
+
+            if (!Regex.IsMatch(input, @"[A-Z]"))
+                return false;
+
+            if (!Regex.IsMatch(input, @"[a-z]"))
+                return false;
+
+            if (!Regex.IsMatch(input, @"\d"))
+                return false;
+            return true;
         }
 
-        private void SendEmail(string email)
+        private void SendEmail(string email, string subject,int code, out string message)
         {
+            message = ""
+;            try
+            {
+                
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
+                //RandomGmail
+                mail.From = new MailAddress("alexcruso84@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = subject;
+                mail.Body = code.ToString();
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new NetworkCredential("alexcruso@gmail.com", "RandomGmail");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
+                message = "Mail sent successfully!";
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
         }
 
-        private void VerificationCodeButton_Click(object sender, RoutedEventArgs e)
+        private void VerifyButton_Click(object sender, RoutedEventArgs e, string message)
         {
             string firstName = FirstNameTextBox.Text;
             string lastName = LastNameTextBox.Text;
             string mobileNumber = MobileNumberTextBox.Text;
             string username = UsernameTextBox.Text;
             string email = EmailTextBox.Text;
+            string gender = GenderComboBox.SelectedIndex.ToString();
+            string address = AddressTextBox.Text;
+            if(string.IsNullOrEmpty(address))
+            {
+                address = "Unknown";
+            }
 
-            string message = string.Empty;
+
 
             if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(mobileNumber)
                 || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email))
             {
-                message = "All the fields should be filled";
+                MessageBox.Show("All the fields should be filled");
                 return;
             }
 
@@ -153,7 +198,7 @@ namespace Restaurant_pages
             }
             if (check_phone)
             {
-                message = "Mobile number already exists, try another one";
+                MessageBox.Show("Mobile number already exists, try another one");
                 return;
             }
 
@@ -169,32 +214,85 @@ namespace Restaurant_pages
             }
             if (check_username)
             {
-                message = "The username already exists, try another one";
+                MessageBox.Show("The username already exists, try another one");
                 return;
             }
 
             //check if the inputs are in correct form
             if(!ValidateName(firstName) || !ValidateName(lastName))
             {
-                message = "Firstname and lastname should contain no character except alphabetic characteres and should be between 3 to 32 chracters";
+                MessageBox.Show("Firstname and lastname should contain no character except alphabetic characteres and should be between 3 to 32 chracters");
                 return;
             }
             if(!ValidateEmail(email))
             {
-                message = "Your email is not valid, try again";
+                MessageBox.Show("Your email is not valid, try again");
                 return;
             }
             if (!ValidateMobileNumber(mobileNumber))
             {
-                message = "Your mobile number is not valid, try again";
+                MessageBox.Show("Your mobile number is not valid, try again");
                 return;
             }
             if (!ValidateUsername(username))
             {
-                message = "Your username is not valid, try again";
+                MessageBox.Show("Your username is not valid, try again");
                 return;
             }
-            //----------------------------------------------------------------------------
+            //----------------------------------------------------------------------------sending email
+            Random random = new Random();
+            int verification_code = random.Next(1000, 10000);
+            message = string.Empty;
+            SendEmail(email, "User's verification code", verification_code, out message);
+
+            MessageBox.Show(message);
+
+
+
+
+           
+            if (message != "Mail sent successfully!")
+            {
+                return;
+            }
+            else
+            {
+                FirstNameTextBox.IsEnabled = false;
+                LastNameTextBox.IsEnabled = false;
+                MobileNumberTextBox.IsEnabled = false;
+                UsernameTextBox.IsEnabled = false;
+                EmailTextBox.IsEnabled = false;
+                Verification.IsEnabled = false;
+                AddressTextBox.IsEnabled = false;
+                VerificationCodeTextBox.IsEnabled = true;
+                
+                if(VerifyCode_Click(sender, e, verification_code))
+                {
+                    VerificationCodeTextBox.IsEnabled = false;
+                    CheckCode.IsEnabled = false;
+                    PasswordTextBox.IsEnabled = true;
+                    rPasswordTextBox.IsEnabled = true;
+                    RegisterB.IsEnabled = true;
+
+                    if(RegisterButton_Click(sender, e))
+                    {
+                        MessageBox.Show("The user has been create");
+                        Users new_user = new Users(firstName, lastName, mobileNumber, email, username, PasswordTextBox.Text, "Bronze", address ,gender);
+                        MainWindow mainWindow = new MainWindow();
+                        this.Close();
+                        mainWindow.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Either the password doesn't pass the requirements or the repeat password field is not the same with password");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The input code is wrong, try again");
+                }
+
+            }
 
 
 
@@ -205,19 +303,46 @@ namespace Restaurant_pages
             this.Close();
         }
 
+        private void VerificationCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string code = VerificationCodeTextBox.Text;
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
             this.Close();
+            mainWindow.Show();
         }
 
-        private void FirstNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private bool VerifyCode_Click(object sender, RoutedEventArgs e, int verification_code)
         {
-
+            try
+            {
+                int code = int.Parse(VerificationCodeTextBox.Text);
+                if(code == verification_code )
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("wrong input format");
+                return false;
+            }
         }
 
-        private void LastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private bool RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(!ValidatePassword(PasswordTextBox.Text)) { return false; }
+            if(PasswordTextBox.Text != rPasswordTextBox.Text) { return false; }
+            return true;
         }
+
+
     }
+
+
+    
 }
