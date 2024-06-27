@@ -56,11 +56,12 @@
             <Button Content="Check Code" x:Name="CheckCode" Width="100" Click="VerifyCode_Click" Height="24" />
             <Button Content="Register" x:Name="RegisterB"  Width="100" Margin="10" Click="RegisterButton_Click" Height="24" />
         </StackPanel>
-        <ComboBox x:Name="GenderComboBox" Grid.Column="2" HorizontalAlignment="Center" Height="22" Margin="0,6,0,0" Grid.RowSpan="2" Grid.Row="1" VerticalAlignment="Top" Width="70" SelectionChanged="GenderComboBox_SelectionChanged">
+        <ComboBox x:Name="GenderComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,1,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="GenderComboBox_SelectionChanged" Grid.Row="1">
             <ComboBoxItem Content="Male" IsSelected="True" />
             <ComboBoxItem Content="Male" />
             <ComboBoxItem Content="Female"/>
         </ComboBox>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="25,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Gender:" VerticalAlignment="Center" Width="55"/>
 
     </Grid>
 </Window>
