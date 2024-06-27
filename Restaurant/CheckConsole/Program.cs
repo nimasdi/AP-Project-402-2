@@ -32,7 +32,7 @@ class Program
         List<Sample> rows = dataAccess.LoadData<Sample, dynamic>(sqlStatement, new { });
         foreach(Sample row in rows)
         {
-            //Console.WriteLine(row.UserID + " " + row.FirstName + " " + row.LastName);
+            Console.WriteLine(row.UserID + " " + row.FirstName + " " + row.LastName);
         }
 
         //Sample for inserting into a table
@@ -52,6 +52,8 @@ class Program
         string sqlS = "INSERT INTO dbo.Users (FirstName, LastName, MobileNumber, Email, UserName, Password, UserType,Address, Gender)" +
             " VALUES(@FirstName, @LastName, @MobileNumber, @Email, @UserName, @Password, @UserType,@Address, @Gender);";
         dataAccess.SaveData(sqlS, new_sample);
+
+        Console.WriteLine(dataAccess.UserLogin("Nima", "Password"));
 
     }
 }
