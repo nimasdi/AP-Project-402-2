@@ -10,7 +10,7 @@ namespace Project_s_classes
 {
     public class Restaurants
     {
-        int RestaurantID { get; set; }
+        public int RestaurantID { get; set; }
         string Name { get; set; }
         string City { get; set; }
         float AverageRating { get; set; }
