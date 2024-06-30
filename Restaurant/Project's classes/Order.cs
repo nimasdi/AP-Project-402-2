@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,14 @@ namespace Project_s_classes
 {
     internal class Order
     {
-        int OrderId {  get; set; }
-        int? UserId {  get; set; }
-        int? RestuarantId {  get; set; }
-        DateTime? OrderDate {  get; set; }
-        decimal? TotalAmount {  get; set; }
-        string? PaymentMethod {  get; set; }
-        string? status {  get; set; }
+        public int OrderId {  get; set; }
+        public int? UserId {  get; set; }
+        public int? RestuarantId {  get; set; }
+        public DateTime? OrderDate {  get; set; }
+        public decimal? TotalAmount {  get; set; }
+        public string? PaymentMethod {  get; set; }
+        public string? status {  get; set; }
+        static DataAccess dataAccess = new DataAccess();
 
         public Order(int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
         {
@@ -24,6 +26,10 @@ namespace Project_s_classes
             TotalAmount = totalAmount;
             PaymentMethod = paymentMethod;
             this.status = status;
+
+            string sqlStatement = "INSERT INTO dbo.Orders (UserId ,RestaurantId, OrderDate, TotalAmount, PaymentMethod, Status)" +
+           " VALUES(@UserId , @RestaurantId, @OrderDate, @TotalAmount, @PaymentMethod, @Status);";
+            this.OrderId = dataAccess.SaveData(sqlStatement, this, true);
         }
     }
 }

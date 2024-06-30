@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,13 @@ namespace Project_s_classes
 {
     internal class Complaint
     {
-        int ComplaintID {  get; set; }
-        int? UserId { get; set; }
-        int? RestaurantId  { get; set; }
-        string? Title {  get; set; }
-        string? Description {  get; set; }
-        string? Status {  get; set; }
+        public int ComplaintID {  get; set; }
+        public int? UserId { get; set; }
+        public int? RestaurantId  { get; set; }
+        public string? Title {  get; set; }
+        public string? Description {  get; set; }
+        public string? Status {  get; set; }
+        static DataAccess dataAccess = new DataAccess();
 
         public Complaint(int? userId, int? restaurantId, string? title, string? description, string? status)
         {
@@ -22,6 +24,10 @@ namespace Project_s_classes
             Title = title;
             Description = description;
             Status = status;
+
+            string sqlStatement = "INSERT INTO dbo.Complaints (UserId, RestaurantId, Title, Description, Status)" +
+           " VALUES(@UserId, @RestaurantId, @Title, @Description, @Status);";
+            this.ComplaintID = dataAccess.SaveData(sqlStatement, this, true);
         }
     }
 }

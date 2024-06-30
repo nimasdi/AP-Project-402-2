@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ namespace Project_s_classes
 {
     internal class Menu
     {
-        int MenuID {  get; set; }
-        int? RestaurantId {  get; set; }
-        string? Category {  get; set; }
-        string? ItemName {  get; set; }
-        string? Ingredients {  get; set; }
-        decimal? Price {  get; set; }
-        string? ImageURL {  get; set; }
-        float? AverageRating {  get; set; }
-        int? QuantityAvailable {  get; set; }
+        public int MenuID {  get; set; }
+        public int? RestaurantId {  get; set; }
+        public string? Category {  get; set; }
+        public string? ItemName {  get; set; }
+        public string? Ingredients {  get; set; }
+        public decimal? Price {  get; set; }
+        public string? ImageURL {  get; set; }
+        public float? AverageRating {  get; set; }
+        public int? QuantityAvailable {  get; set; }
+        static DataAccess dataAccess = new DataAccess();
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
@@ -28,6 +30,10 @@ namespace Project_s_classes
             ImageURL = imageURL;
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
+
+            string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuanntityAvailable)" +
+           " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuanntityAvailable);";
+            this.MenuID = dataAccess.SaveData(sqlStatement, this, true);
         }
     }
 }

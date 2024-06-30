@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,12 @@ namespace Project_s_classes
 {
     internal class OrderDetail
     {
-        int OrderDetailId { get; set; }
-        int? OrderId {  get; set; }
-        int? MenuId {  get; set; }
-        int? Quantity {  get; set; }
-        decimal? Price {  get; set; }
+        public int OrderDetailId { get; set; }
+        public int? OrderId {  get; set; }
+        public int? MenuId {  get; set; }
+        public int? Quantity {  get; set; }
+        public decimal? Price {  get; set; }
+        static DataAccess dataAccess = new DataAccess();
 
         public OrderDetail(int? orderId, int? menuId, int? quantity, decimal? price)
         {
@@ -20,6 +22,10 @@ namespace Project_s_classes
             MenuId = menuId;
             Quantity = quantity;
             Price = price;
+
+            string sqlStatement = "INSERT INTO dbo.OrderDetails (OrderId ,MenuId, Quantity, Price)" +
+           " VALUES(@OrderId ,@MenuId, @Quantity, @Price);";
+            this.OrderDetailId = dataAccess.SaveData(sqlStatement, this, true);
         }
     }
 }
