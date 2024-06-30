@@ -1,0 +1,55 @@
+﻿<Window x:Class="Restaurant_Pages.RestaurantManagement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Restaurant_pages"
+    mc:Ignorable="d"
+    Title="Register" Height="450" Width="800">
+
+    <Grid Margin="0,0,0,-16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10,10,305,10" Grid.ColumnSpan="2">
+            <TextBlock Text="Restaurant Management" FontWeight="Bold" FontSize="16"/>
+
+            <!-- Create/Edit Restaurant Section -->
+            <GroupBox Header="Create / Edit Restaurant" Margin="10,10,10,0">
+                <StackPanel Height="232">
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Name:" Width="150"/>
+                        <TextBox Name="txtName" Width="200"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="City:" Width="150"/>
+                        <TextBox Name="txtCity" Width="200"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Average Rating:" Width="150"/>
+                        <TextBox Name="txtAverageRating" Width="200"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Reservation Available:" Width="150"/>
+                        <CheckBox Name="cbIsReservationAvailable"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <Button Name="btnSave" Content="Save" Width="100" Margin="0,0,10,0" Click="btnSave_Click"/>
+                        <Button Name="btnClear" Content="Clear" Width="100" Click="btnClear_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
