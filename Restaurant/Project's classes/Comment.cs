@@ -18,9 +18,8 @@ namespace Project_s_classes
         public bool Edited { get; set; }
 
 
-        public Comment(int commentID, int menuID, int userID, string userName, string content, float rating, DateTime createdAt, bool edited)
+        public Comment(int menuID, int userID, string userName, string content, float rating, DateTime createdAt, bool edited)
         {
-            CommentID = commentID;
             MenuID = menuID;
             UserID = userID;
             UserName = userName;

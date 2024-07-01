@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBAccess;
 
 namespace Project_s_classes
 {
@@ -18,6 +21,12 @@ namespace Project_s_classes
         public float? AverageRating {  get; set; }
         public int? QuantityAvailable {  get; set; }
 
+        public List<Comment> Comments { get; set; } = new List<Comment>(); 
+
+        static DataAccess dataAccess = new DataAccess();
+
+
+
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
             RestaurantId = restaurantId;
@@ -29,5 +38,28 @@ namespace Project_s_classes
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
         }
+
+        public void AddComment(int userId, string userName, string content, float rating)
+        {
+            var newComment = new Comment(this.MenuID, userId, userName, content, rating, DateTime.Now ,false);
+
+            Comments.Add(newComment);
+
+        }
+
+        public void EditComment(int commentId, string newContent, float newRating)
+        {
+            var commentToEdit = Comments.Find(c => c.CommentID == commentId);
+            if (commentToEdit != null)
+            {
+                commentToEdit.Content = newContent;
+                commentToEdit.Rating = newRating;
+                commentToEdit.Edited = true;
+
+                // Update database logic should be implemented here
+                // Example: DataAccess.UpdateComment(commentToEdit);
+            }
+        }
     }
+   
 }
