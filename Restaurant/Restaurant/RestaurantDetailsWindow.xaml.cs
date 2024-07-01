@@ -15,6 +15,7 @@ using DBAccess;
 using Microsoft.Data.SqlClient;
 using Project_s_classes;
 using DBAccess;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Restaurant
 {
@@ -24,13 +25,16 @@ namespace Restaurant
     public partial class RestaurantDetailsWindow : Window
     {
         private readonly Restaurants _restaurant;
-        private readonly DataAccess _dataAccess; 
+        private readonly DataAccess _dataAccess;
+        private readonly Users _currentUser;
 
-        public RestaurantDetailsWindow(Restaurants restaurant)
+
+        public RestaurantDetailsWindow(Restaurants restaurant, Users currentUser)
         {
             InitializeComponent();
             _restaurant = restaurant;
             _dataAccess = new DataAccess();
+            _currentUser = currentUser;
             DataContext = _restaurant;
 
             List<Project_s_classes.Menu> menuItems = GetMenuItemsForRestaurant(_restaurant.RestaurantID);
@@ -48,7 +52,7 @@ namespace Restaurant
         {
             if (MenuItemListBox.SelectedItem is Project_s_classes.Menu selectedMenu)
             {
-                var menuItemDetailsWindow = new MenuItemDetailsWindow(selectedMenu);
+                var menuItemDetailsWindow = new MenuItemDetailsWindow(selectedMenu,_currentUser);
                 menuItemDetailsWindow.Show();
             }
         }

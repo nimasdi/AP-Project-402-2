@@ -14,14 +14,14 @@ namespace Project_s_classes
         public int UserID { get; set; }
         public string UserName { get; set; }
         public string Content { get; set; }
-        public float Rating { get; set; }
+        public float? Rating { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Edited { get; set; }
 
         static DataAccess dataAccess = new DataAccess();
 
 
-        public Comment(int menuID, int userID, string userName, string content, float rating, DateTime createdAt, bool edited)
+        public Comment(int menuID, int userID, string userName, string content, float? rating, DateTime createdAt, bool edited)
         {
             MenuID = menuID;
             UserID = userID;
@@ -72,6 +72,14 @@ namespace Project_s_classes
             };
 
             dataAccess.SaveData(sqlStatement, parameters, false);
+        }
+
+        public void UpdateInDatabase()
+        {
+            string sql = "UPDATE dbo.Comments " +
+                         "SET Content = @Content, Rating = @Rating, Edited = @Edited " +
+                         "WHERE CommentID = @CommentID;";
+            dataAccess.SaveData(sql, this);
         }
 
         public void Delete()

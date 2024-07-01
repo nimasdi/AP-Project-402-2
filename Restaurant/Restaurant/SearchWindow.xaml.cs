@@ -23,12 +23,14 @@ namespace Restaurant
     {
         private readonly DataAccess _dataAccess;
         private List<Restaurants> _restaurants;
+        private readonly Users _currentUser;
 
-        public SearchWindow()
+        public SearchWindow(Users currentUser)
         {
             InitializeComponent();
             _dataAccess = new DataAccess();
             LoadRestaurants();
+            _currentUser = currentUser;
         }
 
         private void LoadRestaurants()
@@ -71,7 +73,7 @@ namespace Restaurant
             if (RestaurantListView.SelectedItem is Restaurants selectedRestaurant)
             {
                 // go to restaurant details window
-                var restaurantDetailsWindow = new RestaurantDetailsWindow(selectedRestaurant.RestaurantID);
+                var restaurantDetailsWindow = new RestaurantDetailsWindow(selectedRestaurant, _currentUser);
                 restaurantDetailsWindow.Show();
                 this.Close();
             }

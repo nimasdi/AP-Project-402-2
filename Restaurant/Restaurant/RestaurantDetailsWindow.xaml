@@ -20,7 +20,10 @@
             <ListBox x:Name="MenuItemListBox" ItemsSource="{Binding MenuItems}" Margin="0,20,0,0" SelectionChanged="MenuItemListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding ItemName}" Margin="10,0"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ImageURL}" Height="100" Width="100" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding ItemName}" Margin="10,0"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
