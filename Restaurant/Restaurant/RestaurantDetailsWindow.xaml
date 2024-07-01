@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="RestaurantDetailsWindow" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel Margin="10">
+            <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding City}" FontSize="16" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding Address}" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Average Rating:" FontSize="16" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding AverageRating}" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Reservation Enabled:" FontSize="16" Margin="0,0,0,5"/>
+            <TextBlock Text="{Binding IsReservationEnabled}" FontSize="16" Margin="0,0,0,10"/>
+
+            <!-- Menu Items -->
+            <ListBox x:Name="MenuItemListBox" ItemsSource="{Binding MenuItems}" Margin="0,20,0,0" SelectionChanged="MenuItemListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ItemName}" Margin="10,0"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
     </Grid>
+
 </Window>

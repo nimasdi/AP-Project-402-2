@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace Project_s_classes
         public DateTime CreatedAt { get; set; }
         public bool Edited { get; set; }
 
+        static DataAccess dataAccess = new DataAccess();
+
 
         public Comment(int menuID, int userID, string userName, string content, float rating, DateTime createdAt, bool edited)
         {
@@ -27,6 +30,54 @@ namespace Project_s_classes
             Rating = rating;
             CreatedAt = createdAt;
             Edited = edited;
+
+            SaveToDatabase();
+
+        }
+
+        public void SaveToDatabase()
+        {
+            string sqlStatement = @"INSERT INTO dbo.Comments (MenuID, UserID, UserName, Content, Rating, CreatedAt, Edited)
+                                    VALUES (@MenuID, @UserID, @UserName, @Content, @Rating, @CreatedAt, @Edited);
+                                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            var parameters = new
+            {
+                MenuID,
+                UserID,
+                UserName,
+                Content,
+                Rating,
+                CreatedAt = DateTime.Now, 
+                Edited
+            };
+
+            CommentID = dataAccess.SaveData(sqlStatement, parameters, true);
+        }
+        public void Edit(string newContent)
+        {
+            Content = newContent;
+            Edited = true;
+
+
+            string sqlStatement = @"UPDATE dbo.Comments 
+                                    SET Content = @Content, Edited = @Edited 
+                                    WHERE CommentID = @CommentID;";
+
+            var parameters = new
+            {
+                Content,
+                Edited,
+                CommentID
+            };
+
+            dataAccess.SaveData(sqlStatement, parameters, false);
+        }
+
+        public void Delete()
+        {
+            string sqlStatement = "DELETE FROM dbo.Comments WHERE CommentID = @CommentID;";
+            dataAccess.SaveData(sqlStatement, new { CommentID });
         }
     }
 }

@@ -37,29 +37,49 @@ namespace Project_s_classes
             ImageURL = imageURL;
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
+
+            LoadComments();
         }
 
+        private void LoadComments()
+        {
+            string sql = "SELECT CommentID, UserID, UserName, Content, Rating, CreatedAt, Edited " +
+                         "FROM dbo.Comments " +
+                         "WHERE MenuID = @MenuID;";
+
+            var parameters = new { MenuID };
+
+            var commentsFromDb = dataAccess.LoadData<Comment, dynamic>(sql, parameters);
+
+            Comments.AddRange(commentsFromDb);
+        }
         public void AddComment(int userId, string userName, string content, float rating)
         {
-            var newComment = new Comment(this.MenuID, userId, userName, content, rating, DateTime.Now ,false);
+            var newComment = new Comment(this.MenuID, userId, userName, content, rating, DateTime.Now, false);
 
+            newComment.SaveToDatabase();
             Comments.Add(newComment);
-
         }
 
-        public void EditComment(int commentId, string newContent, float newRating)
+        public void EditComment(int commentId, string newContent)
         {
-            var commentToEdit = Comments.Find(c => c.CommentID == commentId);
+            var commentToEdit = Comments.FirstOrDefault(c => c.CommentID == commentId);
             if (commentToEdit != null)
             {
-                commentToEdit.Content = newContent;
-                commentToEdit.Rating = newRating;
-                commentToEdit.Edited = true;
-
-                // Update database logic should be implemented here
-                // Example: DataAccess.UpdateComment(commentToEdit);
+                commentToEdit.Edit(newContent);
             }
         }
+
+        public void DeleteComment(int commentId)
+        {
+            var commentToDelete = Comments.FirstOrDefault(c => c.CommentID == commentId);
+            if (commentToDelete != null)
+            {
+                commentToDelete.Delete();
+                Comments.Remove(commentToDelete);
+            }
+        }
+
     }
    
 }
