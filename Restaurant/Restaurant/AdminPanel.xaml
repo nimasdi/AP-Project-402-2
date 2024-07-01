@@ -1,15 +1,16 @@
-﻿<Window x:Class="Restaurant_pages.AdminPanel"
+﻿<Window x:Class="Restaurant_Pages.AdminPanel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Restaurant_pages"
+        xmlns:local="clr-namespace:Restaurant_Pages"
         mc:Ignorable="d"
         Title="AdminPanel" Height="450" Width="800">
 
 
     <Grid>
-        <Button Content="Restaurant Management" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RestaurantManagement_Click" Margin="20,24,0,0"/>
+        <Button Content="Restaurant Registration" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RestaurantManagement_Click" Margin="20,24,0,0"/>
+        <Button Content="Searching in restaurants" Width="200" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RestaurantSearch_Click" Margin="20,114,0,0"/>
 
     </Grid>
 

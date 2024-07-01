@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant
+namespace Restaurant_Pages
 {
     /// <summary>
     /// Interaction logic for AdminPanel.xaml
     /// </summary>
-    public partial class AdminPanel : Page
+    public partial class AdminPanel : Window
     {
         public AdminPanel()
         {
@@ -32,7 +32,14 @@ namespace Restaurant
 
         private void RestaurantManagement_Click(object sender, RoutedEventArgs e)
         {
-            RestaurantManagement managementWindow = new RestaurantManagement();
+            RestaurantRegistration managementWindow = new RestaurantRegistration();
+            managementWindow.Show();
+        }
+
+        private void RestaurantSearch_Click(object sender, RoutedEventArgs e)
+        {
+            RestaurantSearch searchRestaurant = new RestaurantSearch();
+            searchRestaurant.Show();
         }
     }
 }

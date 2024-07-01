@@ -17,20 +17,22 @@ namespace Project_s_classes
         public bool IsReservationEnabled { get; set; }
         public int? AdminID { get; set; }
         public int Password {  get; set; }
+        public string UserName {  get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Restaurants(string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password)
+        public Restaurants(string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password, string userName)
         {
             this.Name = name;
             this.City = city;
             this.AverageRating = averageRating;
             this.IsReservationEnabled = isReservationEnabled;
             this.AdminID = adminID;
-            Password=password;
+            this.Password=password;
+            this.UserName = userName;
 
             //saving restaurant instance to the data base
-            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, Password)" +
-                "VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @AdminID, @Password)";
+            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, Password, UserName)" +
+                "VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @AdminID, @Password, @UserName)";
             this.RestaurantID = dataAccess.SaveData(sqlStatement, this, true);
             
         }
