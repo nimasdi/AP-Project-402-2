@@ -23,5 +23,30 @@ namespace Restaurant_pages
         {
             InitializeComponent();
         }
+
+        private void ComplaintButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TrackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OrdersButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -107,6 +107,11 @@ namespace Restaurant
             this.Close();
             register.Show();
         }
+
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 
 }

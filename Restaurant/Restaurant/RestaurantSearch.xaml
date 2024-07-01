@@ -15,7 +15,7 @@
                     <ComboBoxItem Content="Name"/>
                     <ComboBoxItem Content="City"/>
                     <ComboBoxItem Content="Rating"/>
-                    <ComboBoxItem Content="Unhandled Complaints"/>
+                    <ComboBoxItem Content="Have Complaints"/>
                 </ComboBox>
                 <TextBox x:Name="txtSearch" Width="200" Margin="5"/>
                 <Button Content="Search" Width="100" Margin="5" Click="SearchButton_Click"/>

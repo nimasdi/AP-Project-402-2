@@ -18,6 +18,8 @@ namespace Project_s_classes
         public int? AdminID { get; set; }
         public int Password {  get; set; }
         public string UserName {  get; set; }
+        public bool haveComplaints { get; set; }
+
         static DataAccess dataAccess = new DataAccess();
 
         public Restaurants(string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password, string userName)
@@ -29,10 +31,11 @@ namespace Project_s_classes
             this.AdminID = adminID;
             this.Password=password;
             this.UserName = userName;
+            this.haveComplaints = false;
 
             //saving restaurant instance to the data base
-            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, Password, UserName)" +
-                "VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @AdminID, @Password, @UserName)";
+            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, Password, UserName, haveComplaints)" +
+                "VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @AdminID, @Password, @UserName, @haveComplaints)";
             this.RestaurantID = dataAccess.SaveData(sqlStatement, this, true);
             
         }

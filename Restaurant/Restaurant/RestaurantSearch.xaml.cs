@@ -71,8 +71,9 @@ namespace Restaurant_Pages
                             filter = Restaurants.Where(x => x.AverageRating == rating);
                             ResultsDataGrid.ItemsSource = filter;
                             break;
-                        case "Unhandled Complaints":
-                            //i should contain a complaints part for this
+                        case "Have Complaints":
+                            filter = Restaurants.Where(x => x.haveComplaints == true);  
+                            ResultsDataGrid.ItemsSource = filter;
                             break;
                         default:
                             break;

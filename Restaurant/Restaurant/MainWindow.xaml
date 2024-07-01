@@ -32,10 +32,10 @@
         <TextBox Grid.Column="1"  x:Name="UsernameTextBox" Margin="210,162,0,4" Grid.RowSpan="2" TextChanged="UsernameTextBox_TextChanged" />
 
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Password:" VerticalAlignment="Center" Height="47" />
-        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="PasswordBox" Margin="210,6,0,4" />
+        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="PasswordBox" Margin="210,6,0,4" Password="" />
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="256,47,0,0" Grid.RowSpan="2" Height="20" VerticalAlignment="Top"/>
         <Button Grid.Column="1" Content="Login" HorizontalAlignment="Left" Margin="206,2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="81" Click="LoginButton_Click" Height="26"/>
-        <Button Grid.Column="1" Content="Register" HorizontalAlignment="Left" Margin="316,1,0,0" Grid.Row="4" VerticalAlignment="Top" Width="82" Click="RegisterButton_click" Height="25"/>
+        <Button Grid.Column="1" Content="Register" HorizontalAlignment="Left" Margin="316,1,0,129" Grid.Row="4" Width="82" Click="RegisterButton_click"/>
     </Grid>
 </Window>

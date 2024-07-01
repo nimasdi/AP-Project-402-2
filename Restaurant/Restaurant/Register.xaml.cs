@@ -340,6 +340,31 @@ namespace Restaurant_pages
             return true;
         }
 
+        private void FirstNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void LastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void rPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void VerifyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void VerifyCode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 
 

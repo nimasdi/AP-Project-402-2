@@ -41,5 +41,11 @@ namespace Restaurant_Pages
             RestaurantSearch searchRestaurant = new RestaurantSearch();
             searchRestaurant.Show();
         }
+
+        private void ComplaintSearch_Click(object sender, RoutedEventArgs e)
+        {
+            ComplaintsSearch complaintWindow = new ComplaintsSearch();
+            complaintWindow.Show();
+        }
     }
 }
