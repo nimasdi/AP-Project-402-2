@@ -18,7 +18,10 @@ namespace DBAccess
         string jsonFile = "appsetting.json";
         private readonly string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=E:\TAHA\TERM 4\AP\PROJECT\AP-PROJECT-402-2\RESTAURANTDB\RESTAURANTDB.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         
-        //SqlConnection con;
+        public string ConnectionString
+        {
+            get => this._connectionString;
+        }
 
         //Loading data from DB
         public List<T> LoadData<T, U>(string sqlStatement, U parameters)

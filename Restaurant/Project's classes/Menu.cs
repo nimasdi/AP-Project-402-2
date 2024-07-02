@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-﻿using DBAccess;
-=======
+using DBAccess;
 ﻿using Microsoft.Data.SqlClient;
->>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,11 +12,9 @@ namespace Project_s_classes
 {
     public class Menu
     {
-<<<<<<< HEAD
+
         public int? MenuID {  get; set; }
-=======
-        public int MenuID {  get; set; }
->>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
+
         public int? RestaurantId {  get; set; }
         public string? Category {  get; set; }
         public string? ItemName {  get; set; }
@@ -28,16 +23,10 @@ namespace Project_s_classes
         public string? ImageURL {  get; set; }
         public float? AverageRating {  get; set; }
         public int? QuantityAvailable {  get; set; }
-<<<<<<< HEAD
-        static DataAccess dataAccess = new DataAccess();
-=======
 
         public List<Comment> Comments { get; set; } = new List<Comment>(); 
 
         static DataAccess dataAccess = new DataAccess();
-
-
->>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
 
         public Menu(int? menuId,int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
@@ -51,13 +40,11 @@ namespace Project_s_classes
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
 
-<<<<<<< HEAD
+
             string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuanntityAvailable)" +
            " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuanntityAvailable);";
             this.MenuID = dataAccess.SaveData(sqlStatement, this, true);
-=======
             LoadComments();
->>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
         }
 
         private void LoadComments()

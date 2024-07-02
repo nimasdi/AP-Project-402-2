@@ -52,7 +52,7 @@ namespace Restaurant_Pages
                 string? selectedAspect = ComplaintSearchCriteriaComboBox.SelectedItem.ToString();
                 string filterName = txtSearch.Text;
 
-                if (string.IsNullOrEmpty(selectedAspect))
+                if (string.IsNullOrEmpty(selectedAspect) && (selectedAspect != "Latest Complaint" || selectedAspect != "All"))
                 {
                     MessageBox.Show("You should choose something to search for in combobox");
                 }
@@ -157,7 +157,16 @@ namespace Restaurant_Pages
                             }
                             MessageBox.Show("All the complaints have been checked");
                             break;
-
+                        case "All":
+                            if(Complaints != null)
+                            {
+                                ComplaintResultsDataGrid.ItemsSource = Complaints;
+                            }
+                            else
+                            {
+                                MessageBox.Show("There are no complaints filed from any user");
+                            }
+                            break;
                         default:
                             MessageBox.Show("Something went wrong");
                             break;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,12 @@ namespace Restaurant_Pages
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void AnswerComplaintSearch_Click(object sender, RoutedEventArgs e)
+        {
+            RespondingComplaintxaml answer = new RespondingComplaintxaml();
+            answer.Show();
         }
     }
 }
