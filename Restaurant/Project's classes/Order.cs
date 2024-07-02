@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 
 namespace Project_s_classes
 {
-    internal class Order
+    public class Order
     {
-        int OrderId {  get; set; }
-        int? UserId {  get; set; }
-        int? RestuarantId {  get; set; }
-        DateTime? OrderDate {  get; set; }
-        decimal? TotalAmount {  get; set; }
-        string? PaymentMethod {  get; set; }
-        string? status {  get; set; }
+        public int OrderId {  get; set; }
+        public int? UserId {  get; set; }
+        public int? RestaurantId {  get; set; }
+        public DateTime? OrderDate {  get; set; }
+        public decimal? TotalAmount {  get; set; }
+        public string? PaymentMethod {  get; set; }
+        public string? Status {  get; set; }
+        public int? Rating { get; set; }
+        public string? Comment { get; set; }
 
-        public Order(int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
+        public Order(int? userId, int? restaurantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status, int? rating = null, string? comment = null)
         {
             UserId = userId;
-            RestuarantId = restuarantId;
+            RestaurantId = restaurantId;
             OrderDate = orderDate;
             TotalAmount = totalAmount;
             PaymentMethod = paymentMethod;
-            this.status = status;
+            Status = status;
+            Rating = rating;
+            Comment = comment;
         }
     }
 }

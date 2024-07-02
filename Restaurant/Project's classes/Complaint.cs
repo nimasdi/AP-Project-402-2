@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Project_s_classes
 {
-    internal class Complaint
+    public class Complaint
     {
-        int ComplaintID {  get; set; }
-        int? UserId { get; set; }
-        int? RestaurantId  { get; set; }
-        string? Title {  get; set; }
-        string? Description {  get; set; }
-        string? Status {  get; set; }
+        public int ComplaintID {  get; set; }
+        public int? UserId { get; set; }
+        public int? RestaurantId  { get; set; }
+        public string? Title {  get; set; }
+        public string? Description {  get; set; }
+        public string? Status {  get; set; }
 
         public Complaint(int? userId, int? restaurantId, string? title, string? description, string? status)
         {

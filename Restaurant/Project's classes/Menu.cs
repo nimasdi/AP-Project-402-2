@@ -1,22 +1,31 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBAccess;
 
 namespace Project_s_classes
 {
-    internal class Menu
+    public class Menu
     {
-        int MenuID {  get; set; }
-        int? RestaurantId {  get; set; }
-        string? Category {  get; set; }
-        string? ItemName {  get; set; }
-        string? Ingredients {  get; set; }
-        decimal? Price {  get; set; }
-        string? ImageURL {  get; set; }
-        float? AverageRating {  get; set; }
-        int? QuantityAvailable {  get; set; }
+        public int MenuID {  get; set; }
+        public int? RestaurantId {  get; set; }
+        public string? Category {  get; set; }
+        public string? ItemName {  get; set; }
+        public string? Ingredients {  get; set; }
+        public decimal? Price {  get; set; }
+        public string? ImageURL {  get; set; }
+        public float? AverageRating {  get; set; }
+        public int? QuantityAvailable {  get; set; }
+
+        public List<Comment> Comments { get; set; } = new List<Comment>(); 
+
+        static DataAccess dataAccess = new DataAccess();
+
+
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
@@ -28,6 +37,49 @@ namespace Project_s_classes
             ImageURL = imageURL;
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
+
+            LoadComments();
         }
+
+        private void LoadComments()
+        {
+            string sql = "SELECT CommentID, UserID, UserName, Content, Rating, CreatedAt, Edited " +
+                         "FROM dbo.Comments " +
+                         "WHERE MenuID = @MenuID;";
+
+            var parameters = new { MenuID };
+
+            var commentsFromDb = dataAccess.LoadData<Comment, dynamic>(sql, parameters);
+
+            Comments.AddRange(commentsFromDb);
+        }
+        public void AddComment(int userId, string userName, string content, float rating)
+        {
+            var newComment = new Comment(this.MenuID, userId, userName, content, rating, DateTime.Now, false);
+
+            newComment.SaveToDatabase();
+            Comments.Add(newComment);
+        }
+
+        public void EditComment(int commentId, string newContent)
+        {
+            var commentToEdit = Comments.FirstOrDefault(c => c.CommentID == commentId);
+            if (commentToEdit != null)
+            {
+                commentToEdit.Edit(newContent);
+            }
+        }
+
+        public void DeleteComment(int commentId)
+        {
+            var commentToDelete = Comments.FirstOrDefault(c => c.CommentID == commentId);
+            if (commentToDelete != null)
+            {
+                commentToDelete.Delete();
+                Comments.Remove(commentToDelete);
+            }
+        }
+
     }
+   
 }
