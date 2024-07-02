@@ -11,7 +11,7 @@
         <StackPanel Orientation="Vertical" Margin="10">
             <!-- Search Section -->
             <StackPanel Orientation="Horizontal" Margin="10">
-                <ComboBox x:Name="ComplaintSearchCriteriaComboBox" Width="150" Margin="5">
+                <ComboBox x:Name="ComplaintSearchCriteriaComboBox" Width="150" Margin="5" SelectionChanged="ComplaintSearchCriteriaComboBox_SelectionChanged">
                     <ComboBoxItem Content="Username"/>
                     <ComboBoxItem Content="Title"/>
                     <ComboBoxItem Content="First Name"/>
@@ -19,6 +19,7 @@
                     <ComboBoxItem Content="Restaurant Name"/>
                     <ComboBoxItem Content="Status"/>
                     <ComboBoxItem Content="Latest Complaint"/>
+                    <ComboBoxItem Content="All"/>
                 </ComboBox>
                 <TextBox x:Name="txtSearch" Width="200" Margin="5" TextChanged="txtSearch_TextChanged"/>
                 <Button Content="Search" Width="100" Margin="5" Click="ComplaintSearchButton_Click"/>

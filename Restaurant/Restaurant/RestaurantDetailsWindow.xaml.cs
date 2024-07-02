@@ -151,8 +151,8 @@ namespace Restaurant
         {
             if (_restaurant.IsReservationEnabled && IsUserEligibleForReservation())
             {
-                var reservationWindow = new ReservationWindow(_restaurant, _currentUser, this);
-                reservationWindow.ShowDialog();
+                //var reservationWindow = new ReservationWindow(_restaurant, _currentUser, this);
+                //reservationWindow.ShowDialog();
             }
             else
             {
@@ -178,7 +178,7 @@ namespace Restaurant
                 return false;
             }
 
-            switch (_currentUser.ServiceTier)
+            switch (_currentUser.UserType)
             {
                 case "Bronze":
                     return _currentUser.ReservationsMadeThisMonth < 2;

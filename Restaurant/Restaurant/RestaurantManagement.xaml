@@ -43,17 +43,24 @@
                         <TextBlock Text="Username:" Width="150"/>
                         <TextBox Name="txtUserName" Width="200"/>
                     </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Service Type:" Width="150"/>
+                        <ComboBox Name="ServiceyTypeComboBox"  Width="79" SelectionChanged="ServiceyTypeComboBox_SelectionChanged">
+                            <ComboBoxItem Content="delivery" IsSelected="true"/>
+                            <ComboBoxItem Content="dine-in"/>
+                        </ComboBox>
+                    </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">
                         <TextBlock Text="Reservation Available:" Width="150"/>
                         <CheckBox Name="cbIsReservationAvailable"/>
                     </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                        <Button Name="btnSave" Content="Save" Width="100" Margin="0,0,10,0" Click="btnSave_Click"/>
-                        <Button Name="btnClear" Content="Clear" Width="100" Click="btnClear_Click"/>
+                    <StackPanel Orientation="Horizontal" Height="35" Width="447">
+                        <Button x:Name="btnSave" Content="Save" Width="100" Margin="0,0,10,0" Click="btnSave_Click"/>
+                        <Button x:Name="btnClear" Content="Clear" Width="100" Click="btnClear_Click"/>
                     </StackPanel>
-                    
+
                 </StackPanel>
             </GroupBox>
         </StackPanel>

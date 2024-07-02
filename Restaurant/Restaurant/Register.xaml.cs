@@ -135,18 +135,18 @@ namespace Restaurant_pages
 
         private void SendEmail(string email, string subject,int code, out string message)
         {
-            message = ""
-; try
+            message = "";
+            try
             {
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("alexcruso84@gmail.com");
+                mail.From = new MailAddress("tbiklaryan@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = "Email Verification";
                 mail.Body = "Your verification code is: " + code.ToString();
                 smtpClient.Port = 587;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "RandomGmail");
+                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(mail);
 
@@ -290,7 +290,7 @@ namespace Restaurant_pages
                 AddressTextBox.IsEnabled = false;
                 UserTypeComboBox.IsEnabled = false;
                 GenderComboBox.IsEnabled = false;
-
+                CheckCode.IsEnabled = true;
                 VerificationCodeTextBox.IsEnabled = true;
 
             }
@@ -307,10 +307,11 @@ namespace Restaurant_pages
                     RepeatPasswordBox.IsEnabled = true;
                     RegisterB.IsEnabled = true;
                     CheckCode.IsEnabled = false;
-
+                    VerificationCodeTextBox.IsEnabled = false;
                     MessageBox.Show("Alright, you can choose your password now");
                     return;
                 }
+                MessageBox.Show("Wrong code");
                 return;
             }
             catch (FormatException)
@@ -332,10 +333,14 @@ namespace Restaurant_pages
             string mobileNumber = MobileNumberTextBox.Text;
             string username = UsernameTextBox.Text;
             string email = EmailTextBox.Text;
-            string gender = GenderComboBox.SelectedIndex.ToString();
+            string gender = GenderComboBox.SelectedItem.ToString();
             string address = AddressTextBox.Text;
-            string userType = UserTypeComboBox.SelectedIndex.ToString();
+            string userType = UserTypeComboBox.SelectedItem.ToString();
 
+            if (string.IsNullOrEmpty(address))
+            {
+                address = "Unknown";
+            }
             VerificationCodeTextBox.IsEnabled = false;
             CheckCode.IsEnabled = false;
             PasswordBox.IsEnabled = true;
@@ -346,7 +351,7 @@ namespace Restaurant_pages
             else if (PasswordBox.Password != RepeatPasswordBox.Password) { MessageBox.Show("Input password and it's repetance don't match"); }
             else
             {
-                Users new_user = new Users(0,firstName, lastName, mobileNumber, email, username, PasswordBox.Password, userType, address, gender);
+                Users new_user = new Users(0,firstName, lastName, mobileNumber, email, username, PasswordBox.Password, userType, address, gender, null, null);
                 MessageBox.Show("The user has been create");
                 MainWindow mainWindow = new MainWindow();
                 this.Close();

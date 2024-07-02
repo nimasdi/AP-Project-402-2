@@ -52,7 +52,7 @@ namespace Restaurant
                 return;
             }
 
-            var complaint = new Complaint(_userId, selectedRestaurant.RestaurantID, title, description, "Pending");
+            var complaint = new Complaint(null,_userId, selectedRestaurant.RestaurantID, title, description);
 
             SaveComplaint(complaint);
             MessageBox.Show("Complaint submitted successfully.");

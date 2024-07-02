@@ -17,18 +17,16 @@ namespace Project_s_classes
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public string UserType {  get; set; }
+        public string? UserType {  get; set; }
         public string Address {  get; set; }
-        public string Gender { get; set; }
-
-        public string ServiceTier { get; set; } // "Bronze", "Silver", "Gold", or null
+        public string? Gender { get; set; }
         public DateTime? ServiceExpiration { get; set; }
-        public int ReservationsMadeThisMonth { get; set; }
+        public int? ReservationsMadeThisMonth { get; set; }
 
         static DataAccess dataAccess = new DataAccess();
 
 
-        public Users(int? userID, string firstName, string lastName, string mobileNumber, string email, string userName, string password, string userType, string address, string gender)
+        public Users(int? userID, string firstName, string lastName, string mobileNumber, string email, string userName, string password, string? userType, string address, string? gender, DateTime? serviceExpiration, int? reservationMade)
         {
             UserID = userID;
             this.FirstName = firstName;
@@ -40,36 +38,35 @@ namespace Project_s_classes
             this.UserType = userType;
             this.Address = address;
             this.Gender = gender;
-            this.ServiceTier = null;
             this.ServiceExpiration = null;
             this.ReservationsMadeThisMonth = 0;
 
             // Saving instance to database
-            string sqlStatement = "INSERT INTO dbo.Users (FirstName, LastName, MobileNumber, Email, UserName, Password, UserType, Address, Gender, ServiceTier, ServiceExpiration, ReservationsMadeThisMonth)" +
-                                  " VALUES(@FirstName, @LastName, @MobileNumber, @Email, @UserName, @Password, @UserType, @Address, @Gender, @ServiceTier, @ServiceExpiration, @ReservationsMadeThisMonth);";
+            string sqlStatement = "INSERT INTO dbo.Users (FirstName, LastName, MobileNumber, Email, UserName, Password, UserType, Address, Gender, ServiceExpiration, ReservationsMadeThisMonth)" +
+                              " VALUES(@FirstName, @LastName, @MobileNumber, @Email, @UserName, @Password, @UserType, @Address, @Gender, @ServiceExpiration, @ReservationsMadeThisMonth);";
             this.UserID = dataAccess.SaveData(sqlStatement, this, true);
         }
 
-        public void UpdateServiceTier(string serviceTier, DateTime serviceExpiration)
+        public void UpdateUserType(string userType, DateTime serviceExpiration)
         {
-            this.ServiceTier = serviceTier;
+            this.UserType = userType;
             this.ServiceExpiration = serviceExpiration;
             this.ReservationsMadeThisMonth = 0;
 
-            string sqlStatement = "UPDATE dbo.Users SET ServiceTier = @ServiceTier, ServiceExpiration = @ServiceExpiration, ReservationsMadeThisMonth = @ReservationsMadeThisMonth WHERE UserID = @UserID";
+            string sqlStatement = "UPDATE dbo.Users SET UserType = @UserType, ServiceExpiration = @ServiceExpiration, ReservationsMadeThisMonth = @ReservationsMadeThisMonth WHERE UserID = @UserID";
             dataAccess.SaveData(sqlStatement, this);
         }
 
         public bool CanMakeReservation(out string message)
         {
-            if (ServiceTier == null || ServiceExpiration == null || ServiceExpiration < DateTime.Now)
+            if (UserType == null || ServiceExpiration == null || ServiceExpiration < DateTime.Now)
             {
                 message = "Your special service has expired or you do not have one.";
                 return false;
             }
 
             int maxReservations;
-            switch (ServiceTier)
+            switch (UserType)
             {
                 case "Bronze":
                     maxReservations = 2;

@@ -92,7 +92,8 @@ namespace Restaurant_Pages
             if (ValidateUsername(txtUserName.Text))
             {
                 int pass = PassGenerator();
-                var restaurant = new Restaurants(null,txtName.Text, txtCity.Text, float.Parse(txtAverageRating.Text), cbIsReservationAvailable.IsChecked ?? false, null, pass, txtUserName.Text);
+                //here i should put a service type enum for restaurants and a field or combobox for it
+                var restaurant = new Restaurants(null,txtName.Text, txtCity.Text, float.Parse(txtAverageRating.Text), cbIsReservationAvailable.IsChecked ?? false, null, pass, txtUserName.Text, ServiceyTypeComboBox.SelectedIndex.ToString());
                 MessageBox.Show("A new restaurant got created by admin");
                 this.Close();
             }
@@ -101,6 +102,11 @@ namespace Restaurant_Pages
                 MessageBox.Show("The usernaem is not valid, please try agian");
                 txtUserName.Clear();
             }
+        }
+
+        private void ServiceyTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

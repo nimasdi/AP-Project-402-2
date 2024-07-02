@@ -184,5 +184,10 @@ namespace Restaurant_Pages
         {
 
         }
+
+        private void ComplaintSearchCriteriaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
