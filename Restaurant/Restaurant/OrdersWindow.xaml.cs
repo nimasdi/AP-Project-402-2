@@ -64,6 +64,7 @@ namespace Restaurant
                 selectedOrder.Comment = CommentTextBox.Text;
 
                 UpdateOrderRatingAndComment(selectedOrder.OrderId, selectedOrder.Rating, selectedOrder.Comment);
+                UpdateRestaurantAverageRating(selectedOrder.RestaurantId);
                 MessageBox.Show("Rating and comment submitted successfully.");
             }
             else
@@ -81,6 +82,21 @@ namespace Restaurant
         {
             string sql = "UPDATE dbo.Orders SET Rating = @Rating, Comment = @Comment WHERE OrderId = @OrderId";
             _dataAccess.SaveData(sql, new { Rating = rating, Comment = comment, OrderId = orderId });
+        }
+
+
+        private void UpdateRestaurantAverageRating(int? restaurantId)
+        {
+            string sql = "SELECT Rating FROM dbo.Orders WHERE RestaurantId = @RestaurantId AND Rating IS NOT NULL";
+            var ratings = _dataAccess.LoadData<int, dynamic>(sql, new { RestaurantId = restaurantId });
+
+            if (ratings.Count > 0)
+            {
+                double newAverageRating = ratings.Average();
+
+                sql = "UPDATE dbo.Restaurants SET AverageRating = @AverageRating WHERE RestaurantID = @RestaurantId";
+                _dataAccess.SaveData(sql, new { AverageRating = newAverageRating, RestaurantId = restaurantId });
+            }
         }
     }
 

@@ -16,18 +16,52 @@
             <TextBlock Text="Reservation Enabled:" FontSize="16" Margin="0,0,0,5"/>
             <TextBlock Text="{Binding IsReservationEnabled}" FontSize="16" Margin="0,0,0,10"/>
 
-            <!-- Menu Items -->
-            <ListBox x:Name="MenuItemListBox" ItemsSource="{Binding MenuItems}" Margin="0,20,0,0" SelectionChanged="MenuItemListBox_SelectionChanged">
+            <!-- Menu Categories -->
+            <ListBox x:Name="MenuCategoriesListBox" ItemsSource="{Binding MenuItemsByCategory.Keys}" SelectionChanged="MenuCategoriesListBox_SelectionChanged" Margin="0,20,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Margin="0,5"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Menu Items by Category -->
+            <ListView x:Name="MenuItemsListView" Margin="0,10" SelectionChanged="MenuItemsListView_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Item Name" Width="200" DisplayMemberBinding="{Binding ItemName}"/>
+                        <GridViewColumn Header="Ingredients" Width="300" DisplayMemberBinding="{Binding Ingredients}"/>
+                        <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding Price}"/>
+                        <GridViewColumn Header="Quantity Available" Width="100" DisplayMemberBinding="{Binding QuantityAvailable}"/>
+                        <GridViewColumn Header="Average Rating" Width="100" DisplayMemberBinding="{Binding AverageRating}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Cart and Order Section -->
+            <TextBlock Text="Cart" FontSize="18" FontWeight="Bold" Margin="0,20,0,10"/>
+            <ListBox x:Name="CartListBox" ItemsSource="{Binding CartItems}" Margin="0,10,0,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ImageURL}" Height="100" Width="100" Margin="0,0,10,0"/>
+                            
                             <TextBlock Text="{Binding ItemName}" Margin="10,0"/>
+                            <TextBlock Text=" - Quantity: " Margin="10,0"/>
+                            <TextBlock Text="{Binding Quantity}" Margin="10,0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <ComboBox x:Name="PaymentMethodComboBox" Margin="0,10,0,0">
+                <ComboBoxItem Content="Cash"/>
+                <ComboBoxItem Content="Online"/>
+            </ComboBox>
+            <Button Content="Checkout" Margin="0,10,0,0" Click="CheckoutButton_Click"/>
+
+            <!-- Reservation Button -->
+            <Button Content="Make a Reservation" Margin="0,10,0,0" Click="MakeReservationButton_Click" Visibility="{Binding IsReservationButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
     </Grid>
-
+    
 </Window>
