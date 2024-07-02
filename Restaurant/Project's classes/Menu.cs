@@ -1,15 +1,25 @@
+<<<<<<< HEAD
 ﻿using DBAccess;
+=======
+﻿using Microsoft.Data.SqlClient;
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBAccess;
 
 namespace Project_s_classes
 {
-    internal class Menu
+    public class Menu
     {
+<<<<<<< HEAD
         public int? MenuID {  get; set; }
+=======
+        public int MenuID {  get; set; }
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
         public int? RestaurantId {  get; set; }
         public string? Category {  get; set; }
         public string? ItemName {  get; set; }
@@ -18,7 +28,16 @@ namespace Project_s_classes
         public string? ImageURL {  get; set; }
         public float? AverageRating {  get; set; }
         public int? QuantityAvailable {  get; set; }
+<<<<<<< HEAD
         static DataAccess dataAccess = new DataAccess();
+=======
+
+        public List<Comment> Comments { get; set; } = new List<Comment>(); 
+
+        static DataAccess dataAccess = new DataAccess();
+
+
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
 
         public Menu(int? menuId,int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
@@ -32,9 +51,54 @@ namespace Project_s_classes
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
 
+<<<<<<< HEAD
             string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuanntityAvailable)" +
            " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuanntityAvailable);";
             this.MenuID = dataAccess.SaveData(sqlStatement, this, true);
+=======
+            LoadComments();
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
         }
+
+        private void LoadComments()
+        {
+            string sql = "SELECT CommentID, UserID, UserName, Content, Rating, CreatedAt, Edited " +
+                         "FROM dbo.Comments " +
+                         "WHERE MenuID = @MenuID;";
+
+            var parameters = new { MenuID };
+
+            var commentsFromDb = dataAccess.LoadData<Comment, dynamic>(sql, parameters);
+
+            Comments.AddRange(commentsFromDb);
+        }
+        public void AddComment(int userId, string userName, string content, float rating)
+        {
+            var newComment = new Comment(this.MenuID, userId, userName, content, rating, DateTime.Now, false);
+
+            newComment.SaveToDatabase();
+            Comments.Add(newComment);
+        }
+
+        public void EditComment(int commentId, string newContent)
+        {
+            var commentToEdit = Comments.FirstOrDefault(c => c.CommentID == commentId);
+            if (commentToEdit != null)
+            {
+                commentToEdit.Edit(newContent);
+            }
+        }
+
+        public void DeleteComment(int commentId)
+        {
+            var commentToDelete = Comments.FirstOrDefault(c => c.CommentID == commentId);
+            if (commentToDelete != null)
+            {
+                commentToDelete.Delete();
+                Comments.Remove(commentToDelete);
+            }
+        }
+
     }
+   
 }

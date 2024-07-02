@@ -9,15 +9,22 @@ namespace Project_s_classes
 {
     public class Complaint
     {
+<<<<<<< HEAD
         public int? ComplaintID {  get; set; }
+=======
+        public int ComplaintID {  get; set; }
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
         public int? UserId { get; set; }
         public int? RestaurantId  { get; set; }
         public string? Title {  get; set; }
         public string? Description {  get; set; }
         public string? Status {  get; set; }
+<<<<<<< HEAD
         public DateTime CreateDate { get; set; }
         public string Response {  get; set; }
         static DataAccess dataAccess = new DataAccess();
+=======
+>>>>>>> bc1d0981a80edd217d22f61a1f3801f598da4862
 
         public Complaint(int? complaintID,int? userId, int? restaurantId, string? title, string? description) 
         {
