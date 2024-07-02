@@ -2,6 +2,12 @@
 
 namespace Project_s_classes
 {
+    public enum UserType
+    {
+        Boronze = 1,
+        Silver = 2,
+        Gold = 3,
+    }
     public class Users
     {
         public int? UserID { get; set; }

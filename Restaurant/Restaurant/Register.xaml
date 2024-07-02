@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Restaurant_pages"
         mc:Ignorable="d"
         Title="Register" Height="450" Width="800">
-    <Grid Margin="0,0,0,-6" HorizontalAlignment="Right" Width="800">
+    <Grid Margin="0,0,0,-6" HorizontalAlignment="Center" Width="780">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -14,8 +14,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" MinHeight="31" />
+            <RowDefinition Height="30*" />
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="176*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -23,45 +25,54 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="0" Grid.Column="1" Name="FirstNameTextBox" Margin="5" TextChanged="FirstNameTextBox_TextChanged" />
+        <TextBlock Grid.Column="0" Text="First Name:" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="0" Grid.Column="1" Name="FirstNameTextBox" Margin="5,5,5,5" TextChanged="FirstNameTextBox_TextChanged" />
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="1" Grid.Column="1" Name="LastNameTextBox" Margin="5" TextChanged="LastNameTextBox_TextChanged" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name:" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="1" Grid.Column="1" Name="LastNameTextBox" Margin="5,5,5,5" TextChanged="LastNameTextBox_TextChanged" />
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Number:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="2" Grid.Column="1" Name="MobileNumberTextBox" Margin="5" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Number:" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="2" Grid.Column="1" Name="MobileNumberTextBox" Margin="5,5,5,5" />
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Username:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="3" Grid.Column="1" Name="UsernameTextBox" Margin="5" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Username:" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="3" Grid.Column="1" Name="UsernameTextBox" Margin="5,5,5,5" />
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Address(optional):" VerticalAlignment="Center" />
-        <TextBox Grid.Row="4" Grid.Column="1" Name="AddressTextBox" Margin="5" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Address(optional):" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="4" Grid.Column="1" Name="AddressTextBox" Margin="5,5,5,5" />
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Email:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="5" Grid.Column="1" Name="EmailTextBox" Margin="5" />
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Email:" VerticalAlignment="Center" Height="16" />
+        <TextBox Grid.Row="5" Grid.Column="1" Name="EmailTextBox" Margin="5,5,5,5" />
 
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Verification Code:" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Name="VerificationCodeTextBox" Margin="5" TextChanged="VerificationCodeTextBox_TextChanged"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Verification Code:" VerticalAlignment="Center" Height="16"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Name="VerificationCodeTextBox" Margin="5,5,5,5" TextChanged="VerificationCodeTextBox_TextChanged" IsEnabled="False"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Password:" VerticalAlignment="Top" Margin="0,11,0,0"/>
-        <TextBox Grid.Row="7" Grid.Column="1" Name="PasswordTextBox" Margin="5,11,5,213"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Password:" VerticalAlignment="Top" Margin="0,11,0,0" Height="16"/>
+        <PasswordBox x:Name="PasswordBox" Margin="5,2,10,4" FontSize="14" Password="" Grid.Column="1" Grid.Row="7" IsEnabled="False"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Repeaet Password:" VerticalAlignment="Top" Margin="0,41,0,0"/>
-        <TextBox Grid.Row="7" Grid.Column="1" Name="rPasswordTextBox" Margin="5,49,5,0" TextChanged="rPassword_TextChanged" Height="24" VerticalAlignment="Top"/>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Repeaet Password:" VerticalAlignment="Top" Margin="0,8,0,0" Height="16"/>
+        <PasswordBox x:Name="RepeatPasswordBox" Margin="5,0,15,11" FontSize="14" Password="" Grid.Column="1" Grid.Row="8" IsEnabled="False"/>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" VerticalAlignment="Top" Margin="170,106,170,0" Grid.ColumnSpan="3" Height="62">
+        <StackPanel Grid.Row="9" Orientation="Horizontal" VerticalAlignment="Top" Margin="170,56,170,0" Grid.ColumnSpan="3" Height="62">
             <Button Content="Verification Code" x:Name="Verification" Width="100" Click="VerifyButton_Click" Height="24" />
             <Button Content="Cancel" Width="100" Margin="10" Click="CancelButton_Click" Height="24" />
-            <Button Content="Check Code" x:Name="CheckCode" Width="100" Click="VerifyCode_Click" Height="24" />
-            <Button Content="Register" x:Name="RegisterB"  Width="100" Margin="10" Click="RegisterButton_Click" Height="24" />
+            <Button Content="Check Code" x:Name="CheckCode" Width="100" Click="VerifyCode_Click" Height="24" IsEnabled="False"/>
+            <Button Content="Register" x:Name="RegisterB"  Width="100" Margin="10" Click="RegisterButton_Click" Height="24" IsEnabled="False"/>
         </StackPanel>
-        <ComboBox x:Name="GenderComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,1,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="GenderComboBox_SelectionChanged" Grid.Row="1">
+        <ComboBox x:Name="GenderComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,1,0,0" VerticalAlignment="Top" Width="85" SelectionChanged="GenderComboBox_SelectionChanged" Grid.Row="1">
             <ComboBoxItem Content="Male" IsSelected="True" />
-            <ComboBoxItem Content="Male" />
             <ComboBoxItem Content="Female"/>
         </ComboBox>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="25,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Gender:" VerticalAlignment="Center" Width="55"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="10,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Gender:" VerticalAlignment="Center" Width="55"/>
+
+        <ComboBox x:Name="UserTypeComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,0,0,0" VerticalAlignment="Center" Width="85" SelectionChanged="UserTypeComboBox_SelectionChanged" Grid.Row="4">
+            <ComboBoxItem Content="Boronze" IsSelected="True" />
+            <ComboBoxItem Content="Silver"/>
+            <ComboBoxItem Content="Gold"/>
+        </ComboBox>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="10,5,0,0" Grid.Row="4" TextWrapping="Wrap" Text="User Type:" VerticalAlignment="Top" Width="55"/>
+
+
+
 
     </Grid>
 </Window>
