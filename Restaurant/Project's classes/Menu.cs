@@ -26,6 +26,8 @@ namespace Project_s_classes
         static DataAccess dataAccess = new DataAccess();
 
 
+        public Menu(){        }
+
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
