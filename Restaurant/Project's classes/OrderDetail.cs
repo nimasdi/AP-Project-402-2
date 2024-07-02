@@ -9,15 +9,16 @@ namespace Project_s_classes
 {
     internal class OrderDetail
     {
-        public int OrderDetailId { get; set; }
+        public int? OrderDetailId { get; set; }
         public int? OrderId {  get; set; }
         public int? MenuId {  get; set; }
         public int? Quantity {  get; set; }
         public decimal? Price {  get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public OrderDetail(int? orderId, int? menuId, int? quantity, decimal? price)
+        public OrderDetail(int? orderdetailId,int? orderId, int? menuId, int? quantity, decimal? price)
         {
+            OrderDetailId = orderdetailId;
             OrderId = orderId;
             MenuId = menuId;
             Quantity = quantity;

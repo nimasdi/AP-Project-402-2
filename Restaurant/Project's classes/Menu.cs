@@ -9,7 +9,7 @@ namespace Project_s_classes
 {
     internal class Menu
     {
-        public int MenuID {  get; set; }
+        public int? MenuID {  get; set; }
         public int? RestaurantId {  get; set; }
         public string? Category {  get; set; }
         public string? ItemName {  get; set; }
@@ -20,8 +20,9 @@ namespace Project_s_classes
         public int? QuantityAvailable {  get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
+        public Menu(int? menuId,int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
+            this.MenuID = menuId;
             RestaurantId = restaurantId;
             Category = category;
             ItemName = itemName;

@@ -4,7 +4,7 @@ namespace Project_s_classes
 {
     public class Admin
     {
-        public int AdminId { get; set; }
+        public int? AdminId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
@@ -15,8 +15,9 @@ namespace Project_s_classes
         public string Gender { get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Admin(string firstName, string lastName, string mobileNumber, string email, string userName, string password, string address, string gender)
+        public Admin(int? adminID,string firstName, string lastName, string mobileNumber, string email, string userName, string password, string address, string gender)
         {
+            AdminId = adminID;
             FirstName = firstName;
             LastName = lastName;
             MobileNumber = mobileNumber;

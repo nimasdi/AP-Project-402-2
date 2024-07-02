@@ -9,7 +9,7 @@ namespace Project_s_classes
 {
     internal class Order
     {
-        public int OrderId {  get; set; }
+        public int? OrderId {  get; set; }
         public int? UserId {  get; set; }
         public int? RestuarantId {  get; set; }
         public DateTime? OrderDate {  get; set; }
@@ -18,8 +18,9 @@ namespace Project_s_classes
         public string? status {  get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Order(int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
+        public Order(int? orderId,int? userId, int? restuarantId, DateTime? orderDate, decimal? totalAmount, string? paymentMethod, string? status)
         {
+            OrderId = orderId;
             UserId = userId;
             RestuarantId = restuarantId;
             OrderDate = orderDate;

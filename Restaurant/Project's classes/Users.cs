@@ -4,7 +4,7 @@ namespace Project_s_classes
 {
     public class Users
     {
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
@@ -17,8 +17,9 @@ namespace Project_s_classes
         static DataAccess dataAccess = new DataAccess();
         
 
-        public Users(string firstName, string lastName, string mobileNumber, string email, string userName, string password, string userType, string address, string gender)
+        public Users(int? userID, string firstName, string lastName, string mobileNumber, string email, string userName, string password, string userType, string address, string gender)
         {
+            UserID = userID;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.MobileNumber = mobileNumber;

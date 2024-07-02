@@ -92,7 +92,7 @@ namespace Restaurant_Pages
             if (ValidateUsername(txtUserName.Text))
             {
                 int pass = PassGenerator();
-                var restaurant = new Restaurants(txtName.Text, txtCity.Text, float.Parse(txtAverageRating.Text), cbIsReservationAvailable.IsChecked ?? false, null, pass, txtUserName.Text);
+                var restaurant = new Restaurants(null,txtName.Text, txtCity.Text, float.Parse(txtAverageRating.Text), cbIsReservationAvailable.IsChecked ?? false, null, pass, txtUserName.Text);
                 MessageBox.Show("A new restaurant got created by admin");
                 this.Close();
             }

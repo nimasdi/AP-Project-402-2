@@ -8,6 +8,34 @@
     Title="Complaints" Height="450" Width="800">
 
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <!-- Search Section -->
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <ComboBox x:Name="ComplaintSearchCriteriaComboBox" Width="150" Margin="5">
+                    <ComboBoxItem Content="Username"/>
+                    <ComboBoxItem Content="Title"/>
+                    <ComboBoxItem Content="First Name"/>
+                    <ComboBoxItem Content="Last Name"/>
+                    <ComboBoxItem Content="Restaurant Name"/>
+                    <ComboBoxItem Content="Status"/>
+                    <ComboBoxItem Content="Latest Complaint"/>
+                </ComboBox>
+                <TextBox x:Name="txtSearch" Width="200" Margin="5" TextChanged="txtSearch_TextChanged"/>
+                <Button Content="Search" Width="100" Margin="5" Click="ComplaintSearchButton_Click"/>
+                <Button Content="ٍExit" Width="100" Margin="5" Click="ExitButton_Click"/>
+
+            </StackPanel>
+
+            <!-- DataGrid to display search results -->
+            <DataGrid x:Name="ComplaintResultsDataGrid" AutoGenerateColumns="False" Margin="10" IsReadOnly="True" SelectionChanged="ComplaintResultsDataGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ComplaintID}"/>
+                    <DataGridTextColumn Header="User ID" Binding="{Binding UserId}"/>
+                    <DataGridTextColumn Header="Restaurant ID" Binding="{Binding RestaurantId}"/>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Window>

@@ -18,6 +18,8 @@ using Project_s_classes;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Restaurant_pages
 {
@@ -250,7 +252,7 @@ namespace Restaurant_pages
 
 
 
-           
+
             if (message != "Mail sent successfully!")
             {
                 return;
@@ -265,42 +267,8 @@ namespace Restaurant_pages
                 Verification.IsEnabled = false;
                 AddressTextBox.IsEnabled = false;
                 VerificationCodeTextBox.IsEnabled = true;
-                
-                if(VerifyCode_Click(sender, e, verification_code))
-                {
-                    VerificationCodeTextBox.IsEnabled = false;
-                    CheckCode.IsEnabled = false;
-                    PasswordTextBox.IsEnabled = true;
-                    rPasswordTextBox.IsEnabled = true;
-                    RegisterB.IsEnabled = true;
-
-                    if(RegisterButton_Click(sender, e))
-                    {
-                        MessageBox.Show("The user has been create");
-                        Users new_user = new Users(firstName, lastName, mobileNumber, email, username, PasswordTextBox.Text, "Bronze", address ,gender);
-                        MainWindow mainWindow = new MainWindow();
-                        this.Close();
-                        mainWindow.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Either the password doesn't pass the requirements or the repeat password field is not the same with password");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("The input code is wrong, try again");
-                }
 
             }
-
-
-
-            MessageBox.Show("Registration successful!");
-
-            MainWindow loginWindow = new MainWindow();
-            loginWindow.Show();
-            this.Close();
         }
 
         private void VerificationCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -332,14 +300,6 @@ namespace Restaurant_pages
                 return false;
             }
         }
-
-        private bool RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(!ValidatePassword(PasswordTextBox.Text)) { return false; }
-            if(PasswordTextBox.Text != rPasswordTextBox.Text) { return false; }
-            return true;
-        }
-
         private void FirstNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -365,6 +325,38 @@ namespace Restaurant_pages
 
         }
 
+        private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            string firstName = FirstNameTextBox.Text;
+            string lastName = LastNameTextBox.Text;
+            string mobileNumber = MobileNumberTextBox.Text;
+            string username = UsernameTextBox.Text;
+            string email = EmailTextBox.Text;
+            string gender = GenderComboBox.SelectedIndex.ToString();
+            string address = AddressTextBox.Text;
+
+            VerificationCodeTextBox.IsEnabled = false;
+            CheckCode.IsEnabled = false;
+            PasswordTextBox.IsEnabled = true;
+            rPasswordTextBox.IsEnabled = true;
+            RegisterB.IsEnabled = true;
+
+            if (!ValidatePassword(PasswordTextBox.Text)) { MessageBox.Show("Password is wrong format"); }
+            else if (PasswordTextBox.Text != rPasswordTextBox.Text) { MessageBox.Show("Input password and it's repetance don't match"); }
+            else
+            {
+                Users new_user = new Users(0,firstName, lastName, mobileNumber, email, username, PasswordTextBox.Text, "Bronze", address, gender);
+                MessageBox.Show("The user has been create");
+                MainWindow mainWindow = new MainWindow();
+                this.Close();
+                mainWindow.Show();
+            }
+        }
     }
 
 

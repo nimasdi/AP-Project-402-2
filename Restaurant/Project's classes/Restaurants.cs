@@ -10,7 +10,7 @@ namespace Project_s_classes
 {
     public class Restaurants
     {
-        public int RestaurantID { get; set; }
+        public int? RestaurantID { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
         public float AverageRating { get; set; }
@@ -19,11 +19,13 @@ namespace Project_s_classes
         public int Password {  get; set; }
         public string UserName {  get; set; }
         public bool haveComplaints { get; set; }
-
+        public int ComplaintsNum { get; set; }
+        
         static DataAccess dataAccess = new DataAccess();
 
-        public Restaurants(string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password, string userName)
+        public Restaurants(int? restaurantId, string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password, string userName)
         {
+            RestaurantID = restaurantId;
             this.Name = name;
             this.City = city;
             this.AverageRating = averageRating;
@@ -32,6 +34,7 @@ namespace Project_s_classes
             this.Password=password;
             this.UserName = userName;
             this.haveComplaints = false;
+            this.ComplaintsNum = 0;
 
             //saving restaurant instance to the data base
             string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, Password, UserName, haveComplaints)" +

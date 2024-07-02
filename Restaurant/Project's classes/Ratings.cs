@@ -9,17 +9,18 @@ namespace Project_s_classes
 {
     public class Ratings
     {
-        int RatingID {  get; set; }
-        int? UserID { get; set; }
-        int? RestaurantID  { get; set; }
-        int? MenuID { get; set; }
-        int RatingValue { get; set; }
-        string Comment { get; set; }
+        public int? RatingID {  get; set; }
+        public int? UserID { get; set; }
+        public int? RestaurantID  { get; set; }
+        public int? MenuID { get; set; }
+        public int RatingValue { get; set; }
+        public string Comment { get; set; }
         DateTime Date { get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Ratings(int? userID, int? restaurantID, int? menuID, int ratingValue, string comment)
+        public Ratings(int? ratingID, int? userID, int? restaurantID, int? menuID, int ratingValue, string comment)
         {
+            RatingID = ratingID;
             this.UserID = userID;
             this.RestaurantID = restaurantID;
             this.MenuID = menuID;   

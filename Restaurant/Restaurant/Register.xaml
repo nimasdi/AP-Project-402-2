@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Restaurant_pages"
         mc:Ignorable="d"
         Title="Register" Height="450" Width="800">
-    <Grid Margin="0,0,0,-6">
+    <Grid Margin="0,0,0,-6" HorizontalAlignment="Right" Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -48,9 +48,9 @@
         <TextBox Grid.Row="7" Grid.Column="1" Name="PasswordTextBox" Margin="5,11,5,213"/>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Repeaet Password:" VerticalAlignment="Top" Margin="0,41,0,0"/>
-        <TextBox Grid.Row="7" Grid.Column="1" Name="rPasswordTextBox" Margin="5,41,5,0" TextChanged="rPassword_TextChanged" Height="16" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Name="rPasswordTextBox" Margin="5,49,5,0" TextChanged="rPassword_TextChanged" Height="24" VerticalAlignment="Top"/>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" VerticalAlignment="Top" Margin="170,86,170,0" Grid.ColumnSpan="3" Height="62">
+        <StackPanel Grid.Row="7" Orientation="Horizontal" VerticalAlignment="Top" Margin="170,106,170,0" Grid.ColumnSpan="3" Height="62">
             <Button Content="Verification Code" x:Name="Verification" Width="100" Click="VerifyButton_Click" Height="24" />
             <Button Content="Cancel" Width="100" Margin="10" Click="CancelButton_Click" Height="24" />
             <Button Content="Check Code" x:Name="CheckCode" Width="100" Click="VerifyCode_Click" Height="24" />

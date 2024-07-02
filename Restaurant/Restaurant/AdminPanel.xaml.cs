@@ -47,5 +47,10 @@ namespace Restaurant_Pages
             ComplaintsSearch complaintWindow = new ComplaintsSearch();
             complaintWindow.Show();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
