@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant_pages"
         mc:Ignorable="d"
-        Title="Register" Height="450" Width="800">
-    <Grid Margin="0,0,0,-6" HorizontalAlignment="Center" Width="780">
+        Title="Register" Height="545" Width="800">
+    <Grid Background="#2C3E50" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -14,10 +14,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" MinHeight="31" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="35*"/>
-            <RowDefinition Height="176*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,54 +24,81 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="First Name:" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="0" Grid.Column="1" Name="FirstNameTextBox" Margin="5,5,5,5" TextChanged="FirstNameTextBox_TextChanged" />
+        <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" Background="#ECF0F1" Padding="20" CornerRadius="10" Grid.ColumnSpan="2" Margin="0,0,-24,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="-10,-10,-20,0">
+                <StackPanel>
+                    <TextBlock Text="Register" FontSize="24" FontWeight="Bold" Foreground="#34495E" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name:" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="1" Grid.Column="1" Name="LastNameTextBox" Margin="5,5,5,5" TextChanged="LastNameTextBox_TextChanged" />
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="First Name:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="FirstNameTextBox" Height="30" Margin="0,5,0,15" FontSize="14" TextChanged="FirstNameTextBox_TextChanged"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Mobile Number:" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="2" Grid.Column="1" Name="MobileNumberTextBox" Margin="5,5,5,5" />
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Last Name:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="LastNameTextBox" Height="30" Margin="0,5,0,15" FontSize="14" TextChanged="LastNameTextBox_TextChanged"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Username:" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="3" Grid.Column="1" Name="UsernameTextBox" Margin="5,5,5,5" />
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Mobile Number:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="MobileNumberTextBox" Height="30" Margin="0,5,0,15" FontSize="14"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Address(optional):" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="4" Grid.Column="1" Name="AddressTextBox" Margin="5,5,5,5" />
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Username:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="UsernameTextBox" Height="30" Margin="0,5,0,15" FontSize="14"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Email:" VerticalAlignment="Center" Height="16" />
-        <TextBox Grid.Row="5" Grid.Column="1" Name="EmailTextBox" Margin="5,5,5,5" />
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Address (optional):" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="AddressTextBox" Height="30" Margin="0,5,0,15" FontSize="14"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Verification Code:" VerticalAlignment="Center" Height="16"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Name="VerificationCodeTextBox" Margin="5,5,5,5" TextChanged="VerificationCodeTextBox_TextChanged" IsEnabled="False"/>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Email:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="EmailTextBox" Height="30" Margin="0,5,0,15" FontSize="14"/>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Password:" VerticalAlignment="Top" Margin="0,11,0,0" Height="16"/>
-        <PasswordBox x:Name="PasswordBox" Margin="5,2,10,4" FontSize="14" Password="" Grid.Column="1" Grid.Row="7" IsEnabled="False"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                        <TextBlock Text="Gender:" Foreground="#34495E" FontSize="14" Margin="0,5,10,0"/>
+                        <ComboBox Name="GenderComboBox" Width="120" Margin="0,5" SelectionChanged="GenderComboBox_SelectionChanged">
+                            <ComboBoxItem Content="Male" IsSelected="True"/>
+                            <ComboBoxItem Content="Female"/>
+                        </ComboBox>
+                    </StackPanel>
 
-        <TextBlock Grid.Row="8" Grid.Column="0" Text="Repeaet Password:" VerticalAlignment="Top" Margin="0,8,0,0" Height="16"/>
-        <PasswordBox x:Name="RepeatPasswordBox" Margin="5,0,15,11" FontSize="14" Password="" Grid.Column="1" Grid.Row="8" IsEnabled="False"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                        <TextBlock Text="User Type:" Foreground="#34495E" FontSize="14" Margin="0,5,10,0"/>
+                        <ComboBox Name="UserTypeComboBox" Width="120" Margin="0,5" SelectionChanged="UserTypeComboBox_SelectionChanged">
+                            <ComboBoxItem Content="Bronze" IsSelected="True"/>
+                            <ComboBoxItem Content="Silver"/>
+                            <ComboBoxItem Content="Gold"/>
+                        </ComboBox>
+                    </StackPanel>
 
-        <StackPanel Grid.Row="9" Orientation="Horizontal" VerticalAlignment="Top" Margin="170,56,170,0" Grid.ColumnSpan="3" Height="62">
-            <Button Content="Verification Code" x:Name="Verification" Width="100" Click="VerifyButton_Click" Height="24" />
-            <Button Content="Cancel" Width="100" Margin="10" Click="CancelButton_Click" Height="24" />
-            <Button Content="Check Code" x:Name="CheckCode" Width="100" Click="VerifyCode_Click" Height="24" IsEnabled="False"/>
-            <Button Content="Register" x:Name="RegisterB"  Width="100" Margin="10" Click="RegisterButton_Click" Height="24" IsEnabled="False"/>
-        </StackPanel>
-        <ComboBox x:Name="GenderComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,1,0,0" VerticalAlignment="Top" Width="85" SelectionChanged="GenderComboBox_SelectionChanged" Grid.Row="1">
-            <ComboBoxItem Content="Male" IsSelected="True" />
-            <ComboBoxItem Content="Female"/>
-        </ComboBox>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="10,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Gender:" VerticalAlignment="Center" Width="55"/>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Verification Code:" Foreground="#34495E" FontSize="14"/>
+                        <TextBox Name="VerificationCodeTextBox" Height="30" Margin="0,5,0,15" FontSize="14" IsEnabled="False" TextChanged="VerificationCodeTextBox_TextChanged"/>
+                    </StackPanel>
 
-        <ComboBox x:Name="UserTypeComboBox" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="85,0,0,0" VerticalAlignment="Center" Width="85" SelectionChanged="UserTypeComboBox_SelectionChanged" Grid.Row="4">
-            <ComboBoxItem Content="Boronze" IsSelected="True" />
-            <ComboBoxItem Content="Silver"/>
-            <ComboBoxItem Content="Gold"/>
-        </ComboBox>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="10,5,0,0" Grid.Row="4" TextWrapping="Wrap" Text="User Type:" VerticalAlignment="Top" Width="55"/>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Password:" Foreground="#34495E" FontSize="14"/>
+                        <PasswordBox Name="PasswordBox" Height="30" Margin="0,5,0,15" FontSize="14" IsEnabled="False"/>
+                    </StackPanel>
 
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Repeat Password:" Foreground="#34495E" FontSize="14"/>
+                        <PasswordBox Name="RepeatPasswordBox" Height="30" Margin="0,5,0,15" FontSize="14" IsEnabled="False"/>
+                    </StackPanel>
 
-
-
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                        <Button Content="Verification Code" Name="Verification" Width="120" Margin="5" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="VerifyButton_Click"/>
+                        <Button Content="Cancel" Width="100" Margin="5" Background="#E74C3C" Foreground="White" FontWeight="Bold" Click="CancelButton_Click"/>
+                        <Button Content="Check Code" Name="CheckCode" Width="100" Margin="5" Background="#3498DB" Foreground="White" FontWeight="Bold" Click="VerifyCode_Click" IsEnabled="False"/>
+                        <Button Content="Register" Name="RegisterB" Width="100" Margin="5" Background="#2ECC71" Foreground="White" FontWeight="Bold" Click="RegisterButton_Click" IsEnabled="False"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>
