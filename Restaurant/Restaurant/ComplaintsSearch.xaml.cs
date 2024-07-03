@@ -39,7 +39,9 @@ namespace Restaurant_Pages
 
         private void ComplaintSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtSearch.Text))
+            string? selectedAspect = ComplaintSearchCriteriaComboBox.SelectedItem.ToString()
+                    .Split(':')[1].Trim();
+            if (string.IsNullOrEmpty(txtSearch.Text) && selectedAspect != "Latest Complaint" && selectedAspect != "All")
             {
                 MessageBox.Show("The search txt box cannot be empty, please try again!");
             }
@@ -49,10 +51,10 @@ namespace Restaurant_Pages
                 var Restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
                 var Users = dataAccess.LoadData<Users, dynamic>("SELECT * FROM dbo.Users", new { });
 
-                string? selectedAspect = ComplaintSearchCriteriaComboBox.SelectedItem.ToString();
+                
                 string filterName = txtSearch.Text;
 
-                if (string.IsNullOrEmpty(selectedAspect) && (selectedAspect != "Latest Complaint" || selectedAspect != "All"))
+                if (string.IsNullOrEmpty(selectedAspect))
                 {
                     MessageBox.Show("You should choose something to search for in combobox");
                 }
@@ -68,6 +70,7 @@ namespace Restaurant_Pages
                             if (!userIds.Any())
                             {
                                 MessageBox.Show("There is no user object with such user name");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -79,9 +82,10 @@ namespace Restaurant_Pages
 
                         case "Title":
                             var titleMatch = Complaints.Where(complaint => complaint.Title == filterName);
-                            if (titleMatch.Any())
+                            if (!titleMatch.Any())
                             {
                                 MessageBox.Show("There is no title to match what has been written");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -97,6 +101,7 @@ namespace Restaurant_Pages
                             if (!filter_firstname.Any())
                             {
                                 MessageBox.Show("There is no user available with such firstname");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -113,6 +118,7 @@ namespace Restaurant_Pages
                             if (!filter_lastname.Any())
                             {
                                 MessageBox.Show("There is no user available with such lastname");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -126,6 +132,7 @@ namespace Restaurant_Pages
                             if (filterName != "Checked" &&  filterName != "Not Checked")
                             {
                                 MessageBox.Show("Wrong input for txt, you are allowed to use 'Checked' or 'Not Checked' here");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -140,6 +147,7 @@ namespace Restaurant_Pages
                             if (!resturantName.Any())
                             {
                                 MessageBox.Show("There is no restaurant with such name");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                                 break;
                             }
                             else
@@ -151,11 +159,17 @@ namespace Restaurant_Pages
 
                         case "Latest Complaint":
                             Complaint? latesComplaint = Complaints.OrderByDescending(complaint => complaint.CreateDate).Where(complaint => complaint.Status == "Not Checked").FirstOrDefault();
+                            List<Complaint> com = new List<Complaint>();
+                            com.Add(latesComplaint);
                             if (latesComplaint != null)
                             {
-                                ComplaintResultsDataGrid.CurrentItem = latesComplaint;
+                                ComplaintResultsDataGrid.ItemsSource = com;
                             }
-                            MessageBox.Show("All the complaints have been checked");
+                            else
+                            {
+                                MessageBox.Show("All the complaints have been checked");
+                                ComplaintResultsDataGrid.ItemsSource = null;
+                            }
                             break;
                         case "All":
                             if(Complaints != null)
@@ -165,6 +179,7 @@ namespace Restaurant_Pages
                             else
                             {
                                 MessageBox.Show("There are no complaints filed from any user");
+                                ComplaintResultsDataGrid.ItemsSource = null;
                             }
                             break;
                         default:

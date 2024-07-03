@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant_pages"
         mc:Ignorable="d"
-        Title="Register" Height="545" Width="800">
+        Title="Register" Height="545" Width="800"
+        Background="#2C3E50">
     <Grid Background="#2C3E50" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,9 +20,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0*" />
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" Background="#ECF0F1" Padding="20" CornerRadius="10" Grid.ColumnSpan="2" Margin="0,0,-24,0">
