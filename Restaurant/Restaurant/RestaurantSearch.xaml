@@ -114,7 +114,7 @@
                     <DataGridTextColumn Header="Average Rating" Binding="{Binding AverageRating}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Username" Binding="{Binding UserName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Password" Binding="{Binding Password}" IsReadOnly="False"/>
+                    <DataGridTextColumn Header="Password" Binding="{Binding Password}" IsReadOnly="True"/>
                     <DataGridCheckBoxColumn Header="Reservation Available" Binding="{Binding IsReservationEnabled}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
