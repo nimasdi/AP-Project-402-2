@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.AspNetCore.SignalR.Client;
+
 
 namespace Restaurant_pages
 {
@@ -54,29 +56,28 @@ namespace Restaurant_pages
             complaintWindow.Show();
         }
 
-        private void ComplaintButton_Click(object sender, RoutedEventArgs e)
+
+        private async void OnlineSupportButton_Click(object sender, RoutedEventArgs e)
         {
+            var connection = new HubConnectionBuilder()
+                .WithUrl("http://localhost:5000/chathub")
+                .Build();
 
+            await connection.StartAsync();
+            bool isAdminOnline = await connection.InvokeAsync<bool>("IsAdminOnline");
+
+            if (isAdminOnline)
+            {
+                ChatWindow chatWindow = new ChatWindow();
+                chatWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("No admin is currently online. Please try again later.", "Admin Offline", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            await connection.StopAsync();
         }
-
-        private void TrackButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OrdersButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+    }
     }
 }

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CheckConsole", "..\CheckCon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project classes", "..\Project's classes\Project classes.csproj", "{417CE208-5B56-429B-B380-5B335DB275D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantPanel", "..\RestaurantPanel\RestaurantPanel.csproj", "{68181C8E-C655-4515-8CD6-36A2D59A8169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantPanel", "..\RestaurantPanel\RestaurantPanel.csproj", "{68181C8E-C655-4515-8CD6-36A2D59A8169}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineSupport", "..\OnlineSupport\OnlineSupport.csproj", "{B1D8E2D8-BFFD-427D-8546-9A4DED0FF356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{68181C8E-C655-4515-8CD6-36A2D59A8169}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68181C8E-C655-4515-8CD6-36A2D59A8169}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68181C8E-C655-4515-8CD6-36A2D59A8169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D8E2D8-BFFD-427D-8546-9A4DED0FF356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D8E2D8-BFFD-427D-8546-9A4DED0FF356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D8E2D8-BFFD-427D-8546-9A4DED0FF356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D8E2D8-BFFD-427D-8546-9A4DED0FF356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
