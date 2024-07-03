@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project_s_classes
 {
-    internal class OrderDetail
+    public class OrderDetail
     {
         public int? OrderDetailId { get; set; }
         public int? OrderId {  get; set; }
@@ -16,9 +16,8 @@ namespace Project_s_classes
         public decimal? Price {  get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public OrderDetail(int? orderdetailId,int? orderId, int? menuId, int? quantity, decimal? price)
+        public OrderDetail(int? orderId, int? menuId, int? quantity, decimal? price)
         {
-            OrderDetailId = orderdetailId;
             OrderId = orderId;
             MenuId = menuId;
             Quantity = quantity;

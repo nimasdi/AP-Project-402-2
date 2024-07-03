@@ -27,7 +27,7 @@ namespace Project_s_classes
         public bool haveComplaints { get; set; }
         public int ComplaintsNum { get; set; }
         public decimal PenaltyRevenue { get; set; }
-        public string? ServiceType { get; set; }
+        public string? ServiceType { get; set; }  // Dine-In ; Delivery ; Delivery / Dine-In
 
         static DataAccess dataAccess = new DataAccess();
 

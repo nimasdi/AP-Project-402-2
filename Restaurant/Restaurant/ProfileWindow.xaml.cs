@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DBAccess;
 using Project_s_classes;
+using System.Windows.Media.Animation;
 
 
 namespace Restaurant
@@ -74,25 +75,40 @@ namespace Restaurant
             {
                 string newServiceTier = selectedTier.Content.ToString();
 
-                if (_user.ServiceTier != newServiceTier)
+                if (_user.UserType != newServiceTier)
                 {
-                    _user.ServiceTier = newServiceTier;
-                    SimulatePaymentAndSendEmail();
+                    _user.UserType = newServiceTier;
+                    OnlinePayment(newServiceTier);
 
-                    _user.UpdateServiceTier(newServiceTier, DateTime.Now.AddDays(30));
+                    _user.UpdateUserType(newServiceTier, DateTime.Now.AddDays(30));
                 }
             }
 
             MessageBox.Show("Changes saved successfully.");
         }
 
-        private void SimulatePaymentAndSendEmail()
+        private void OnlinePayment(string Tier)
         {
             try
             {
+                decimal price = 0;
+
+                if (Tier == "Bronze")
+                {
+                    price = 100;
+                }
+                else if (Tier == "Silver")
+                {
+                    price = 150;
+                }
+                else
+                {
+                    price = 300;
+                }
+
                 int code = new Random().Next(100000, 999999);
                 string message;
-                SendEmail(_user.Email, "Payment Instructions for Service Tier Upgrade", code, out message);
+                SendEmail(_user.Email, "Payment for Service Tier Upgrade", code ,price, out message);
 
                 MessageBox.Show(message, "Payment Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -102,29 +118,40 @@ namespace Restaurant
             }
         }
 
-        private void SendEmail(string email, string subject, int code, out string message)
+        private void SendEmail(string email, string subject, int code, decimal totalAmount, out string message)
         {
             message = "";
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
                 mail.From = new MailAddress("alexcruso84@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = subject;
-                mail.Body = code.ToString();
 
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new NetworkCredential("alexcruso84@gmail.com", "RandomGmail");
-                SmtpServer.EnableSsl = true;
 
-                SmtpServer.Send(mail);
-                message = "Mail sent successfully!";
+                StringBuilder body = new StringBuilder();
+                body.AppendLine("Thank you for upgrading your service tier!");
+                body.AppendLine("Your verification code is: " + code);
+                body.AppendLine();
+                body.AppendLine("Purchase Details:");
+                body.AppendLine("----------------------------");
+
+
+                body.AppendLine();
+                body.AppendLine($"Total Amount: {totalAmount:C}");
+
+                smtpClient.Port = 587;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mail);
+
+                message = "Upgrade confirmation email sent.";
             }
             catch (Exception ex)
             {
-                message = "Error: " + ex.Message;
+                message = "Error sending verification email: " + ex.Message;
             }
         }
     }

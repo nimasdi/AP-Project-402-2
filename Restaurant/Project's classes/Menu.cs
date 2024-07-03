@@ -34,7 +34,6 @@ namespace Project_s_classes
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
-            this.MenuID = menuId;
             RestaurantId = restaurantId;
             Category = category;
             ItemName = itemName;

@@ -17,6 +17,7 @@ using Project_s_classes;
 using DBAccess;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Net.Mail;
+using System.Net;
 
 namespace Restaurant
 {
@@ -119,13 +120,30 @@ namespace Restaurant
                 return;
             }
 
+            decimal totalAmount = CartItems.Sum(item => item.Quantity * GetItemPrice(item.MenuID));
+
+            Order newOrder = new Order(
+                _currentUser.UserID,
+                _restaurant.RestaurantID,
+                DateTime.Now,
+                totalAmount,
+                selectedPaymentMethod,
+                "Pending",
+                false
+            );
+
+            foreach (var cartItem in CartItems)
+            {
+                new OrderDetail(newOrder.OrderId, cartItem.MenuID, cartItem.Quantity, GetItemPrice(cartItem.MenuID));
+            }
+
             if (selectedPaymentMethod == "Cash")
             {
                 MessageBox.Show("Order placed successfully. Please pay in cash upon delivery.", "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (selectedPaymentMethod == "Online")
             {
-                OnlinePayment();
+                OnlinePayment(newOrder);
             }
 
             // Clear cart after checkout
@@ -133,13 +151,27 @@ namespace Restaurant
             CartListBox.ItemsSource = null;
         }
 
-        private void OnlinePayment()
+        private decimal GetItemPrice(int menuID)
+        {
+            foreach (var category in MenuItemsByCategory.Values)
+            {
+                var item = category.FirstOrDefault(menu => menu.MenuID == menuID);
+                if (item != null)
+                {
+                    return item.Price ?? 0;
+                }
+            }
+            return 0;
+        }
+
+
+        private void OnlinePayment(Order order)
         {
             try
             {
-                // TODO: Implement online payment logic
-
-                MessageBox.Show("Order placed successfully. Payment instructions have been sent to your email.", "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
+                string verificationCode = GenerateOrderCode(_currentUser.UserID, _restaurant.RestaurantID);
+                SendEmail(_currentUser.Email, "Order Confirmation", verificationCode, order.TotalAmount, CartItems, out string emailMessage);
+                MessageBox.Show(emailMessage, "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -151,8 +183,38 @@ namespace Restaurant
         {
             if (_restaurant.IsReservationEnabled && IsUserEligibleForReservation())
             {
-                //var reservationWindow = new ReservationWindow(_restaurant, _currentUser, this);
-                //reservationWindow.ShowDialog();
+                if (CartItems.Count == 0)
+                {
+                    MessageBox.Show("Your cart is empty.", "Empty Cart", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var selectedPaymentMethod = "Cash";
+
+                decimal totalAmount = CartItems.Sum(item => item.Quantity * GetItemPrice(item.MenuID));
+
+                Order newOrder = new Order(
+                    _currentUser.UserID,
+                    _restaurant.RestaurantID,
+                    DateTime.Now,
+                    totalAmount,
+                    selectedPaymentMethod,
+                    "Pending",
+                    true
+                );
+
+                foreach (var cartItem in CartItems)
+                {
+                    new OrderDetail(newOrder.OrderId, cartItem.MenuID, cartItem.Quantity, GetItemPrice(cartItem.MenuID));
+                }
+
+
+                MessageBox.Show("Order placed successfully. Please pay in cash upon delivery.", "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+                // Clear cart after checkout
+                CartItems.Clear();
+                CartListBox.ItemsSource = null;
             }
             else
             {
@@ -190,6 +252,58 @@ namespace Restaurant
                     return false;
             }
         }
+
+        private string GenerateOrderCode(int? userId, int? restaurantId)
+        {
+            var random = new Random();
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            return $"{userId}-{restaurantId}-{timestamp}-{random.Next(1000, 9999)}";
+        }
+
+        private void SendEmail(string email, string subject, string code, decimal? totalAmount, List<CartItem> cartItems, out string message)
+        {
+            message = "";
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("alexcruso84@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = subject;
+
+
+                StringBuilder body = new StringBuilder();
+                body.AppendLine("Thank you for your order!");
+                body.AppendLine("Your order code is: " + code);
+                body.AppendLine();
+                body.AppendLine("Purchase Details:");
+                body.AppendLine("----------------------------");
+
+                foreach (var item in cartItems)
+                {
+                    body.AppendLine($"Item: {item.ItemName}, Quantity: {item.Quantity}, Price: {GetItemPrice(item.MenuID):C}");
+                }
+
+                body.AppendLine();
+                body.AppendLine($"Total Amount: {totalAmount:C}");
+
+
+
+                smtpClient.Port = 587;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mail);
+
+                message = "Order confirmation email sent.";
+            }
+            catch (Exception ex)
+            {
+                message = "Error sending verification email: " + ex.Message;
+            }
+        }
+
+
     }
     public class CartItem
     {
