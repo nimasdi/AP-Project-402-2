@@ -1,5 +1,7 @@
 ﻿using DBAccess;
+using Project_s_classes;
 using System.Data.Common;
+using System.Reflection.Metadata;
 
 //all the things in here are just test to see the output of the codes
 
@@ -26,34 +28,14 @@ class Program
     static void Main(string[] args)
     {
         //A test to read data
-        string sqlStatement = "SELECT * FROM dbo.Users";
+        
         DataAccess dataAccess = new DataAccess();
 
-        List<Sample> rows = dataAccess.LoadData<Sample, dynamic>(sqlStatement, new { });
-        foreach(Sample row in rows)
-        {
-            Console.WriteLine(row.UserID + " " + row.FirstName + " " + row.LastName);
-        }
+        Complaint complaint = new Complaint(null, 13, 1, "Test title", "Complaint");
+        Complaint complaint2 = new Complaint(null, 13, 1, "Test title2", "Complaint2");
 
-        //Sample for inserting into a table
-        Sample new_sample = new Sample
-        {
-            FirstName = "Nima",
-            LastName = "Saeedi",
-            MobileNumber = "1234556",
-            Email = "something@gmail.com",
-            UserName = "nima",
-            Password = "Password",
-            UserType = "Gold",
-            Address = "shahrak gharb",
-            Gender = "Male"
-        };
 
-        string sqlS = "INSERT INTO dbo.Users (FirstName, LastName, MobileNumber, Email, UserName, Password, UserType,Address, Gender)" +
-            " VALUES(@FirstName, @LastName, @MobileNumber, @Email, @UserName, @Password, @UserType,@Address, @Gender);";
-        dataAccess.SaveData(sqlS, new_sample);
 
-       
 
     }
 }

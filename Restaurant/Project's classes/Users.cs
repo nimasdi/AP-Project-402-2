@@ -25,10 +25,13 @@ namespace Project_s_classes
 
         static DataAccess dataAccess = new DataAccess();
 
+        public Users()
+        {
 
+        }
         public Users(int? userID, string firstName, string lastName, string mobileNumber, string email, string userName, string password, string? userType, string address, string? gender, DateTime? serviceExpiration, int? reservationMade)
         {
-            UserID = userID;
+            //UserID = userID;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.MobileNumber = mobileNumber;

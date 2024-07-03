@@ -19,18 +19,23 @@ namespace Project_s_classes
         public DateTime CreateDate { get; set; }
         public string Response {  get; set; }
         static DataAccess dataAccess = new DataAccess();
+        
 
+        public Complaint()
+        {
+
+        }
 
         public Complaint(int? complaintID,int? userId, int? restaurantId, string? title, string? description) 
         {
-            ComplaintID = complaintID;
-            UserId = userId;
-            RestaurantId = restaurantId;
-            Title = title;
-            Description = description;
-            Status = "Not Checked";
-            CreateDate = DateTime.Now;
-            Response = string.Empty;
+            //ComplaintID = complaintID;
+            this.UserId = userId;
+            this.RestaurantId = restaurantId;
+            this.Title = title;
+            this.Description = description;
+            this.Status = "Not Checked";
+            this.CreateDate = DateTime.Now;
+            this.Response = string.Empty;
 
             string sqlStatement = "INSERT INTO dbo.Complaints (UserId, RestaurantId, Title, Description, Status, CreateDate, Response)" +
            " VALUES(@UserId, @RestaurantId, @Title, @Description, @Status, @CreateDate, @Response);";

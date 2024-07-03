@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DBAccess\DBAccess.csproj" />
+    <ProjectReference Include="..\Project's classes\Project classes.csproj" />
   </ItemGroup>
 
 </Project>

@@ -50,56 +50,60 @@ namespace Restaurant
                     }
                 }
             }
-            if(admin)
+            if (admin)
             {
                 MessageBox.Show("Admin's login successful");
                 AdminPanel adminPanel = new AdminPanel();
                 adminPanel.Show();
                 this.Close();
-                
-            }
 
-            bool user_available = false;
-            bool password_available = false;
-
-            foreach (Users user in users)
-            {
-                if(user.UserName == username)
-                {
-                    user_available = true;
-                    break;
-                }
-            }
-
-            if (!user_available)
-            {
-                MessageBox.Show("No such user with the input username is available. You may sign up first");
-                return;
-            }
-
-            foreach(Users user in users)
-            {
-                if(user.Password == password)
-                {
-                    password_available = true;
-                    break;
-                }
-            }
-
-            if(!password_available)
-            {
-                MessageBox.Show("Password is wrong, Try again!!");
-                return;
             }
 
             else
             {
-                MessageBox.Show("User's Login was succesfull");
+                bool user_available = false;
+                bool password_available = false;
 
-                //rederict to the user's template
-                //usertemp ut = new usertemp();
-                this.Close();
-                //ut.show();
+                foreach (Users user in users)
+                {
+                    if (user.UserName == username)
+                    {
+                        user_available = true;
+                        break;
+                    }
+                }
+
+                if (!user_available)
+                {
+                    MessageBox.Show("No such user with the input username is available. You may sign up first");
+                    return;
+                }
+
+                foreach (Users user in users)
+                {
+                    if (user.Password == password)
+                    {
+                        password_available = true;
+                        break;
+                    }
+                }
+
+                if (!password_available)
+                {
+                    MessageBox.Show("Password is wrong, Try again!!");
+                    return;
+                }
+
+                else
+                {
+                    MessageBox.Show("User's Login was succesfull");
+
+                    //rederict to the user's template
+                    main_menu userTemplate = new main_menu();
+                    userTemplate.Show();
+                    this.Close();
+                    
+                }
             }
             
         }
