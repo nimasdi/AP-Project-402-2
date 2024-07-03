@@ -39,6 +39,7 @@ namespace DBAccess
             {
                 if (returnId) 
                 {
+                    sqlStatement += "; SELECT CAST(SCOPE_IDENTITY() as int)";
                     return connection.QuerySingle<int>(sqlStatement, parameters);
                 }
                 else

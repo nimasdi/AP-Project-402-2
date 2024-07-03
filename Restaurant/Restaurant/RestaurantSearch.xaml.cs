@@ -1,10 +1,13 @@
-﻿using DBAccess;
+﻿using Dapper;
+using DBAccess;
+using Microsoft.Data.SqlClient;
 using Project_s_classes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +40,9 @@ namespace Restaurant_Pages
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(txtSearch.Text))
+            string? SelectedAspect = SearchCriteriaComboBox.SelectedItem.ToString().Split(':')[1].Trim();
+
+            if (string.IsNullOrEmpty(txtSearch.Text) && SelectedAspect != "Have Complaints")
             {
                 MessageBox.Show("You should write something on the text box, please try again");
             }
@@ -46,8 +51,6 @@ namespace Restaurant_Pages
                 string sqlStatement = "SELECT * FROM dbo.Restaurants";
                 var Restaurants = dataAccess.LoadData<Restaurants, dynamic>(sqlStatement, new { });
                 
-
-                string? SelectedAspect = SearchCriteriaComboBox.SelectedItem.ToString();
                 string Check = txtSearch.Text;
 
                 if(string.IsNullOrEmpty(SelectedAspect))
@@ -67,9 +70,16 @@ namespace Restaurant_Pages
                             ResultsDataGrid.ItemsSource = filter;
                             break;
                         case "Rating":
-                            float rating = float.Parse(Check);
-                            filter = Restaurants.Where(x => x.AverageRating == rating);
-                            ResultsDataGrid.ItemsSource = filter;
+                            try
+                            {
+                                float rating = float.Parse(Check);
+                                filter = Restaurants.Where(x => x.AverageRating == rating);
+                                ResultsDataGrid.ItemsSource = filter;
+                            }
+                            catch(FormatException)
+                            {
+                                MessageBox.Show("The input format for the average rating is wrong, float or int.");
+                            }
                             break;
                         case "Have Complaints":
                             filter = Restaurants.Where(x => x.haveComplaints == true);  
@@ -77,6 +87,60 @@ namespace Restaurant_Pages
                             break;
                         default:
                             break;
+                    }
+                }
+            }
+        }
+
+        private void ResultsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ResultsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.Column.Header.ToString() == "Password")
+            {
+                TextBox editedElement = e.EditingElement as TextBox;
+                if (editedElement != null)
+                {
+                    string newPassword = editedElement.Text;
+                    var selectedRestaurant = (Restaurants)e.Row.Item;
+
+                    bool isValidPassword = newPassword.Length == 8 && Regex.IsMatch(newPassword, @"^\d+$");
+
+                    if (isValidPassword)
+                    {
+                        bool isUniquePassword = true;
+                        var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
+
+                        foreach (var restaurant in restaurants)
+                        {
+                            if (restaurant.Password.ToString() == newPassword && restaurant.RestaurantID != selectedRestaurant.RestaurantID)
+                            {
+                                isUniquePassword = false;
+                                break;
+                            }
+                        }
+
+                        if (isUniquePassword)
+                        {
+                            using (SqlConnection conn = new SqlConnection(dataAccess.ConnectionString))
+                            {
+                                conn.Open();
+                                string query = "UPDATE Restaurants SET Password = @Password WHERE RestaurantID = @RestaurantID";
+                                conn.Execute(query, new { Password = newPassword, RestaurantID = selectedRestaurant.RestaurantID });
+                            }
+                            MessageBox.Show("The password of the restaurant was changed successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("This password has already been used by another restaurant.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The new password does not meet the requirements (8 digits).");
                     }
                 }
             }

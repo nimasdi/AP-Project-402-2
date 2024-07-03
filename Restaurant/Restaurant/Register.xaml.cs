@@ -140,7 +140,7 @@ namespace Restaurant_pages
             {
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("tbiklaryan@gmail.com");
+                mail.From = new MailAddress("alexcruso84@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = "Email Verification";
                 mail.Body = "Your verification code is: " + code.ToString();
@@ -333,9 +333,11 @@ namespace Restaurant_pages
             string mobileNumber = MobileNumberTextBox.Text;
             string username = UsernameTextBox.Text;
             string email = EmailTextBox.Text;
-            string gender = GenderComboBox.SelectedItem.ToString();
+            string combo1 = GenderComboBox.SelectedItem.ToString();
+            string gender = combo1.Split(':')[1].Trim();
             string address = AddressTextBox.Text;
-            string userType = UserTypeComboBox.SelectedItem.ToString();
+            string combo2 = UserTypeComboBox.SelectedItem.ToString();
+            string userType = combo2.Split(':')[1].Trim();
 
             if (string.IsNullOrEmpty(address))
             {

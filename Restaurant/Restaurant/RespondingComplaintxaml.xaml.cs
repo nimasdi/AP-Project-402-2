@@ -27,6 +27,7 @@ namespace Restaurant
         public RespondingComplaintxaml()
         {
             InitializeComponent();
+            UpdateDataGrid();
         }
         DataAccess dataAccess = new DataAccess();
 
@@ -38,33 +39,53 @@ namespace Restaurant
             ComplaintsDataGrid.ItemsSource = complaints;
         }
 
+        private void ComplaintsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComplaintsDataGrid.SelectedItem is Complaint selectedComplaint)
+            {
+                MessageBox.Show($"Selected Complaint ID: {selectedComplaint.ComplaintID}");
+            }
+            else
+            {
+                MessageBox.Show("No item selected");
+            }
+        }
+
         private void SubmitResponse_Click(object sender, RoutedEventArgs e)
         {
-            UpdateDataGrid();
-
-            if(ComplaintsDataGrid.SelectedItem is Complaint selectedComplaint)
+            if (ComplaintsDataGrid.SelectedItem is Complaint selectedComplaint)
             {
                 string response = ResponseTextBox.Text;
-                if(!string.IsNullOrEmpty(response))
+                if (!string.IsNullOrEmpty(response))
                 {
                     int? complaintId = selectedComplaint.ComplaintID;
-                    //updating the database
-                    using(var connection = new SqlConnection(dataAccess.ConnectionString))
+
+                    try
                     {
-                        var query = "UPDATE dbo.Complaints SET Response = @Response, Status = 'Checked' WHERE ComplaintID=@ComplaintID";
-                        connection.Execute(query, new {Response = response, ComplaintID = complaintId});
+                        using (var connection = new SqlConnection(dataAccess.ConnectionString))
+                        {
+                            var query = "UPDATE dbo.Complaints SET Response = @Response, Status = 'Checked' WHERE ComplaintID = @ComplaintID";
+                            connection.Execute(query, new { Response = response, ComplaintID = complaintId });
+                        }
+
+                        MessageBox.Show("The complaint got answered by the admin");
                     }
-                    MessageBox.Show("The complaint got answered by the admin");
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error updating data: " + ex.Message);
+                    }
+
+                    
                     UpdateDataGrid();
                 }
                 else
                 {
-                    MessageBox.Show("Response part cannot be empty, give a response to a compalint");
+                    MessageBox.Show("Response part cannot be empty, give a response to a complaint");
                 }
             }
             else
             {
-                MessageBox.Show("Select and item to respond to");
+                MessageBox.Show("Select an item to respond to");
             }
         }
 

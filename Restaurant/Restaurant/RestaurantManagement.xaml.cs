@@ -71,7 +71,7 @@ namespace Restaurant_Pages
                 return false;
 
             string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (words.Length < 3)
+            if (words[0].Length < 3)
                 return false;
 
             return true;
@@ -91,11 +91,28 @@ namespace Restaurant_Pages
 
             if (ValidateUsername(txtUserName.Text))
             {
-                int pass = PassGenerator();
-                //here i should put a service type enum for restaurants and a field or combobox for it
-                var restaurant = new Restaurants(null,txtName.Text, txtCity.Text, float.Parse(txtAverageRating.Text), cbIsReservationAvailable.IsChecked ?? false, null, pass, txtUserName.Text, ServiceyTypeComboBox.SelectedIndex.ToString());
-                MessageBox.Show("A new restaurant got created by admin");
-                this.Close();
+                if (!string.IsNullOrEmpty(txtUserName.Text) && !string.IsNullOrEmpty(txtCity.Text) && !string.IsNullOrEmpty(txtAverageRating.Text)
+                    && !string.IsNullOrEmpty(txtUserName.Text))
+                {
+                    int pass = PassGenerator();
+                    //here i should put a service type enum for restaurants and a field or combobox for it
+                    try
+                    {
+                        float averageRating = float.Parse(txtAverageRating.Text);
+                        string serviceType = ServiceyTypeComboBox.SelectedItem.ToString().Split(':')[1].Trim();
+                        var restaurant = new Restaurants(null, txtName.Text, txtCity.Text, averageRating, cbIsReservationAvailable.IsChecked ?? false, serviceType, 1, pass, txtUserName.Text);
+                        MessageBox.Show("A new restaurant got created by admin");
+                        this.Close();
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("The format input for the average rating is not correct, it should be int or float");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You should fill all the text parts");
+                }
             }
             else
             {

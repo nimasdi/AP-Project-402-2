@@ -21,19 +21,24 @@ namespace Project_s_classes
         public string City { get; set; }
         public float AverageRating { get; set; }
         public bool IsReservationEnabled { get; set; }
+        public string? ServiceType { get; set; }
         public int? AdminID { get; set; }
         public int Password {  get; set; }
         public string UserName {  get; set; }
         public bool haveComplaints { get; set; }
         public int ComplaintsNum { get; set; }
         public decimal PenaltyRevenue { get; set; }
-        public string? ServiceType { get; set; }  // Dine-In ; Delivery ; Delivery / Dine-In
+       
 
         static DataAccess dataAccess = new DataAccess();
 
-        public Restaurants(int? restaurantId, string name, string city, float averageRating, bool isReservationEnabled, int? adminID, int password, string userName, string? serviceType)
+        public Restaurants()
         {
-            RestaurantID = restaurantId;
+
+        }
+        public Restaurants(int? restaurantId, string name, string city, float averageRating, bool isReservationEnabled, string? serviceType, int? adminID, int password, string userName)
+        {
+            //RestaurantID = restaurantId;
             this.Name = name;
             this.City = city;
             this.AverageRating = averageRating;
@@ -45,13 +50,12 @@ namespace Project_s_classes
             this.haveComplaints = false;
             this.ComplaintsNum = 0;
             this.PenaltyRevenue = 0;
-            this.ServiceType = serviceType;
 
             //there should be a service type implementation here
 
             // Saving restaurant instance to the database
-            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, AdminID, ServiceType, PenaltyRevenue, haveComplaints)" +
-                " VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @AdminID, @ServiceType, @PenaltyRevenue, @haveComplaints)";
+            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, ServiceType, AdminID, Password, UserName, haveComplaints, ComplaintsNum, PenaltyRevenue )" +
+                " VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @ServiceType, @AdminID, @Password, @UserName, @haveComplaints, @ComplaintsNum, @PenaltyRevenue)";
             this.RestaurantID = dataAccess.SaveData(sqlStatement, this, true);
         }
     }

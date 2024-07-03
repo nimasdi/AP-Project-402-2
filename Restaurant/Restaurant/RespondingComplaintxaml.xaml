@@ -6,22 +6,127 @@
       xmlns:local="clr-namespace:Restaurant"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Responding Complaint">
+      Title="Responding Complaint" Background="#2C3E50">
 
-    <Grid>
-        <DataGrid x:Name="ComplaintsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Complaint ID" Binding="{Binding ComplaintID}" Width="*" />
-                <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" Width="*" />
-                <DataGridTextColumn Header="Restaurant ID" Binding="{Binding RestaurantId}" Width="*" />
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" />
-                <DataGridTextColumn Header="Creation Date" Binding="{Binding CreateDate}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBox x:Name="ResponseTextBox" HorizontalAlignment="Left" Height="100" Margin="10,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="760"/>
-        <Button Content="Submit Response" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="760" Height="30" Click="SubmitResponse_Click"/>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Width="760" Height="30" Click="Exit_Click"/>
-    </Grid>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border 
+                                x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                                <ContentPresenter 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2980B9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1E4D6C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="760"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="#ECF0F1"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#ECF0F1"/>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <TextBlock Text="Responding to Complaint" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#ECF0F1"
+                       HorizontalAlignment="Center" 
+                       Margin="0,10,0,15"/>
+
+            <DataGrid x:Name="ComplaintsDataGrid" 
+                      AutoGenerateColumns="False" 
+                      HorizontalAlignment="Center" 
+                      Margin="0,48,0,0" 
+                      VerticalAlignment="Top" 
+                      Width="760"
+                      SelectionMode="Single" 
+                      SelectionUnit="FullRow"
+                      IsReadOnly="True"
+                      SelectionChanged="ComplaintsDataGrid_SelectionChanged" Height="180">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Complaint ID" Binding="{Binding ComplaintID}" Width="*" />
+                    <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" Width="*" />
+                    <DataGridTextColumn Header="Restaurant ID" Binding="{Binding RestaurantId}" Width="*" />
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" />
+                    <DataGridTextColumn Header="Creation Date" Binding="{Binding CreateDate}" Width="*" />
+                    <DataGridTextColumn Header="Response" Binding="{Binding Response}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <TextBox x:Name="ResponseTextBox" 
+                     Margin="0,254,0,0" 
+                     TextWrapping="Wrap" 
+                     Width="759" 
+                     Height="115"
+                     Background="#ECF0F1" HorizontalAlignment="Center"/>
+
+            <Button Content="Submit Response" 
+                    Margin="10,390,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="760" 
+                    Height="30" 
+                    Click="SubmitResponse_Click"
+                    Background="#2ECC71"/>
+
+            <Button Content="Exit" 
+                    Margin="10,430,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="760" 
+                    Height="30" 
+                    Click="Exit_Click"
+                    Background="#E74C3C"/>
+        </Grid>
+    </ScrollViewer>
 </Window>
