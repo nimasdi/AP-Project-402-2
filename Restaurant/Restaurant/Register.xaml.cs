@@ -18,6 +18,8 @@ using Project_s_classes;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Restaurant_pages
 {
@@ -27,6 +29,7 @@ namespace Restaurant_pages
     public partial class Register : Window
     {
         static DataAccess dataAccess = new DataAccess();
+        static int verficationCode = -1;
 
 
         public Register()
@@ -42,8 +45,8 @@ namespace Restaurant_pages
                 return false;
             }
 
-            string[] words = input.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries); 
-            if(words.Length < 3 || words.Length > 32)
+            string[] words = input.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            if (words[0].Length < 3 || words[0].Length > 32)
             {
                 return false;
             }
@@ -64,12 +67,12 @@ namespace Restaurant_pages
             string domain = parts[1];
 
             string[] localwords = local.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (localwords.Length < 3 || localwords.Length > 32)
+            if (localwords[0].Length < 3 || localwords[0].Length > 32)
                 return false;
 
             Regex regex = new Regex(@"^[a-zA-Z\s]+$");
-            if (!regex.IsMatch(local))
-                return false;
+            //if (!regex.IsMatch(local))
+                //return false;
 
             string[] domainParts = domain.Split('.');
             if(domainParts.Length != 2)
@@ -79,7 +82,7 @@ namespace Restaurant_pages
             string front = domainParts[1];
 
             string[] frontWords = front.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if(frontWords.Length < 2 || frontWords.Length > 3)
+            if (frontWords[0].Length < 2 || frontWords[0].Length > 3)
                 return false;
 
             if(!regex.IsMatch(front))
@@ -105,7 +108,7 @@ namespace Restaurant_pages
                 return false;
 
             string[] words = input.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-            if(words.Length < 3) 
+            if (words[0].Length < 3) 
                 return false;
 
             return true;
@@ -132,33 +135,59 @@ namespace Restaurant_pages
 
         private void SendEmail(string email, string subject,int code, out string message)
         {
-            message = ""
-;            try
+            message = "";
+            try
             {
-                
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-
-                //RandomGmail
-                mail.From = new MailAddress("alexcruso84@gmail.com");
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("tbiklaryan@gmail.com");
                 mail.To.Add(email);
-                mail.Subject = subject;
-                mail.Body = code.ToString();
+                mail.Subject = "Email Verification";
+                mail.Body = "Your verification code is: " + code.ToString();
+                smtpClient.Port = 587;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mail);
 
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new NetworkCredential("alexcruso@gmail.com", "RandomGmail");
-                SmtpServer.EnableSsl = true;
+                message = "Verification email sent.";
 
-                SmtpServer.Send(mail);
-                message = "Mail sent successfully!";
+
             }
             catch (Exception ex)
             {
-                message = "Error: " + ex.Message;
+                message = "Error sending verification email: " + ex.Message;
             }
         }
 
-        private void VerifyButton_Click(object sender, RoutedEventArgs e, string message)
+        private void VerificationCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string code = VerificationCodeTextBox.Text;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            this.Close();
+            mainWindow.Show();
+        }
+
+        private void FirstNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void LastNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void rPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void VerifyButton_Click(object sender, RoutedEventArgs e)
         {
             string firstName = FirstNameTextBox.Text;
             string lastName = LastNameTextBox.Text;
@@ -167,14 +196,13 @@ namespace Restaurant_pages
             string email = EmailTextBox.Text;
             string gender = GenderComboBox.SelectedIndex.ToString();
             string address = AddressTextBox.Text;
-            if(string.IsNullOrEmpty(address))
+            string userType = UserTypeComboBox.SelectedIndex.ToString();
+
+            if (string.IsNullOrEmpty(address))
             {
                 address = "Unknown";
             }
-
-
-
-            if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(mobileNumber)
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(mobileNumber)
                 || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("All the fields should be filled");
@@ -188,9 +216,9 @@ namespace Restaurant_pages
 
             //checking the mobile number uniqueness
             bool check_phone = false;
-            foreach(Users row in rows)
+            foreach (Users row in rows)
             {
-                if(row.MobileNumber == mobileNumber)
+                if (row.MobileNumber == mobileNumber)
                 {
                     check_phone = true;
                     break;
@@ -204,9 +232,9 @@ namespace Restaurant_pages
 
             //check the username uniqueness\
             bool check_username = false;
-            foreach(Users row in rows)
+            foreach (Users row in rows)
             {
-                if(row.UserName == username)
+                if (row.UserName == username)
                 {
                     check_username = true;
                     break;
@@ -219,12 +247,12 @@ namespace Restaurant_pages
             }
 
             //check if the inputs are in correct form
-            if(!ValidateName(firstName) || !ValidateName(lastName))
+            if (!ValidateName(firstName) || !ValidateName(lastName))
             {
                 MessageBox.Show("Firstname and lastname should contain no character except alphabetic characteres and should be between 3 to 32 chracters");
                 return;
             }
-            if(!ValidateEmail(email))
+            if (!ValidateEmail(email))
             {
                 MessageBox.Show("Your email is not valid, try again");
                 return;
@@ -241,17 +269,13 @@ namespace Restaurant_pages
             }
             //----------------------------------------------------------------------------sending email
             Random random = new Random();
-            int verification_code = random.Next(1000, 10000);
-            message = string.Empty;
-            SendEmail(email, "User's verification code", verification_code, out message);
+            verficationCode = random.Next(1000, 10000);
+            string message = string.Empty;
+            SendEmail(email, "User's verification code", verficationCode, out message);
 
             MessageBox.Show(message);
 
-
-
-
-           
-            if (message != "Mail sent successfully!")
+            if (message != "Verification email sent.")
             {
                 return;
             }
@@ -264,83 +288,81 @@ namespace Restaurant_pages
                 EmailTextBox.IsEnabled = false;
                 Verification.IsEnabled = false;
                 AddressTextBox.IsEnabled = false;
+                UserTypeComboBox.IsEnabled = false;
+                GenderComboBox.IsEnabled = false;
+                CheckCode.IsEnabled = true;
                 VerificationCodeTextBox.IsEnabled = true;
-                
-                if(VerifyCode_Click(sender, e, verification_code))
-                {
-                    VerificationCodeTextBox.IsEnabled = false;
-                    CheckCode.IsEnabled = false;
-                    PasswordTextBox.IsEnabled = true;
-                    rPasswordTextBox.IsEnabled = true;
-                    RegisterB.IsEnabled = true;
-
-                    if(RegisterButton_Click(sender, e))
-                    {
-                        MessageBox.Show("The user has been create");
-                        Users new_user = new Users(firstName, lastName, mobileNumber, email, username, PasswordTextBox.Text, "Bronze", address ,gender);
-                        MainWindow mainWindow = new MainWindow();
-                        this.Close();
-                        mainWindow.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Either the password doesn't pass the requirements or the repeat password field is not the same with password");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("The input code is wrong, try again");
-                }
 
             }
-
-
-
-            MessageBox.Show("Registration successful!");
-
-            MainWindow loginWindow = new MainWindow();
-            loginWindow.Show();
-            this.Close();
         }
 
-        private void VerificationCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string code = VerificationCodeTextBox.Text;
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            this.Close();
-            mainWindow.Show();
-        }
-
-        private bool VerifyCode_Click(object sender, RoutedEventArgs e, int verification_code)
+        private void VerifyCode_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 int code = int.Parse(VerificationCodeTextBox.Text);
-                if(code == verification_code )
+                if (code == verficationCode)
                 {
-                    return true;
+                    PasswordBox.IsEnabled = true;
+                    RepeatPasswordBox.IsEnabled = true;
+                    RegisterB.IsEnabled = true;
+                    CheckCode.IsEnabled = false;
+                    VerificationCodeTextBox.IsEnabled = false;
+                    MessageBox.Show("Alright, you can choose your password now");
+                    return;
                 }
-                return false;
+                MessageBox.Show("Wrong code");
+                return;
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 MessageBox.Show("wrong input format");
-                return false;
+                return;
             }
         }
 
-        private bool RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(!ValidatePassword(PasswordTextBox.Text)) { return false; }
-            if(PasswordTextBox.Text != rPasswordTextBox.Text) { return false; }
-            return true;
+
         }
 
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            string firstName = FirstNameTextBox.Text;
+            string lastName = LastNameTextBox.Text;
+            string mobileNumber = MobileNumberTextBox.Text;
+            string username = UsernameTextBox.Text;
+            string email = EmailTextBox.Text;
+            string gender = GenderComboBox.SelectedItem.ToString();
+            string address = AddressTextBox.Text;
+            string userType = UserTypeComboBox.SelectedItem.ToString();
 
+            if (string.IsNullOrEmpty(address))
+            {
+                address = "Unknown";
+            }
+            VerificationCodeTextBox.IsEnabled = false;
+            CheckCode.IsEnabled = false;
+            PasswordBox.IsEnabled = true;
+            RepeatPasswordBox.IsEnabled = true;
+            RegisterB.IsEnabled = true;
+
+            if (!ValidatePassword(PasswordBox.Password)) { MessageBox.Show("Password is wrong format"); }
+            else if (PasswordBox.Password != RepeatPasswordBox.Password) { MessageBox.Show("Input password and it's repetance don't match"); }
+            else
+            {
+                Users new_user = new Users(0,firstName, lastName, mobileNumber, email, username, PasswordBox.Password, userType, address, gender, null, null);
+                MessageBox.Show("The user has been create");
+                MainWindow mainWindow = new MainWindow();
+                this.Close();
+                mainWindow.Show();
+            }
+        }
+
+        private void UserTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 

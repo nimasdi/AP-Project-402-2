@@ -41,7 +41,7 @@ namespace Restaurant
             _currentUser = currentUser;
             DataContext = this;
 
-            MenuItemsByCategory = GetMenuItemsForRestaurant(_restaurant.RestaurantID);
+            MenuItemsByCategory = GetMenuItemsForRestaurant((int)_restaurant.RestaurantID);
             MenuCategoriesListBox.ItemsSource = MenuItemsByCategory.Keys;
 
             CheckReservationEligibility();
@@ -91,7 +91,7 @@ namespace Restaurant
                     }
                     else
                     {
-                        CartItems.Add(new CartItem { MenuID = selectedMenu.MenuID, ItemName = selectedMenu.ItemName, Quantity = 1 });
+                        CartItems.Add(new CartItem { MenuID = (int)selectedMenu.MenuID, ItemName = selectedMenu.ItemName, Quantity = 1 });
                     }
 
                     CartListBox.ItemsSource = null;
@@ -151,8 +151,8 @@ namespace Restaurant
         {
             if (_restaurant.IsReservationEnabled && IsUserEligibleForReservation())
             {
-                var reservationWindow = new ReservationWindow(_restaurant, _currentUser, this);
-                reservationWindow.ShowDialog();
+                //var reservationWindow = new ReservationWindow(_restaurant, _currentUser, this);
+                //reservationWindow.ShowDialog();
             }
             else
             {
@@ -178,7 +178,7 @@ namespace Restaurant
                 return false;
             }
 
-            switch (_currentUser.ServiceTier)
+            switch (_currentUser.UserType)
             {
                 case "Bronze":
                     return _currentUser.ReservationsMadeThisMonth < 2;

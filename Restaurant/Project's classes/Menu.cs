@@ -1,3 +1,4 @@
+using DBAccess;
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace Project_s_classes
 {
     public class Menu
     {
-        public int MenuID {  get; set; }
+
+        public int? MenuID {  get; set; }
+
         public int? RestaurantId {  get; set; }
         public string? Category {  get; set; }
         public string? ItemName {  get; set; }
@@ -31,6 +34,7 @@ namespace Project_s_classes
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
+            this.MenuID = menuId;
             RestaurantId = restaurantId;
             Category = category;
             ItemName = itemName;
@@ -40,6 +44,10 @@ namespace Project_s_classes
             AverageRating = averageRating;
             QuantityAvailable = quantityAvailable;
 
+
+            string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuanntityAvailable)" +
+           " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuanntityAvailable);";
+            this.MenuID = dataAccess.SaveData(sqlStatement, this, true);
             LoadComments();
         }
 
