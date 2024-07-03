@@ -63,7 +63,7 @@ namespace Restaurant
                 }
                 selectedOrder.Comment = CommentTextBox.Text;
 
-                UpdateOrderRatingAndComment(selectedOrder.OrderId, selectedOrder.Rating, selectedOrder.Comment);
+                UpdateOrderRatingAndComment((int)selectedOrder.OrderId, selectedOrder.Rating, selectedOrder.Comment);
                 UpdateRestaurantAverageRating(selectedOrder.RestaurantId);
                 MessageBox.Show("Rating and comment submitted successfully.");
             }

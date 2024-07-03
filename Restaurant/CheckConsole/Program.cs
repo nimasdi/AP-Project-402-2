@@ -53,7 +53,7 @@ class Program
             " VALUES(@FirstName, @LastName, @MobileNumber, @Email, @UserName, @Password, @UserType,@Address, @Gender);";
         dataAccess.SaveData(sqlS, new_sample);
 
-        Console.WriteLine(dataAccess.UserLogin("Nima", "Password"));
+       
 
     }
 }

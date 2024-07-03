@@ -1,6 +1,7 @@
 ﻿using DBAccess;
 using Project_s_classes;
 using Restaurant_pages;
+using Restaurant_Pages;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,9 +53,10 @@ namespace Restaurant
             if(admin)
             {
                 MessageBox.Show("Admin's login successful");
-                // admin templamte = new admin template
+                AdminPanel adminPanel = new AdminPanel();
+                adminPanel.Show();
                 this.Close();
-                //admintemp.show();
+                
             }
 
             bool user_available = false;
@@ -72,6 +74,7 @@ namespace Restaurant
             if (!user_available)
             {
                 MessageBox.Show("No such user with the input username is available. You may sign up first");
+                return;
             }
 
             foreach(Users user in users)
@@ -86,6 +89,7 @@ namespace Restaurant
             if(!password_available)
             {
                 MessageBox.Show("Password is wrong, Try again!!");
+                return;
             }
 
             else
@@ -98,6 +102,13 @@ namespace Restaurant
                 //ut.show();
             }
             
+        }
+
+
+
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)

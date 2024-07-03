@@ -9,18 +9,19 @@ namespace Project_s_classes
 {
     public class Reservation
     {
-        int ReservationID { get; set; }
-        int? UserID { get; set; }
-        int? RestaurantID { get; set; }
-        DateTime ReservationDate { get; set; }
-        TimeSpan StartTime { get; set; }
-        int Duration { get; set; }
-        string Status { get; set; }
-        string ServiceType { get; set; }
+        public int? ReservationID { get; set; }
+        public int? UserID { get; set; }
+        public int? RestaurantID { get; set; }
+        public DateTime ReservationDate { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public int Duration { get; set; }
+        public string Status { get; set; }
+        public string ServiceType { get; set; }
         static DataAccess dataAccess = new DataAccess();
 
-        public Reservation(int? userID, int? restaurantID, int duration, string status, string serviceType)
+        public Reservation(int? reservationId,int? userID, int? restaurantID, int duration, string status, string serviceType)
         {
+            ReservationID = reservationId;
             this.UserID = userID;
             this.RestaurantID = restaurantID;
             this.ReservationDate = DateTime.Now;
