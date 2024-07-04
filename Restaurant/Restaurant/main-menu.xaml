@@ -9,22 +9,25 @@
         Background="#2C3E50">
 
     <Grid Margin="10">
-        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20" Margin="21,26,21,26">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20" Margin="12,10,12,14">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="User Panel" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E" Height="71"/>
+                <TextBlock Text="User Panel" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
-                    <Button Content="Profile" Width="150" Height="40" Margin="10" Click="ProfileButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" />
+                    <Button Content="Profile" Width="150" Height="40" Margin="10" Click="ProfileButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Search" Width="150" Height="40" Margin="10" Click="SearchButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Orders" Width="150" Height="40" Margin="10" Click="OrdersButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center" Width="490">
                     <Button Content="Track" Width="150" Height="40" Margin="10" Click="TrackButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Complaint" Width="150" Height="40" Margin="10" Click="ComplaintButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold"/>
+                
+
+                <Button Content="Login" Width="150" Height="40" Margin="10" Click="Login_Click" Background="ForestGreen" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
     </Grid>
