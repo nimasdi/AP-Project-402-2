@@ -22,7 +22,7 @@ namespace Restaurant
     public partial class ComplaintWindow : Window
     {
         private readonly DataAccess _dataAccess;
-        private readonly int _userId;
+        private readonly int? _userId;
         private List<Restaurants> _restaurants;
 
         public ComplaintWindow(int? userId)
@@ -54,24 +54,9 @@ namespace Restaurant
 
             var complaint = new Complaint(null,_userId, selectedRestaurant.RestaurantID, title, description);
 
-            SaveComplaint(complaint);
+
             MessageBox.Show("Complaint submitted successfully.");
             this.Close();
-        }
-
-
-        public void SaveComplaint(Complaint complaint)
-        {
-            string sql = "INSERT INTO dbo.Complaints (UserID, RestaurantID, Title, Description, Status, Date) VALUES (@UserID, @RestaurantID, @Title, @Description, @Status, @Date)";
-            _dataAccess.SaveData(sql, new
-            {
-                complaint.UserId,
-                complaint.RestaurantId,
-                complaint.Title,
-                complaint.Description,
-                complaint.Status,
-                Date = DateTime.Now
-            });
         }
 
         public List<Restaurants> GetAllRestaurants()

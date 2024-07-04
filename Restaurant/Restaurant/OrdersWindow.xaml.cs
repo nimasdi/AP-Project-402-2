@@ -22,7 +22,7 @@ namespace Restaurant
     public partial class OrdersWindow : Window
     {
         private readonly DataAccess _dataAccess;
-        private readonly int _userId;
+        private readonly int? _userId;
         private List<Order> _orders;
 
         public OrdersWindow(int? userId)
@@ -36,7 +36,7 @@ namespace Restaurant
 
         private void LoadOrders()
         {
-            _orders = GetOrdersByUserId(_userId);
+            _orders = GetOrdersByUserId((int)_userId);
             OrdersDataGrid.ItemsSource = _orders;
         }
 

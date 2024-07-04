@@ -29,9 +29,11 @@ namespace Restaurant_Pages
 
     public partial class RestaurantRegistration : Window
     {
-        public RestaurantRegistration()
+        private readonly Admin _currentAdimin;
+        public RestaurantRegistration(Admin currentAdimin)
         {
             InitializeComponent();
+            _currentAdimin=currentAdimin;
         }
         static DataAccess dataAccess = new DataAccess();
 
@@ -100,7 +102,7 @@ namespace Restaurant_Pages
                     {
                         float averageRating = float.Parse(txtAverageRating.Text);
                         string serviceType = ServiceyTypeComboBox.SelectedItem.ToString().Split(':')[1].Trim();
-                        var restaurant = new Restaurants(null, txtName.Text, txtCity.Text, averageRating, cbIsReservationAvailable.IsChecked ?? false, serviceType, 1, pass, txtUserName.Text);
+                        var restaurant = new Restaurants(null, txtName.Text, txtCity.Text, averageRating, cbIsReservationAvailable.IsChecked ?? false, serviceType, _currentAdimin.AdminId, pass, txtUserName.Text);
                         MessageBox.Show("A new restaurant got created by admin");
                         this.Close();
                     }

@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DBAccess\DBAccess.csproj" />
     <ProjectReference Include="..\Project's classes\Project classes.csproj" />
+    <ProjectReference Include="..\RestaurantPanel\RestaurantPanel.csproj" />
   </ItemGroup>
 
 </Project>

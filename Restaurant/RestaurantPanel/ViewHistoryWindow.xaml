@@ -25,6 +25,6 @@
 
         <DataGrid x:Name="HistoryDataGrid" Grid.Row="2" AutoGenerateColumns="True" Margin="10"/>
 
-        <Button Content="Close" Grid.Row="3" HorizontalAlignment="Right" Margin="10" Click="CloseButton_Click"/>
+        <Button Content="Close" Grid.Row="2" Margin="757,288,0,0" Click="CloseButton_Click" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="33"/>
     </Grid>
 </Window>

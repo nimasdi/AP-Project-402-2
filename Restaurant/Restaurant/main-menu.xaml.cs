@@ -78,6 +78,11 @@ namespace Restaurant_pages
 
             await connection.StopAsync();
         }
+
+        private void TrackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
-    }
+    
 }
