@@ -86,5 +86,12 @@ namespace Restaurant_Pages
             AnswerComments commentTemplate = new AnswerComments();
             commentTemplate.Show();
         }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }
