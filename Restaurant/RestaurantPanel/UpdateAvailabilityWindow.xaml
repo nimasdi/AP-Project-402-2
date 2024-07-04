@@ -1,0 +1,28 @@
+﻿<Window x:Class="RestaurantPanel.UpdateAvailabilityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantPanel"
+        mc:Ignorable="d"
+        Title="UpdateAvailabilityWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Select a Food Item to Update Availability" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <ListBox x:Name="FoodItemsListBox" DisplayMemberPath="ItemName" Height="200" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Selected Item:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <TextBlock Text="Item Name:"/>
+            <TextBox x:Name="ItemNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Current Quantity:"/>
+            <TextBox x:Name="CurrentQuantityTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+
+            <TextBlock Text="New Quantity:"/>
+            <TextBox x:Name="NewQuantityTextBox" Margin="0,0,0,10"/>
+
+            <Button Content="Update" Width="100" Click="UpdateButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

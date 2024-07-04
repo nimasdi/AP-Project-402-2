@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Project_s_classes;
+using Restaurant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.AspNetCore.SignalR.Client;
+
 
 namespace Restaurant_pages
 {
@@ -19,34 +23,61 @@ namespace Restaurant_pages
     /// </summary>
     public partial class main_menu : Window
     {
-        public main_menu()
+        private readonly Users _currentUser;
+
+        public main_menu(Users currentUser)
         {
             InitializeComponent();
-        }
-
-        private void ComplaintButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TrackButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OrdersButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            _currentUser = currentUser;
         }
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var profileWindow = new ProfileWindow(_currentUser);
+            profileWindow.Show();
         }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            var searchWindow = new SearchWindow(_currentUser);
+            searchWindow.Show();
+        }
+
+        private void OrdersButton_Click(object sender, RoutedEventArgs e)
+        {
+            var ordersWindow = new OrdersWindow(_currentUser.UserID);
+            ordersWindow.Show();
+        }
+
+
+        private void ComplaintButton_Click(object sender, RoutedEventArgs e)
+        {
+            var complaintWindow = new ComplaintWindow(_currentUser.UserID);
+            complaintWindow.Show();
+        }
+
+
+        private async void OnlineSupportButton_Click(object sender, RoutedEventArgs e)
+        {
+            var connection = new HubConnectionBuilder()
+                .WithUrl("http://localhost:5000/chathub")
+                .Build();
+
+            await connection.StartAsync();
+            bool isAdminOnline = await connection.InvokeAsync<bool>("IsAdminOnline");
+
+            if (isAdminOnline)
+            {
+                ChatWindow chatWindow = new ChatWindow();
+                chatWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("No admin is currently online. Please try again later.", "Admin Offline", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            await connection.StopAsync();
+        }
+    }
     }
 }

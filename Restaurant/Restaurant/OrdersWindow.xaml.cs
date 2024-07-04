@@ -25,7 +25,7 @@ namespace Restaurant
         private readonly int _userId;
         private List<Order> _orders;
 
-        public OrdersWindow(int userId)
+        public OrdersWindow(int? userId)
         {
             InitializeComponent();
             _dataAccess = new DataAccess();

@@ -17,9 +17,10 @@ namespace Project_s_classes
         public float? Rating { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Edited { get; set; }
+        public string AdminResponse { get; set; }
+        public DateTime? ResponseDate { get; set; } 
 
         static DataAccess dataAccess = new DataAccess();
-
 
         public Comment(int? menuID, int? userID, string userName, string content, float? rating, DateTime createdAt, bool edited)
         {
@@ -30,15 +31,17 @@ namespace Project_s_classes
             Rating = rating;
             CreatedAt = createdAt;
             Edited = edited;
+            AdminResponse = string.Empty;
+            ResponseDate = null;
+
 
             SaveToDatabase();
-
         }
 
         public void SaveToDatabase()
         {
-            string sqlStatement = @"INSERT INTO dbo.Comments (MenuID, UserID, UserName, Content, Rating, CreatedAt, Edited)
-                                    VALUES (@MenuID, @UserID, @UserName, @Content, @Rating, @CreatedAt, @Edited);
+            string sqlStatement = @"INSERT INTO dbo.Comments (MenuID, UserID, UserName, Content, Rating, CreatedAt, Edited, AdminResponse, ResponseDate)
+                                    VALUES (@MenuID, @UserID, @UserName, @Content, @Rating, @CreatedAt, @Edited, @AdminResponse, @ResponseDate);
                                     SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             var parameters = new
@@ -48,17 +51,19 @@ namespace Project_s_classes
                 UserName,
                 Content,
                 Rating,
-                CreatedAt = DateTime.Now, 
-                Edited
+                CreatedAt = DateTime.Now,
+                Edited,
+                AdminResponse,
+                ResponseDate
             };
 
             CommentID = dataAccess.SaveData(sqlStatement, parameters, true);
         }
+
         public void Edit(string newContent)
         {
             Content = newContent;
             Edited = true;
-
 
             string sqlStatement = @"UPDATE dbo.Comments 
                                     SET Content = @Content, Edited = @Edited 
@@ -77,7 +82,7 @@ namespace Project_s_classes
         public void UpdateInDatabase()
         {
             string sql = "UPDATE dbo.Comments " +
-                         "SET Content = @Content, Rating = @Rating, Edited = @Edited " +
+                         "SET Content = @Content, Rating = @Rating, Edited = @Edited, AdminResponse = @AdminResponse, ResponseDate = @ResponseDate " +
                          "WHERE CommentID = @CommentID;";
             dataAccess.SaveData(sql, this);
         }
@@ -86,6 +91,37 @@ namespace Project_s_classes
         {
             string sqlStatement = "DELETE FROM dbo.Comments WHERE CommentID = @CommentID;";
             dataAccess.SaveData(sqlStatement, new { CommentID });
+        }
+
+        public void AddAdminResponse(string response)
+        {
+            AdminResponse = response;
+            ResponseDate = DateTime.Now;
+
+            string sqlStatement = @"UPDATE dbo.Comments 
+                                    SET AdminResponse = @AdminResponse, ResponseDate = @ResponseDate 
+                                    WHERE CommentID = @CommentID;";
+
+            var parameters = new
+            {
+                AdminResponse,
+                ResponseDate,
+                CommentID
+            };
+
+            dataAccess.SaveData(sqlStatement, parameters, false);
+        }
+
+        public void DeleteAdminResponse()
+        {
+            AdminResponse = null;
+            ResponseDate = null;
+
+            string sqlStatement = @"UPDATE dbo.Comments 
+                                    SET AdminResponse = NULL, ResponseDate = NULL 
+                                    WHERE CommentID = @CommentID;";
+
+            dataAccess.SaveData(sqlStatement, new { CommentID }, false);
         }
     }
 }
