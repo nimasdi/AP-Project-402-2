@@ -31,6 +31,13 @@
             <TextBlock Text="Gender:"/>
             <TextBox x:Name="GenderTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
 
+            <TextBlock Text="Upgrade Service Tier:"/>
+            <ComboBox x:Name="ServiceTierComboBox" Margin="0,0,0,10">
+                <ComboBoxItem Content="Bronze"/>
+                <ComboBoxItem Content="Silver"/>
+                <ComboBoxItem Content="Gold"/>
+            </ComboBox>
+
             <Button Content="Save Changes" Width="100" Click="SaveChangesButton_Click"/>
         </StackPanel>
     </Grid>

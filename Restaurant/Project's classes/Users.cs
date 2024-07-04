@@ -4,7 +4,7 @@ namespace Project_s_classes
 {
     public enum UserType
     {
-        Boronze = 1,
+        Bronze = 1,
         Silver = 2,
         Gold = 3,
     }

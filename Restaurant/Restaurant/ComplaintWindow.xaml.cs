@@ -25,7 +25,7 @@ namespace Restaurant
         private readonly int _userId;
         private List<Restaurants> _restaurants;
 
-        public ComplaintWindow(int userId)
+        public ComplaintWindow(int? userId)
         {
             InitializeComponent();
             _dataAccess = new DataAccess();
