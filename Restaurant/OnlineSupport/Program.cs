@@ -29,4 +29,4 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
 
-app.Run();
+app.Run("http://localhost:5290");

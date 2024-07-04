@@ -42,12 +42,13 @@ namespace Restaurant
             Admin login_admin = new Admin();
             foreach(Admin a in admins)
             {
-                if(a.UserName == username)
+                if (a.UserName == username)
                 {
-                    if(a.Password == password)
+                    if (a.Password == password)
                     {
                         admin = true;
-                        login_admin = a; 
+                        login_admin = a;
+                        Admin.SetOnlineStatus(username, true);
                         break;
                     }
                 }
@@ -72,7 +73,6 @@ namespace Restaurant
                     if (user.UserName == username)
                     {
                         user_available = true;
-                        
                         break;
                     }
                 }
@@ -106,10 +106,10 @@ namespace Restaurant
                     main_menu userTemplate = new main_menu(login_user);
                     userTemplate.Show();
                     this.Close();
-                    
+
                 }
             }
-            
+
         }
 
 

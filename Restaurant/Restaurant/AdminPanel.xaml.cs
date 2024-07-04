@@ -27,6 +27,7 @@ namespace Restaurant_Pages
         {
             InitializeComponent();
             _currentAdmin = admin;
+            this.Closing += Window_Closing; 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -61,6 +62,23 @@ namespace Restaurant_Pages
         {
             RespondingComplaintxaml answer = new RespondingComplaintxaml();
             answer.Show();
+        }
+
+        private void ChatButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatWindow chatWindow = new ChatWindow(isAdmin: true);
+            chatWindow.Show();
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                Admin.SetOnlineStatus(_currentAdmin.UserName, false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to set admin offline: {ex.Message}");
+            }
         }
     }
 }

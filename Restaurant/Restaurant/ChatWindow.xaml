@@ -5,31 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant"
         mc:Ignorable="d"
-        Title="ChatWindow" Height="500" Width="800">
+        Title="ChatWindow" Height="700" Width="1000">
     <Grid>
-        <TextBox Name="ChatTextBox" 
-                 HorizontalAlignment="Left" 
-                 Height="300" 
-                 VerticalAlignment="Top" 
-                 Width="780" 
-                 Margin="10,10,0,0"
-                 IsReadOnly="True"
-                 VerticalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap"/>
+        <TextBlock Text="Chat" 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="47,10,0,0"
+                   FontSize="24"
+                   FontWeight="Bold"/>
+        <ListBox Name="ChatListBox"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="896"
+                 Height="366"
+                 Margin="47,53,0,0"/>
+
         <TextBox Name="MessageTextBox" 
                  HorizontalAlignment="Left" 
                  Height="100" 
                  VerticalAlignment="Top" 
-                 Width="780" 
-                 Margin="10,320,0,0" 
+                 Width="580" 
+                 Margin="220,442,0,0" 
                  TextWrapping="Wrap"/>
         <Button Name="SendButton" 
                 Content="Send" 
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Width="780" 
+                Width="580" 
                 Height="30" 
-                Margin="10,430,0,0" 
+                Margin="220,569,0,0" 
                 Click="SendButton_Click"/>
     </Grid>
 </Window>

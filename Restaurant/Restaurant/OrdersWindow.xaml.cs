@@ -72,30 +72,51 @@ namespace Restaurant
                 MessageBox.Show("Please select an order to leave a rating or comment.");
             }
         }
-        public List<Order> GetOrdersByUserId(int userId)
+        public List<Order> GetOrdersByUserId(int? userId)
         {
-            string sql = "SELECT OrderId, UserId, RestaurantId, OrderDate, TotalAmount, PaymentMethod, Status, Rating, Comment FROM dbo.Orders WHERE UserId = @UserId";
-            return _dataAccess.LoadData<Order, dynamic>(sql, new { UserId = userId });
+            string sql = "SELECT OrderId, UserId, RestaurantId, OrderDate, TotalAmount, PaymentMethod, Status, Rating, Comment, IsReservation FROM dbo.Orders WHERE UserId = @UserId";
+            try
+            {
+                return _dataAccess.LoadData<Order, dynamic>(sql, new { UserId = userId });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load orders from database: {ex.Message}");
+                return new List<Order>();
+            }
         }
 
         public void UpdateOrderRatingAndComment(int orderId, int? rating, string? comment)
         {
             string sql = "UPDATE dbo.Orders SET Rating = @Rating, Comment = @Comment WHERE OrderId = @OrderId";
-            _dataAccess.SaveData(sql, new { Rating = rating, Comment = comment, OrderId = orderId });
+            try
+            {
+                _dataAccess.SaveData(sql, new { Rating = rating, Comment = comment, OrderId = orderId });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to update order rating and comment: {ex.Message}");
+            }
         }
-
 
         private void UpdateRestaurantAverageRating(int? restaurantId)
         {
             string sql = "SELECT Rating FROM dbo.Orders WHERE RestaurantId = @RestaurantId AND Rating IS NOT NULL";
-            var ratings = _dataAccess.LoadData<int, dynamic>(sql, new { RestaurantId = restaurantId });
-
-            if (ratings.Count > 0)
+            try
             {
-                double newAverageRating = ratings.Average();
+                var ratings = _dataAccess.LoadData<int, dynamic>(sql, new { RestaurantId = restaurantId });
 
-                sql = "UPDATE dbo.Restaurants SET AverageRating = @AverageRating WHERE RestaurantID = @RestaurantId";
-                _dataAccess.SaveData(sql, new { AverageRating = newAverageRating, RestaurantId = restaurantId });
+                if (ratings.Count > 0)
+                {
+                    double newAverageRating = ratings.Average();
+
+                    sql = "UPDATE dbo.Restaurants SET AverageRating = @AverageRating WHERE RestaurantID = @RestaurantId";
+                    _dataAccess.SaveData(sql, new { AverageRating = newAverageRating, RestaurantId = restaurantId });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to update restaurant average rating: {ex.Message}");
             }
         }
     }

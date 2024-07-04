@@ -25,7 +25,7 @@ namespace Restaurant_Pages
     /// </summary>
     /// 
 
-    
+
 
     public partial class RestaurantRegistration : Window
     {
@@ -33,14 +33,14 @@ namespace Restaurant_Pages
         public RestaurantRegistration(Admin currentAdimin)
         {
             InitializeComponent();
-            _currentAdimin=currentAdimin;
+            _currentAdimin = currentAdimin;
         }
         static DataAccess dataAccess = new DataAccess();
 
         private int PassGenerator()
         {
-            var restaurants = dataAccess.LoadData<Restaurants,dynamic>("SELECT * FROM dbo.Restaurants", new { });
-            
+            var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
+
             Random random = new Random();
             int pass = 0;
             while (true)
@@ -49,7 +49,7 @@ namespace Restaurant_Pages
                 bool check = true;
                 foreach (var item in restaurants)
                 {
-                    if (item.Password ==  pass)
+                    if (item.Password == pass)
                     {
                         check = false;
                         break;
@@ -63,7 +63,7 @@ namespace Restaurant_Pages
             }
 
             return pass;
-            
+
         }
 
         private bool ValidateUsername(string input)
