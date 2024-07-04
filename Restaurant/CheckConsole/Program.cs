@@ -23,11 +23,6 @@ public class Sample
     public string Gender { get; set; }
 }
 
-public enum ServiceType
-{
-    delivery = 1,
-    dine_in = 2,
-}
 class Program
 {
     static void Main(string[] args)
@@ -35,9 +30,5 @@ class Program
         //A test to read data
         
         DataAccess dataAccess = new DataAccess();
-
-        //Complaint complaint = new Complaint(null, 13, 1, "Test title", "Complaint");
-        //Complaint complaint2 = new Complaint(null, 13, 1, "Test title2", "Complaint2");
-
     }
 }

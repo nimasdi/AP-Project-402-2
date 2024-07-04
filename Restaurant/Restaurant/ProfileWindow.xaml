@@ -5,40 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant"
         mc:Ignorable="d"
-        Title="ProfileWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="Profile Information" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+        Title="ProfileWindow" Height="450" Width="800"
+        Background="#2C3E50">
+    <Grid Margin="10">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20" Margin="25,10,25,10">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="-10,-10,-20,0">
+                <StackPanel Width="708">
+                    <TextBlock Text="Profile Information" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
-            <TextBlock Text="Username:"/>
-            <TextBox x:Name="UserNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                    <UniformGrid Columns="2" Rows="7" Margin="0,0,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" >
 
-            <TextBlock Text="First Name:"/>
-            <TextBox x:Name="FirstNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="Username:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="UserNameTextBox" IsReadOnly="True" Margin="0,0,0,10" Width="200"/>
 
-            <TextBlock Text="Last Name:"/>
-            <TextBox x:Name="LastNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="First Name:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="FirstNameTextBox" IsReadOnly="True" Margin="0,0,0,10" Width="200"/>
 
-            <TextBlock Text="Email:"/>
-            <TextBox x:Name="EmailTextBox" Margin="0,0,0,10"/>
+                        <TextBlock Text="Last Name:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="LastNameTextBox" IsReadOnly="True" Margin="0,0,0,10" Width="200"/>
 
-            <TextBlock Text="Mobile Number:"/>
-            <TextBox x:Name="MobileNumberTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="Email:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="EmailTextBox" Margin="0,0,0,10" IsReadOnly="False" Width="200"/>
 
-            <TextBlock Text="Address:"/>
-            <TextBox x:Name="AddressTextBox" Margin="0,0,0,10"/>
+                        <TextBlock Text="Mobile Number:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="MobileNumberTextBox" IsReadOnly="True" Margin="0,0,0,10" Width="200"/>
 
-            <TextBlock Text="Gender:"/>
-            <TextBox x:Name="GenderTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <TextBox x:Name="AddressTextBox" Margin="0,0,0,10" IsReadOnly="False" Width="200"/>
 
-            <TextBlock Text="Upgrade Service Tier:"/>
-            <ComboBox x:Name="ServiceTierComboBox" Margin="0,0,0,10">
-                <ComboBoxItem Content="Bronze"/>
-                <ComboBoxItem Content="Silver"/>
-                <ComboBoxItem Content="Gold"/>
-            </ComboBox>
+                        <TextBlock Text="Gender:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <ComboBox x:Name="GenderComboBox" Margin="0,0,0,10" IsEnabled="False" Width="200">
+                            <ComboBoxItem Content="Male"/>
+                            <ComboBoxItem Content="Female"/>
+                        </ComboBox>
 
-            <Button Content="Save Changes" Width="100" Click="SaveChangesButton_Click"/>
-        </StackPanel>
+                        <TextBlock Text="User Type:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+                        <ComboBox x:Name="ServiceTierComboBox" Margin="0,0,0,10" Width="200">
+                            <ComboBoxItem Content="Bronze"/>
+                            <ComboBoxItem Content="Silver"/>
+                            <ComboBoxItem Content="Gold"/>
+                        </ComboBox>
+                    </UniformGrid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20,0,0">
+                        <Button Content="Save Changes" Width="100" Height="30" Click="SaveChangesButton_Click" Background="#3498DB" Foreground="White"  FontWeight="Bold"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>

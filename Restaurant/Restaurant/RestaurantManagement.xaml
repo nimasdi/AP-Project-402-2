@@ -120,10 +120,16 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Address:" Width="150" Foreground="#1E3A5F"/>
+                        <TextBox Name="txtAddress"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
                         <TextBlock Text="Service Type:" Width="150" Foreground="#1E3A5F"/>
                         <ComboBox Name="ServiceyTypeComboBox" SelectionChanged="ServiceyTypeComboBox_SelectionChanged">
                             <ComboBoxItem Content="delivery" IsSelected="true"/>
                             <ComboBoxItem Content="dine-in"/>
+                            <ComboBoxItem Content="both"/>
                         </ComboBox>
                     </StackPanel>
 

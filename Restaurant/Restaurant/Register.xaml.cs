@@ -30,108 +30,16 @@ namespace Restaurant_pages
     {
         static DataAccess dataAccess = new DataAccess();
         static int verficationCode = -1;
+        private ValidateStrings _validate;
 
 
         public Register()
         {
             InitializeComponent();
+            _validate = new ValidateStrings();
         }
 
-        private static bool ValidateName(string input)
-        {
-            Regex regex = new Regex(@"^[a-zA-Z\s]+$");
-            if (!regex.IsMatch(input))
-            {
-                return false;
-            }
-
-            string[] words = input.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-            if (words[0].Length < 3 || words[0].Length > 32)
-            {
-                return false;
-            }
-
-            
-
-            return true;
-        }
-
-        private static bool ValidateEmail(string input)
-        {
-            string[] parts = input.Split('@');
-
-            if (parts.Length != 2)
-                return false;
-
-            string local = parts[0];
-            string domain = parts[1];
-
-            string[] localwords = local.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (localwords[0].Length < 3 || localwords[0].Length > 32)
-                return false;
-
-            Regex regex = new Regex(@"^[a-zA-Z\s]+$");
-            //if (!regex.IsMatch(local))
-                //return false;
-
-            string[] domainParts = domain.Split('.');
-            if(domainParts.Length != 2)
-                return false;
-
-            string back = domainParts[0];   
-            string front = domainParts[1];
-
-            string[] frontWords = front.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (frontWords[0].Length < 2 || frontWords[0].Length > 3)
-                return false;
-
-            if(!regex.IsMatch(front))
-                return false;
-
-            return true;    
-        }
-
-        private bool ValidateMobileNumber(string input)
-        {
-            if(!input.StartsWith("09"))
-                return false;
-
-            Regex regex = new Regex("^09[0-9]{9}$");
-
-            return regex.IsMatch(input);
-        }
-
-        private bool ValidateUsername(string input)
-        {
-            Regex regex = new Regex("^[a-zA-Z0-9]+$");
-            if(!regex.IsMatch(input))
-                return false;
-
-            string[] words = input.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-            if (words[0].Length < 3) 
-                return false;
-
-            return true;
-        }
-
-        private bool ValidatePassword(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-                return false;
-
-            if (input.Length < 8 || input.Length > 32)
-                return false;
-
-            if (!Regex.IsMatch(input, @"[A-Z]"))
-                return false;
-
-            if (!Regex.IsMatch(input, @"[a-z]"))
-                return false;
-
-            if (!Regex.IsMatch(input, @"\d"))
-                return false;
-            return true;
-        }
+       
 
         private void SendEmail(string email, string subject,int code, out string message)
         {
@@ -247,22 +155,22 @@ namespace Restaurant_pages
             }
 
             //check if the inputs are in correct form
-            if (!ValidateName(firstName) || !ValidateName(lastName))
+            if (!_validate.ValidateName(firstName) || !_validate.ValidateName(lastName))
             {
                 MessageBox.Show("Firstname and lastname should contain no character except alphabetic characteres and should be between 3 to 32 chracters");
                 return;
             }
-            if (!ValidateEmail(email))
+            if (!_validate.ValidateEmail(email))
             {
                 MessageBox.Show("Your email is not valid, try again");
                 return;
             }
-            if (!ValidateMobileNumber(mobileNumber))
+            if (!_validate.ValidateMobileNumber(mobileNumber))
             {
                 MessageBox.Show("Your mobile number is not valid, try again");
                 return;
             }
-            if (!ValidateUsername(username))
+            if (!_validate.ValidateUsername(username))
             {
                 MessageBox.Show("Your username is not valid, try again");
                 return;
@@ -349,7 +257,7 @@ namespace Restaurant_pages
             RepeatPasswordBox.IsEnabled = true;
             RegisterB.IsEnabled = true;
 
-            if (!ValidatePassword(PasswordBox.Password)) { MessageBox.Show("Password is wrong format"); }
+            if (!_validate.ValidatePassword(PasswordBox.Password)) { MessageBox.Show("Password is wrong format"); }
             else if (PasswordBox.Password != RepeatPasswordBox.Password) { MessageBox.Show("Input password and it's repetance don't match"); }
             else
             {
@@ -358,6 +266,7 @@ namespace Restaurant_pages
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
+                
             }
         }
 

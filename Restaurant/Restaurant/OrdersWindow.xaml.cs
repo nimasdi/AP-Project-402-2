@@ -36,15 +36,8 @@ namespace Restaurant
 
         private void LoadOrders()
         {
-            try
-            {
-                _orders = GetOrdersByUserId(_userId);
-                OrdersDataGrid.ItemsSource = _orders;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load orders: {ex.Message}");
-            }
+            _orders = GetOrdersByUserId((int)_userId);
+            OrdersDataGrid.ItemsSource = _orders;
         }
 
         private void OrdersDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

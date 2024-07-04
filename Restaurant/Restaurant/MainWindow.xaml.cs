@@ -40,7 +40,7 @@ namespace Restaurant
 
             bool admin = false;
             Admin login_admin = new Admin();
-            foreach (Admin a in admins)
+            foreach(Admin a in admins)
             {
                 if (a.UserName == username)
                 {
@@ -73,7 +73,6 @@ namespace Restaurant
                     if (user.UserName == username)
                     {
                         user_available = true;
-
                         break;
                     }
                 }

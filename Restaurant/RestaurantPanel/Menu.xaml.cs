@@ -62,7 +62,7 @@ namespace RestaurantPanel
         {
             if (MenuItemsListView.SelectedItem is Project_s_classes.Menu selectedMenu)
             {
-                LoadComments(selectedMenu.MenuID);
+                LoadComments((int)selectedMenu.MenuID);
             }
         }
 
