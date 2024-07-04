@@ -30,12 +30,5 @@ class Program
         //A test to read data
         
         DataAccess dataAccess = new DataAccess();
-
-        Complaint complaint = new Complaint(null, 13, 1, "Test title", "Complaint");
-        Complaint complaint2 = new Complaint(null, 13, 1, "Test title2", "Complaint2");
-
-
-
-
     }
 }

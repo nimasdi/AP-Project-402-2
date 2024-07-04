@@ -1,4 +1,5 @@
-﻿using Restaurant;
+﻿using Project_s_classes;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace Restaurant_Pages
     /// </summary>
     public partial class AdminPanel : Window
     {
-        public AdminPanel()
+        private readonly Admin _currentAdmin;
+        public AdminPanel(Admin admin)
         {
             InitializeComponent();
+            _currentAdmin = admin;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,7 +36,7 @@ namespace Restaurant_Pages
 
         private void RestaurantManagement_Click(object sender, RoutedEventArgs e)
         {
-            RestaurantRegistration managementWindow = new RestaurantRegistration();
+            RestaurantRegistration managementWindow = new RestaurantRegistration(_currentAdmin);
             managementWindow.Show();
         }
 

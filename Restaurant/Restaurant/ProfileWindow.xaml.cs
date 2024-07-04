@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using DBAccess;
 using Project_s_classes;
 using System.Windows.Media.Animation;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Restaurant
@@ -24,18 +25,23 @@ namespace Restaurant
     {
         private readonly DataAccess _dataAccess;
         private Users _user;
+        private ValidateStrings _validateStrings;
 
         public ProfileWindow(Users user)
         {
             InitializeComponent();
             _dataAccess = new DataAccess();
             _user = user;
+            _validateStrings = new ValidateStrings();
 
             LoadUserData();
         }
+        
+        
 
         private void LoadUserData()
         {
+            
             if (_user != null)
             {
                 UserNameTextBox.Text = _user.UserName;
@@ -44,16 +50,8 @@ namespace Restaurant
                 EmailTextBox.Text = _user.Email;
                 MobileNumberTextBox.Text = _user.MobileNumber;
                 AddressTextBox.Text = _user.Address;
-                GenderTextBox.Text = _user.Gender;
-
-                foreach (ComboBoxItem item in ServiceTierComboBox.Items)
-                {
-                    if (item.Content.ToString() == _user.ServiceTier)
-                    {
-                        ServiceTierComboBox.SelectedItem = item;
-                        break;
-                    }
-                }
+                GenderComboBox.SelectedItem = GenderComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault(item => item.Content.ToString() == _user.Gender);
+                ServiceTierComboBox.SelectedItem = ServiceTierComboBox.Items.Cast<ComboBoxItem>().FirstOrDefault(item => item.Content.ToString() == _user.UserType);
             }
         }
 
@@ -61,15 +59,48 @@ namespace Restaurant
         {
             string newEmail = EmailTextBox.Text;
             string newAddress = AddressTextBox.Text;
+ 
 
-            if (_user.Email != newEmail || _user.Address != newAddress)
+            if (_user.Email != newEmail && _user.Address != newAddress)
             {
-                _user.Email = newEmail;
-                _user.Address = newAddress;
 
-                string sql = "UPDATE dbo.Users SET Email = @Email, Address = @Address WHERE UserID = @UserID";
-                _dataAccess.SaveData(sql, new { Email = _user.Email, Address = _user.Address, UserID = _user.UserID });
+                if (_validateStrings.ValidateEmail(newEmail))
+                {
+                    _user.Email = newEmail;
+                    _user.Address = newAddress;
+                    string sql = "UPDATE dbo.Users SET Email = @Email, Address = @Address WHERE UserID = @UserID";
+                    _dataAccess.SaveData(sql, new { Email = _user.Email, Address = _user.Address, UserID = _user.UserID });
+                }
+                else
+                {
+                    EmailTextBox.Text = _user.Email;
+                    AddressTextBox.Text = _user.Address;
+                    MessageBox.Show("The new email format is not correct");
+                    return;
+                }
             }
+            else if(_user.Email == newEmail && _user.Address != newAddress)
+            {
+                _user.Address = newAddress;
+                string sql = "UPDATE dbo.Users SET Address = @Address WHERE UserID = @UserID";
+                _dataAccess.SaveData(sql, new { Address = _user.Address, UserID = _user.UserID });
+            }
+            else if(_user.Email != newEmail && _user.Address == newAddress)
+            {
+                if (_validateStrings.ValidateEmail(newEmail))
+                {
+                    _user.Email = newEmail;
+                    string sql = "UPDATE dbo.Users SET Email = @Email WHERE UserID = @UserID";
+                    _dataAccess.SaveData(sql, new { Email = _user.Email, UserID = _user.UserID });
+                }
+                else
+                {
+                    EmailTextBox.Text = _user.Email;
+                    MessageBox.Show("The new email format is not correct");
+                    return;
+                }
+            }
+
 
             if (ServiceTierComboBox.SelectedItem is ComboBoxItem selectedTier)
             {
@@ -84,7 +115,9 @@ namespace Restaurant
                 }
             }
 
+
             MessageBox.Show("Changes saved successfully.");
+            LoadUserData();
         }
 
         private void OnlinePayment(string Tier)

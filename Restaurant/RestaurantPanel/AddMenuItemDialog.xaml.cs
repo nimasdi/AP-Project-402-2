@@ -43,5 +43,10 @@ namespace RestaurantPanel
         {
             DialogResult = false;
         }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -119,5 +119,10 @@ namespace RestaurantPanel
                 MessageBox.Show($"Error exporting CSV file: {ex.Message}");
             }
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
