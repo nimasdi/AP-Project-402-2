@@ -80,5 +80,11 @@ namespace Restaurant_Pages
                 MessageBox.Show($"Failed to set admin offline: {ex.Message}");
             }
         }
+
+        private void AnswerCommeentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            AnswerComments commentTemplate = new AnswerComments();
+            commentTemplate.Show();
+        }
     }
 }
