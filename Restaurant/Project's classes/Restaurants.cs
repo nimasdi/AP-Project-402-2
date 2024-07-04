@@ -28,7 +28,7 @@ namespace Project_s_classes
         public bool haveComplaints { get; set; }
         public int ComplaintsNum { get; set; }
         public decimal PenaltyRevenue { get; set; }
-       
+        public string Address { get; set; }
 
         static DataAccess dataAccess = new DataAccess();
 
@@ -36,7 +36,7 @@ namespace Project_s_classes
         {
 
         }
-        public Restaurants(int? restaurantId, string name, string city, float averageRating, bool isReservationEnabled, string? serviceType, int? adminID, int password, string userName)
+        public Restaurants(int? restaurantId, string name, string city, float averageRating, bool isReservationEnabled, string? serviceType, int? adminID, int password, string userName, string address)
         {
             //RestaurantID = restaurantId;
             this.Name = name;
@@ -50,12 +50,13 @@ namespace Project_s_classes
             this.haveComplaints = false;
             this.ComplaintsNum = 0;
             this.PenaltyRevenue = 0;
+            this.Address = address;
 
-            //there should be a service type implementation here
+            
 
             // Saving restaurant instance to the database
-            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, ServiceType, AdminID, Password, UserName, haveComplaints, ComplaintsNum, PenaltyRevenue )" +
-                " VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @ServiceType, @AdminID, @Password, @UserName, @haveComplaints, @ComplaintsNum, @PenaltyRevenue)";
+            string sqlStatement = "INSERT INTO dbo.Restaurants (Name, City, AverageRating, IsReservationEnabled, ServiceType, AdminID, Password, UserName, haveComplaints, ComplaintsNum, PenaltyRevenue, Address )" +
+                " VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @ServiceType, @AdminID, @Password, @UserName, @haveComplaints, @ComplaintsNum, @PenaltyRevenue, @Address)";
             this.RestaurantID = dataAccess.SaveData(sqlStatement, this, true);
         }
     }
