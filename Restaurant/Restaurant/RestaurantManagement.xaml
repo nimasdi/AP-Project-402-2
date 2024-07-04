@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Restaurant_Pages"
     mc:Ignorable="d"
-    Title="Restaurant Register" Height="485" Width="800"
+    Title="Restaurant Register" Height="630" Width="825"
     Background="#2C3E50">
 
     <Window.Resources>
@@ -81,7 +81,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="0,0,0,-101">
+    <Grid Margin="0,0,0,-6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -96,7 +96,7 @@
                    HorizontalAlignment="Center" Margin="20"/>
 
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Margin="20,20,20,76">
-            <Border Background="#FFFFFF" CornerRadius="10" Padding="20" Height="442">
+            <Border Background="#FFFFFF" CornerRadius="10" Padding="20" Height="480">
                 <StackPanel>
                     <TextBlock Text="Create Restaurant" FontWeight="Bold" FontSize="18" Foreground="#1E3A5F" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -139,7 +139,7 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Height="35" HorizontalAlignment="Center" Margin="10,20,0,0">
-                        <Button x:Name="btnSave" Content="Save" Width="100" Margin="0,0,10,0" Click="btnSave_Click" Background="Blue" Foreground="White" Height="32"/>
+                        <Button x:Name="btnSave" Content="Save" Width="100" Margin="0,0,10,0" Click="btnSave_Click" Background="Green" Foreground="White" Height="32"/>
                         <Button x:Name="btnClear" Content="Clear" Width="100" Click="btnClear_Click" Margin="0,0,10,0" Background="Red" Foreground="White" Height="32"/>
                     </StackPanel>
                 </StackPanel>

@@ -5,30 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant_pages"
         mc:Ignorable="d"
-        Title="main_menu" Height="450" Width="800">
+        Title="main_menu" Height="500" Width="850"
+        Background="#2C3E50">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="91*" />
-            <RowDefinition Height="101*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="103*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*" />
-            <ColumnDefinition Width="201*" />
-            <ColumnDefinition Width="199*"/>
-            <ColumnDefinition Width="200*" />
-        </Grid.ColumnDefinitions>
+    <Grid Margin="10">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20" Margin="21,26,21,26">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="User Panel" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E" Height="71"/>
 
-        <Button Content="Profile" Width="100" Margin="0,10,0,10" Click="ProfileButton_Click" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" />
-        <Button Content="Search" Width="100" Margin="0,10,0,10" Click="SearchButton_Click" Grid.Row="0" HorizontalAlignment="Center" />
-        <Button Content="Orders" Width="100" Margin="0,10,0,10" Click="OrdersButton_Click" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"  />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                    <Button Content="Profile" Width="150" Height="40" Margin="10" Click="ProfileButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" />
+                    <Button Content="Search" Width="150" Height="40" Margin="10" Click="SearchButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="Orders" Width="150" Height="40" Margin="10" Click="OrdersButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
 
-        <Button Content="Track" Width="100" Margin="0,10,0,10" Click="TrackButton_Click" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"  />
-        <Button Content="Complaint" Width="100" Margin="0,10,0,10" Click="ComplaintButton_Click" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center"  />
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                    <Button Content="Track" Width="150" Height="40" Margin="10" Click="TrackButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="Complaint" Width="150" Height="40" Margin="10" Click="ComplaintButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
 
-        <Button Content="Online Support" Width="100" Margin="0,10,0,10" Click="OnlineSupportButton_Click" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center"  />
-
+                <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
