@@ -60,7 +60,7 @@ namespace Restaurant_pages
         private async void OnlineSupportButton_Click(object sender, RoutedEventArgs e)
         {
             var connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/chathub")
+                .WithUrl("http://localhost:5290/chathub")
                 .Build();
 
             await connection.StartAsync();
@@ -68,7 +68,7 @@ namespace Restaurant_pages
 
             if (isAdminOnline)
             {
-                ChatWindow chatWindow = new ChatWindow();
+                ChatWindow chatWindow = new ChatWindow(false);
                 chatWindow.Show();
             }
             else
@@ -78,6 +78,12 @@ namespace Restaurant_pages
 
             await connection.StopAsync();
         }
-    }
+
+        private void TrackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }
+

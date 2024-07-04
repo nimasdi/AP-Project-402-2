@@ -1,4 +1,5 @@
-﻿using Restaurant;
+﻿using Project_s_classes;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace Restaurant_Pages
     /// </summary>
     public partial class AdminPanel : Window
     {
-        public AdminPanel()
+        private readonly Admin _currentAdmin;
+        public AdminPanel(Admin admin)
         {
             InitializeComponent();
+            _currentAdmin = admin;
+            this.Closing += Window_Closing; 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,7 +37,7 @@ namespace Restaurant_Pages
 
         private void RestaurantManagement_Click(object sender, RoutedEventArgs e)
         {
-            RestaurantRegistration managementWindow = new RestaurantRegistration();
+            RestaurantRegistration managementWindow = new RestaurantRegistration(_currentAdmin);
             managementWindow.Show();
         }
 
@@ -58,6 +62,23 @@ namespace Restaurant_Pages
         {
             RespondingComplaintxaml answer = new RespondingComplaintxaml();
             answer.Show();
+        }
+
+        private void ChatButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChatWindow chatWindow = new ChatWindow(isAdmin: true);
+            chatWindow.Show();
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                Admin.SetOnlineStatus(_currentAdmin.UserName, false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to set admin offline: {ex.Message}");
+            }
         }
     }
 }

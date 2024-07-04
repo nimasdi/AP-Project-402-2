@@ -22,7 +22,7 @@ namespace Restaurant
     public partial class ComplaintWindow : Window
     {
         private readonly DataAccess _dataAccess;
-        private readonly int _userId;
+        private readonly int? _userId;
         private List<Restaurants> _restaurants;
 
         public ComplaintWindow(int? userId)

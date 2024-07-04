@@ -25,20 +25,22 @@ namespace Restaurant_Pages
     /// </summary>
     /// 
 
-    
+
 
     public partial class RestaurantRegistration : Window
     {
-        public RestaurantRegistration()
+        private readonly Admin _currentAdimin;
+        public RestaurantRegistration(Admin currentAdimin)
         {
             InitializeComponent();
+            _currentAdimin = currentAdimin;
         }
         static DataAccess dataAccess = new DataAccess();
 
         private int PassGenerator()
         {
-            var restaurants = dataAccess.LoadData<Restaurants,dynamic>("SELECT * FROM dbo.Restaurants", new { });
-            
+            var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
+
             Random random = new Random();
             int pass = 0;
             while (true)
@@ -47,7 +49,7 @@ namespace Restaurant_Pages
                 bool check = true;
                 foreach (var item in restaurants)
                 {
-                    if (item.Password ==  pass)
+                    if (item.Password == pass)
                     {
                         check = false;
                         break;
@@ -61,7 +63,7 @@ namespace Restaurant_Pages
             }
 
             return pass;
-            
+
         }
 
         private bool ValidateUsername(string input)
@@ -82,7 +84,7 @@ namespace Restaurant_Pages
             txtName.Clear();
             txtCity.Clear();
             txtAverageRating.Clear();
-            txtUserName.Clear();    
+            txtUserName.Clear();
             cbIsReservationAvailable.IsChecked = false;
         }
 
@@ -100,7 +102,7 @@ namespace Restaurant_Pages
                     {
                         float averageRating = float.Parse(txtAverageRating.Text);
                         string serviceType = ServiceyTypeComboBox.SelectedItem.ToString().Split(':')[1].Trim();
-                        var restaurant = new Restaurants(null, txtName.Text, txtCity.Text, averageRating, cbIsReservationAvailable.IsChecked ?? false, serviceType, 1, pass, txtUserName.Text);
+                        var restaurant = new Restaurants(null, txtName.Text, txtCity.Text, averageRating, cbIsReservationAvailable.IsChecked ?? false, serviceType, _currentAdimin.AdminId, pass, txtUserName.Text);
                         MessageBox.Show("A new restaurant got created by admin");
                         this.Close();
                     }

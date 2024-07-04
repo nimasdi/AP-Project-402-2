@@ -48,7 +48,7 @@ namespace Restaurant
 
                 foreach (ComboBoxItem item in ServiceTierComboBox.Items)
                 {
-                    if (item.Content.ToString() == _user.ServiceTier)
+                    if (item.Content.ToString() == _user.UserType)
                     {
                         ServiceTierComboBox.SelectedItem = item;
                         break;

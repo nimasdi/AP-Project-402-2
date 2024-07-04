@@ -39,13 +39,16 @@ namespace Restaurant
             List<Admin> admins = dataAccess.LoadData<Admin, dynamic>(sqlStatement2, new { });
 
             bool admin = false;
-            foreach(Admin a in admins)
+            Admin login_admin = new Admin();
+            foreach (Admin a in admins)
             {
-                if(a.UserName == username)
+                if (a.UserName == username)
                 {
-                    if(a.Password == password)
+                    if (a.Password == password)
                     {
                         admin = true;
+                        login_admin = a;
+                        Admin.SetOnlineStatus(username, true);
                         break;
                     }
                 }
@@ -53,10 +56,9 @@ namespace Restaurant
             if (admin)
             {
                 MessageBox.Show("Admin's login successful");
-                AdminPanel adminPanel = new AdminPanel();
+                AdminPanel adminPanel = new AdminPanel(login_admin);
                 adminPanel.Show();
                 this.Close();
-
             }
 
             else
@@ -64,11 +66,14 @@ namespace Restaurant
                 bool user_available = false;
                 bool password_available = false;
 
+                Users login_user = null;
+
                 foreach (Users user in users)
                 {
                     if (user.UserName == username)
                     {
                         user_available = true;
+
                         break;
                     }
                 }
@@ -84,6 +89,7 @@ namespace Restaurant
                     if (user.Password == password)
                     {
                         password_available = true;
+                        login_user = user;
                         break;
                     }
                 }
@@ -93,19 +99,18 @@ namespace Restaurant
                     MessageBox.Show("Password is wrong, Try again!!");
                     return;
                 }
-
                 else
                 {
                     MessageBox.Show("User's Login was succesfull");
 
                     //rederict to the user's template
-                    main_menu userTemplate = new main_menu();
+                    main_menu userTemplate = new main_menu(login_user);
                     userTemplate.Show();
                     this.Close();
-                    
+
                 }
             }
-            
+
         }
 
 

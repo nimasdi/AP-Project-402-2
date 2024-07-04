@@ -35,7 +35,7 @@ namespace Restaurant
 
         private void LoadRestaurants()
         {
-            string sql = "SELECT RestaurantID, Name, City, Address, AverageRating, IsReservationEnabled, AdminID, ServiceType FROM dbo.Restaurants";
+            string sql = "SELECT RestaurantID, Name, City, AverageRating, IsReservationEnabled, ServiceType, AdminID, Password, UserName, haveComplaints, ComplaintsNum, PenaltyRevenue FROM dbo.Restaurants";
             _restaurants = _dataAccess.LoadData<Restaurants, dynamic>(sql, new { }).ToList();
             RestaurantListView.ItemsSource = _restaurants;
         }

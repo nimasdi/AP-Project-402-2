@@ -22,38 +22,45 @@ namespace Restaurant
     public partial class ChatWindow : Window
     {
         private HubConnection _connection;
+        private readonly string _sender;
 
-        public ChatWindow()
+        public ChatWindow(bool isAdmin)
         {
             InitializeComponent();
+            _sender = isAdmin ? "Admin" : "User";
+            InitializeSignalR();
+        }
+
+        private async void InitializeSignalR()
+        {
             _connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5000/chathub")
+                .WithUrl("http://localhost:5290/chatHub")
                 .Build();
 
             _connection.On<string, string>("ReceiveMessage", (user, message) =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    ChatTextBox.AppendText($"{user}: {message}\n");
+                    ChatListBox.Items.Add($"{user}: {message}");
                 });
             });
 
-            _connection.StartAsync();
+            try
+            {
+                await _connection.StartAsync();
+                ChatListBox.Items.Add("Connected to chat server.");
+            }
+            catch (Exception ex)
+            {
+                ChatListBox.Items.Add($"Connection failed: {ex.Message}");
+            }
         }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(MessageTextBox.Text))
-            {
-                await _connection.InvokeAsync("SendMessage", "User", MessageTextBox.Text);
-                MessageTextBox.Clear();
-            }
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            _connection.StopAsync();
-            base.OnClosed(e);
+            var message = MessageTextBox.Text;
+            await _connection.InvokeAsync("SendMessage", _sender, message);
+            MessageTextBox.Clear();
         }
     }
 }

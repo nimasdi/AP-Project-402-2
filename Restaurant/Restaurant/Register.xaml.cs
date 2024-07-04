@@ -356,8 +356,8 @@ namespace Restaurant_pages
                 Users new_user = new Users(0,firstName, lastName, mobileNumber, email, username, PasswordBox.Password, userType, address, gender, null, null);
                 MessageBox.Show("The user has been create");
                 MainWindow mainWindow = new MainWindow();
-                this.Close();
                 mainWindow.Show();
+                this.Close();
             }
         }
 
