@@ -14,18 +14,18 @@
                 <TextBlock Text="User Panel" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
-                    <Button Content="Profile" Width="150" Height="40" Margin="10" Click="ProfileButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="Profile" Width="150" Height="40" Click="ProfileButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Search" Width="150" Height="40" Margin="10" Click="SearchButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Orders" Width="150" Height="40" Margin="10" Click="OrdersButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center" Width="490">
-                    <Button Content="Track" Width="150" Height="40" Margin="10" Click="TrackButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center" Width="500">
                     <Button Content="Complaint" Width="150" Height="40" Margin="10" Click="ComplaintButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
                     <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Button Content="Change Password" Width="150" Height="40" Margin="10" Click="ChangePasswordButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                 </StackPanel>
 
-                
+
 
                 <Button Content="Login" Width="150" Height="40" Margin="10" Click="Login_Click" Background="ForestGreen" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
             </StackPanel>
