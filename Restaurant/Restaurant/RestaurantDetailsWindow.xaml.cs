@@ -28,6 +28,7 @@ namespace Restaurant
         private readonly Restaurants _restaurant;
         private readonly DataAccess _dataAccess;
         private readonly Users _currentUser;
+        private readonly Admin? _currentAdmin;
         public Dictionary<string, List<Project_s_classes.Menu>> MenuItemsByCategory { get; set; }
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 

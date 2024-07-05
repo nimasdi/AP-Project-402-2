@@ -93,5 +93,10 @@ namespace Restaurant
         {
             this.Close();
         }
+
+        private void ResponseTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

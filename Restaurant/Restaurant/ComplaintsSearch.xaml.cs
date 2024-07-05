@@ -152,7 +152,7 @@ namespace Restaurant_Pages
                             }
                             else
                             {
-                                var filter = Complaints.Where(complaint => resturantName.Contains((int)complaint.UserId)).ToList();
+                                var filter = Complaints.Where(complaint => resturantName.Contains((int)complaint.RestaurantId)).ToList();
                                 ComplaintResultsDataGrid.ItemsSource = filter;
                                 break;
                             }
