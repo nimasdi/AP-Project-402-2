@@ -119,6 +119,11 @@ namespace Restaurant
                 MessageBox.Show($"Failed to update restaurant average rating: {ex.Message}");
             }
         }
+
+        private void CommentTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 
 }
