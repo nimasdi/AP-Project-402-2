@@ -161,18 +161,8 @@ namespace Restaurant
                 mail.From = new MailAddress("alexcruso84@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = subject;
-
-
-                StringBuilder body = new StringBuilder();
-                body.AppendLine("Thank you for upgrading your service tier!");
-                body.AppendLine("Your verification code is: " + code);
-                body.AppendLine();
-                body.AppendLine("Purchase Details:");
-                body.AppendLine("----------------------------");
-
-
-                body.AppendLine();
-                body.AppendLine($"Total Amount: {totalAmount:C}");
+                mail.Body = $"Thanks you for upgrading your service tier!\nYour verification code is : {code.ToString()}\n" +
+                    $"\nPurchase Detaisls:\n---------------------\n\nTotal Amount:{totalAmount.ToString()}";
 
                 smtpClient.Port = 587;
                 smtpClient.UseDefaultCredentials = false;

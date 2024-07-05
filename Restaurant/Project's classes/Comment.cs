@@ -22,8 +22,11 @@ namespace Project_s_classes
 
         static DataAccess dataAccess = new DataAccess();
 
+        public Comment()
+        {
 
-        public Comment() { }
+        }
+
 
         public Comment(int? menuID, int? userID, string userName, string content, float? rating, DateTime createdAt, bool edited)
         {
