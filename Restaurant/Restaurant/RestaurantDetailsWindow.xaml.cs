@@ -105,6 +105,17 @@ namespace Restaurant
             }
         }
 
+        private void MenuItemsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (MenuItemsListView.SelectedItem is Project_s_classes.Menu selectedMenu)
+            {
+                var menuItemDetailsWindow = new MenuItemDetailsWindow(selectedMenu, _currentUser);
+                menuItemDetailsWindow.ShowDialog();
+
+            }
+        }
+
+
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
             if (CartItems.Count == 0)
@@ -300,6 +311,59 @@ namespace Restaurant
             catch (Exception ex)
             {
                 message = "Error sending verification email: " + ex.Message;
+            }
+        }
+
+        private void AddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var stackPanel = button.Parent as StackPanel;
+            var quantityTextBox = stackPanel.Children.OfType<TextBox>().FirstOrDefault();
+            if (quantityTextBox != null && int.TryParse(quantityTextBox.Text, out int quantityToAdd) && quantityToAdd > 0)
+            {
+                var menuItem = (MenuItemsListView.SelectedItem as Project_s_classes.Menu);
+                if (menuItem != null)
+                {
+                    if (menuItem.QuantityAvailable >= quantityToAdd)
+                    {
+                        var existingCartItem = CartItems.FirstOrDefault(ci => ci.MenuID == menuItem.MenuID);
+                        if (existingCartItem != null)
+                        {
+                            if (existingCartItem.Quantity + quantityToAdd <= menuItem.QuantityAvailable)
+                            {
+                                existingCartItem.Quantity += quantityToAdd;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Not enough stock available.", "Out of Stock", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                        }
+                        else
+                        {
+                            CartItems.Add(new CartItem { MenuID = (int)menuItem.MenuID, ItemName = menuItem.ItemName, Quantity = quantityToAdd });
+                        }
+
+                        CartListBox.ItemsSource = null;
+                        CartListBox.ItemsSource = CartItems;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Not enough stock available.", "Out of Stock", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid quantity.", "Invalid Quantity", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void DeleteCartItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is CartItem cartItem)
+            {
+                CartItems.Remove(cartItem);
+                CartListBox.ItemsSource = null;
+                CartListBox.ItemsSource = CartItems; // Refresh the ListBox
             }
         }
 

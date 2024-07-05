@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant"
         mc:Ignorable="d"
-        Title="MenuItemDetailsWindow" Height="606" Width="852">
+        Title="MenuItemDetailsWindow" Height="800" Width="1000">
 
     <Grid>
         <StackPanel Margin="10">
@@ -45,7 +45,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Rating:" VerticalAlignment="Center"/>
                     <Slider x:Name="RatingSlider" Width="100" Minimum="1" Maximum="5" TickFrequency="0.5" Value="5"/>
-                    <Button x:Name="SubmitCommentButton" Content="Submit" Width="100" Margin="10,0,0,0" Click="SubmitEditedCommentButton_Click"/>
+                    <Button x:Name="SubmitCommentButton" Content="Submit" Width="100" Margin="10,0,0,0" Click="SubmitCommentButton_Click"/>
+                    <Button x:Name="SubmitEditedCommentButton" Content="Submit Edited Comment" Width="150" Margin="10,0,0,0" Click="SubmitEditedCommentButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

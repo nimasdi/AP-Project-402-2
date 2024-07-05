@@ -23,7 +23,6 @@ namespace RestaurantPanel
     {
         private readonly int _restaurantId;
         private readonly DataAccess _dataAccess;
-        public Dictionary<string, List<Project_s_classes.Menu>> MenuItemsByCategory { get; set; }
 
         public Menu(int restaurantId)
         {
@@ -90,11 +89,13 @@ namespace RestaurantPanel
                             ItemName = dialog.ItemName,
                             Ingredients = dialog.Ingredients,
                             Price = dialog.Price,
-                            QuantityAvailable = dialog.Quantity
+                            QuantityAvailable = dialog.Quantity,
+                            ImageURL = dialog.ImageURL,
+                            AverageRating = dialog.AverageRating
                         };
 
-                        string sql = "INSERT INTO dbo.Menus (RestaurantID, Category, ItemName, Ingredients, Price, QuantityAvailable) " +
-                                     "VALUES (@RestaurantID, @Category, @ItemName, @Ingredients, @Price, @QuantityAvailable)";
+                        string sql = "INSERT INTO dbo.Menus (RestaurantID, Category, ItemName, Ingredients, Price, QuantityAvailable, ImageURL, AverageRating) " +
+                                     "VALUES (@RestaurantID, @Category, @ItemName, @Ingredients, @Price, @QuantityAvailable, @ImageURL, @AverageRating)";
 
                         _dataAccess.SaveData(sql, new
                         {
@@ -103,7 +104,9 @@ namespace RestaurantPanel
                             newItem.ItemName,
                             newItem.Ingredients,
                             newItem.Price,
-                            newItem.QuantityAvailable
+                            newItem.QuantityAvailable,
+                            newItem.ImageURL,
+                            newItem.AverageRating
                         });
 
                         LoadMenuItems(selectedCategory);
@@ -123,7 +126,8 @@ namespace RestaurantPanel
                 var dialog = new EditMenuItemDialog(selectedMenu);
                 if (dialog.ShowDialog() == true)
                 {
-                    string sql = "UPDATE dbo.Menus SET ItemName = @ItemName, Ingredients = @Ingredients, Price = @Price, QuantityAvailable = @QuantityAvailable " +
+                    string sql = "UPDATE dbo.Menus SET ItemName = @ItemName, Ingredients = @Ingredients, " +
+                                 "Price = @Price, QuantityAvailable = @QuantityAvailable, ImageURL = @ImageURL, AverageRating = @AverageRating " +
                                  "WHERE MenuID = @MenuID";
                     _dataAccess.SaveData(sql, selectedMenu);
 

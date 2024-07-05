@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Restaurant"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <local:BooleanToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </Application.Resources>
 </Application>
