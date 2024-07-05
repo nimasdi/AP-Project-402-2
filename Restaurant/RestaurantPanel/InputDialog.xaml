@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="InputDialog" Height="450" Width="800">
-    <Grid Margin="10">
+        Title="InputDialog" Height="250" Width="400" WindowStartupLocation="CenterOwner" Background="#2C3E50">
+    <Grid Margin="20">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="PromptTextBlock" Grid.Row="0" Margin="0,0,0,10"/>
+        <TextBlock x:Name="PromptTextBlock" Grid.Row="0" Margin="0,0,0,10" TextWrapping="Wrap" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
 
-        <TextBox x:Name="InputTextBox" Grid.Row="1" Margin="0,0,0,10" Width="250"/>
+        <TextBox x:Name="InputTextBox" Grid.Row="1" Margin="0,0,0,10" Width="300" Height="30" FontSize="14" Padding="5"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
-            <Button Content="OK" Width="80" Margin="0,0,10,0" Click="OkButton_Click"/>
-            <Button Content="Cancel" Width="80" Click="CancelButton_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="OkButton" Content="OK" Width="100" Margin="10" Padding="5" FontSize="14" FontWeight="Bold" Click="OkButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" Width="100" Margin="10" Padding="5" FontSize="14" FontWeight="Bold" Click="CancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

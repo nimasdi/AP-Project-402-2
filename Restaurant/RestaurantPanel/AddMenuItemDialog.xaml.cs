@@ -23,8 +23,7 @@ namespace RestaurantPanel
         public string Ingredients { get; private set; }
         public decimal Price { get; private set; }
         public int Quantity { get; private set; }
-        public string ImageURL { get; private set; }
-        public float AverageRating { get; private set; }
+        public string? ImageURL { get; private set; }
 
         public AddMenuItemDialog(string category, int restaurantId)
         {
@@ -37,10 +36,9 @@ namespace RestaurantPanel
             {
                 ItemName = ItemNameTextBox.Text;
                 Ingredients = IngredientsTextBox.Text;
-                Price = decimal.Parse(PriceTextBox.Text); // Ensure proper validation for decimal parsing
-                Quantity = int.Parse(QuantityTextBox.Text); // Ensure proper validation for integer parsing
-                ImageURL = ImageURLTextBox.Text;
-                AverageRating = float.Parse(AverageRatingTextBox.Text); // Ensure proper validation for float parsing
+                Price = decimal.Parse(PriceTextBox.Text); 
+                Quantity = int.Parse(QuantityTextBox.Text); 
+                ImageURL = string.IsNullOrWhiteSpace(ImageURLTextBox.Text) ? null : ImageURLTextBox.Text;
 
                 DialogResult = true;
             }
@@ -57,13 +55,10 @@ namespace RestaurantPanel
 
         private bool ValidateInputs()
         {
-            // Perform validation for each input field
             if (string.IsNullOrWhiteSpace(ItemNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(IngredientsTextBox.Text) ||
                 !decimal.TryParse(PriceTextBox.Text, out _) ||
-                !int.TryParse(QuantityTextBox.Text, out _) ||
-                string.IsNullOrWhiteSpace(ImageURLTextBox.Text) ||
-                !float.TryParse(AverageRatingTextBox.Text, out _))
+                !int.TryParse(QuantityTextBox.Text, out _))
             {
                 return false;
             }
@@ -77,13 +72,12 @@ namespace RestaurantPanel
             {
                 ItemName = ItemNameTextBox.Text;
                 Ingredients = IngredientsTextBox.Text;
-                Price = decimal.Parse(PriceTextBox.Text); // Ensure proper validation for decimal parsing
-                Quantity = int.Parse(QuantityTextBox.Text); // Ensure proper validation for integer parsing
-                ImageURL = ImageURLTextBox.Text;
-                AverageRating = float.Parse(AverageRatingTextBox.Text); // Ensure proper validation for float parsing
+                Price = decimal.Parse(PriceTextBox.Text);
+                Quantity = int.Parse(QuantityTextBox.Text);
+                ImageURL = string.IsNullOrWhiteSpace(ImageURLTextBox.Text) ? null : ImageURLTextBox.Text;
 
                 DialogResult = true;
-                Close(); // Close the dialog
+                Close();
             }
             else
             {

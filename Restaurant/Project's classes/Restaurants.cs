@@ -59,5 +59,20 @@ namespace Project_s_classes
                 " VALUES(@Name, @City, @AverageRating, @IsReservationEnabled, @ServiceType, @AdminID, @Password, @UserName, @haveComplaints, @ComplaintsNum, @PenaltyRevenue, @Address)";
             this.RestaurantID = dataAccess.SaveData(sqlStatement, this, true);
         }
+
+        public static void UpdateAverageRating(int restaurantId)
+        {
+            string sql = @"SELECT CAST(AVG(CAST(Rating AS FLOAT)) AS FLOAT)
+                           FROM dbo.Comments 
+                           INNER JOIN dbo.Menus ON Comments.MenuID = Menus.MenuID 
+                           WHERE Menus.RestaurantID = @RestaurantID";
+            var averageRating = dataAccess.LoadData<double, dynamic>(sql, new { RestaurantID = restaurantId });
+
+            if (averageRating.Count > 0 && averageRating[0] != null)
+            {
+                string updateSql = "UPDATE dbo.Restaurants SET AverageRating = @AverageRating WHERE RestaurantID = @RestaurantID";
+                dataAccess.SaveData(updateSql, new { AverageRating = averageRating[0], RestaurantID = restaurantId });
+            }
+        }
     }
 }

@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="ReservationServiceWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="Reservation Service" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+        Title="ReservationServiceWindow" Height="450" Width="800"
+        Background="#2C3E50">
+    <Grid Margin="30">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Reservation Service" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
-            <TextBlock Text="Average Rating:"/>
-            <TextBox x:Name="AverageRatingTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                <TextBlock Text="Average Rating:"/>
+                <TextBox x:Name="AverageRatingTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
 
-            <CheckBox x:Name="EnableReservationCheckBox" Content="Enable Reservation Service" Margin="0,0,0,10"/>
+                <CheckBox x:Name="EnableReservationCheckBox" Content="Enable Reservation Service" Margin="0,0,0,10" VerticalAlignment="Center"/>
 
-            <Button Content="Save" Width="100" Click="SaveButton_Click"/>
-        </StackPanel>
+                <Button Content="Save" Height="30" Width="100" Click="SaveButton_Click" Background="#3498DB" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
     </Grid>
     
 </Window>

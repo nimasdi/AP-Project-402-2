@@ -5,24 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="UpdateAvailabilityWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="Select a Food Item to Update Availability" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+        Title="UpdateAvailabilityWindow" Height="450" Width="800"
+        Background="#2C3E50">
+    <Grid Margin="20">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Update Food Item Availability" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
-            <ListBox x:Name="FoodItemsListBox" DisplayMemberPath="ItemName" Height="200" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Content="Select Food Item:" VerticalAlignment="Center"/>
+                    <ListBox x:Name="FoodItemsListBox" SelectionChanged="FoodItemsListBox_SelectionChanged" DisplayMemberPath="ItemName" Width="200" Margin="5,0,0,0"/>
+                </StackPanel>
 
-            <TextBlock Text="Selected Item:" FontWeight="Bold" Margin="0,10,0,0"/>
-            <TextBlock Text="Item Name:"/>
-            <TextBox x:Name="ItemNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                <TextBlock Text="Selected Item:" FontWeight="Bold" Margin="0,10,0,0"/>
+                <TextBlock Text="Item Name:"/>
+                <TextBox x:Name="ItemNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
 
-            <TextBlock Text="Current Quantity:"/>
-            <TextBox x:Name="CurrentQuantityTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+                <TextBlock Text="Current Quantity:"/>
+                <TextBox x:Name="CurrentQuantityTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
 
-            <TextBlock Text="New Quantity:"/>
-            <TextBox x:Name="NewQuantityTextBox" Margin="0,0,0,10"/>
+                <TextBlock Text="New Quantity:"/>
+                <TextBox x:Name="NewQuantityTextBox" Margin="0,0,0,10"/>
 
-            <Button Content="Update" Width="100" Click="UpdateButton_Click"/>
-        </StackPanel>
+                <Button Content="Update" Width="100" Click="UpdateButton_Click" Background="#3498DB" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

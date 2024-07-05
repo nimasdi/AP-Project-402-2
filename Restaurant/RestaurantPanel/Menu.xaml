@@ -5,43 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="1200">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+        Title="Menu" Height="600" Width="1300"  Background="#2C3E50">
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Content="Add Item" Click="AddItemButton_Click" Width="100" Margin="5"/>
-            <Button Content="Edit Item" Click="EditItemButton_Click" Width="100" Margin="5"/>
-            <Button Content="Delete Item" Click="DeleteItemButton_Click" Width="100" Margin="5"/>
-            <Button Content="Add Category" Click="AddCategoryButton_Click" Width="100" Margin="5"/>
-            <Button Content="Edit Category" Click="EditCategoryButton_Click" Width="100" Margin="5"/>
-            <Button Content="Delete Category" Click="DeleteCategoryButton_Click" Width="100" Margin="5"/>
-        </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="MenuCategoriesListBox" SelectionChanged="MenuCategoriesListBox_SelectionChanged" Grid.Row="1" Grid.Column="0" Margin="5"/>
-        <ListView x:Name="MenuItemsListView" SelectionChanged="MenuItemsListView_SelectionChanged" Grid.Row="1" Grid.Column="1" Margin="5">
-            <!-- Define ListView columns for displaying menu items -->
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Item Name" DisplayMemberBinding="{Binding ItemName}" Width="120"/>
-                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="80"/>
-                    <GridViewColumn Header="Ingredients" DisplayMemberBinding="{Binding Ingredients}" Width="200"/>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="80"/>
-                    <GridViewColumn Header="Quantity Available" DisplayMemberBinding="{Binding QuantityAvailable}" Width="80"/>
-                    <GridViewColumn Header="Image URL" DisplayMemberBinding="{Binding ImageURL}" Width="200"/>
-                    <GridViewColumn Header="Average Rating" DisplayMemberBinding="{Binding AverageRating}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+            <!-- Header Buttons -->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                <Button Content="Add Item" Click="AddItemButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                <Button Content="Edit Item" Click="EditItemButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                <Button Content="Delete Item" Click="DeleteItemButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                <Button Content="Add Category" Click="AddCategoryButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                <Button Content="Edit Category" Click="EditCategoryButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+                <Button Content="Delete Category" Click="DeleteCategoryButton_Click" Width="140" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+            </StackPanel>
 
-        <ListBox x:Name="CommentsListBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="5"/>
-    </Grid>
+            <!-- Menu Categories ListBox -->
+            <ListBox x:Name="MenuCategoriesListBox" SelectionChanged="MenuCategoriesListBox_SelectionChanged" Grid.Row="1" Grid.Column="0" Margin="5"
+                     Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
+                <!-- Style ListBox items if necessary -->
+            </ListBox>
+
+            <!-- Menu Items ListView -->
+            <ListView x:Name="MenuItemsListView" SelectionChanged="MenuItemsListView_SelectionChanged" Grid.Row="1" Grid.Column="1" Margin="5"
+                      Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Item Name" DisplayMemberBinding="{Binding ItemName}" Width="120"/>
+                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="80"/>
+                        <GridViewColumn Header="Ingredients" DisplayMemberBinding="{Binding Ingredients}" Width="200"/>
+                        <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="80"/>
+                        <GridViewColumn Header="Quantity Available" DisplayMemberBinding="{Binding QuantityAvailable}" Width="80"/>
+                        <GridViewColumn Header="Image URL" DisplayMemberBinding="{Binding ImageURL}" Width="200"/>
+                        <GridViewColumn Header="Average Rating" DisplayMemberBinding="{Binding AverageRating}" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Comments ListBox -->
+            <ListBox x:Name="CommentsListBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="5"
+                     Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
+            </ListBox>
+        </Grid>
+    </ScrollViewer>
 </Window>
