@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="1200">
+        Title="Menu" Height="600" Width="1300">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

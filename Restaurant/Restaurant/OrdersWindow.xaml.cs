@@ -55,6 +55,11 @@ namespace Restaurant
             {
                 if (int.TryParse(RatingTextBox.Text, out int rating))
                 {
+                    if (rating < 0 || rating > 5)
+                    {
+                        MessageBox.Show("Rating must be between 0 and 5.", "Invalid Rating", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                     selectedOrder.Rating = rating;
                 }
                 else

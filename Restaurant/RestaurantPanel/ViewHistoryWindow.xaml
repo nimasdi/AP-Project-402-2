@@ -5,26 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="ViewHistoryWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="ViewHistoryWindow" Height="450" Width="800"
+        Background="#2C3E50">
+    <Grid Margin="10">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Order History" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-            <Label Content="Filter:" VerticalAlignment="Center"/>
-            <TextBox x:Name="FilterTextBox" Width="200" Margin="5"/>
-            <Button Content="Apply Filter" Click="ApplyFilterButton_Click" Margin="5"/>
-            <Button Content="Export CSV" Click="ExportCSVButton_Click" Margin="5"/>
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label Content="Filter:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="FilterTextBox" Width="200" Margin="5"/>
+                        <Button Content="Apply Filter" Click="ApplyFilterButton_Click" Margin="5"/>
+                        <Button Content="Export CSV" Click="ExportCSVButton_Click" Margin="5"/>
+                    </StackPanel>
 
-        <TextBlock x:Name="MetricsTextBlock" Grid.Row="1" Margin="10"/>
+                    <TextBlock x:Name="MetricsTextBlock" Margin="0,0,0,10"/>
 
-        <DataGrid x:Name="HistoryDataGrid" Grid.Row="2" AutoGenerateColumns="True" Margin="10"/>
+                    <DataGrid x:Name="HistoryDataGrid" AutoGenerateColumns="True" Margin="0,0,0,10"/>
 
-        <Button Content="Close" Grid.Row="2" Margin="757,288,0,0" Click="CloseButton_Click" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="33"/>
+                    <Button Content="Close" Click="CloseButton_Click" Height="30" Width="100" Background="#3498DB" Foreground="White" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>

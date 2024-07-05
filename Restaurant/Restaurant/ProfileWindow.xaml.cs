@@ -36,12 +36,9 @@ namespace Restaurant
 
             LoadUserData();
         }
-        
-        
 
         private void LoadUserData()
         {
-            
             if (_user != null)
             {
                 UserNameTextBox.Text = _user.UserName;
@@ -59,11 +56,9 @@ namespace Restaurant
         {
             string newEmail = EmailTextBox.Text;
             string newAddress = AddressTextBox.Text;
- 
 
             if (_user.Email != newEmail && _user.Address != newAddress)
             {
-
                 if (_validateStrings.ValidateEmail(newEmail))
                 {
                     _user.Email = newEmail;
@@ -79,13 +74,13 @@ namespace Restaurant
                     return;
                 }
             }
-            else if(_user.Email == newEmail && _user.Address != newAddress)
+            else if (_user.Email == newEmail && _user.Address != newAddress)
             {
                 _user.Address = newAddress;
                 string sql = "UPDATE dbo.Users SET Address = @Address WHERE UserID = @UserID";
                 _dataAccess.SaveData(sql, new { Address = _user.Address, UserID = _user.UserID });
             }
-            else if(_user.Email != newEmail && _user.Address == newAddress)
+            else if (_user.Email != newEmail && _user.Address == newAddress)
             {
                 if (_validateStrings.ValidateEmail(newEmail))
                 {
@@ -101,7 +96,6 @@ namespace Restaurant
                 }
             }
 
-
             if (ServiceTierComboBox.SelectedItem is ComboBoxItem selectedTier)
             {
                 string newServiceTier = selectedTier.Content.ToString();
@@ -111,13 +105,25 @@ namespace Restaurant
                     _user.UserType = newServiceTier;
                     OnlinePayment(newServiceTier);
 
-                    _user.UpdateUserType(newServiceTier, DateTime.Now.AddDays(30));
+                    UpdateUserType((int)_user.UserID, newServiceTier);
                 }
             }
 
-
             MessageBox.Show("Changes saved successfully.");
             LoadUserData();
+        }
+
+        private void UpdateUserType(int userId, string newServiceTier)
+        {
+            string sql = "UPDATE dbo.Users SET UserType = @UserType, ServiceExpiration = @ServiceExpiration WHERE UserID = @UserID";
+            try
+            {
+                _dataAccess.SaveData(sql, new { UserType = newServiceTier, ServiceExpiration = DateTime.Now.AddDays(30), UserID = userId });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to update service tier: {ex.Message}");
+            }
         }
 
         private void OnlinePayment(string Tier)
@@ -141,7 +147,7 @@ namespace Restaurant
 
                 int code = new Random().Next(100000, 999999);
                 string message;
-                SendEmail(_user.Email, "Payment for Service Tier Upgrade", code ,price, out message);
+                SendEmail(_user.Email, "Payment for Service Tier Upgrade", code, price, out message);
 
                 MessageBox.Show(message, "Payment Instructions", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -161,8 +167,8 @@ namespace Restaurant
                 mail.From = new MailAddress("alexcruso84@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = subject;
-                mail.Body = $"Thanks you for upgrading your service tier!\nYour verification code is : {code.ToString()}\n" +
-                    $"\nPurchase Detaisls:\n---------------------\n\nTotal Amount:{totalAmount.ToString()}";
+                mail.Body = $"Thanks you for upgrading your service tier!\nYour verification code is : {code}\n" +
+                            $"\nPurchase Detaisls:\n---------------------\n\nTotal Amount:{totalAmount}";
 
                 smtpClient.Port = 587;
                 smtpClient.UseDefaultCredentials = false;

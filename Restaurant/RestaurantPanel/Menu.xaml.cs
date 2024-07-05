@@ -91,7 +91,7 @@ namespace RestaurantPanel
                             Price = dialog.Price,
                             QuantityAvailable = dialog.Quantity,
                             ImageURL = dialog.ImageURL,
-                            AverageRating = dialog.AverageRating
+                            AverageRating = 0
                         };
 
                         string sql = "INSERT INTO dbo.Menus (RestaurantID, Category, ItemName, Ingredients, Price, QuantityAvailable, ImageURL, AverageRating) " +

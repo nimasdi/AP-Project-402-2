@@ -36,13 +36,13 @@ namespace RestaurantPanel
 
         private void LoadMenuItems()
         {
-            string sql = "SELECT MenuID, RestaurantID, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuantityAvailable FROM dbo.Menus WHERE RestaurantID = @RestaurantID";
+            string sql = "SELECT MenuID, RestaurantID, Category, ItemName, Ingredients, Price, ImageURL, QuantityAvailable FROM dbo.Menus WHERE RestaurantID = @RestaurantID";
             _menuItems = _dataAccess.LoadData<Project_s_classes.Menu, dynamic>(sql, new { RestaurantID = _restaurantId });
 
             FoodItemsListBox.ItemsSource = _menuItems;
         }
 
-        private void FoodItemsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void FoodItemsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (FoodItemsListBox.SelectedItem is Project_s_classes.Menu selectedMenuItem)
             {
@@ -70,6 +70,11 @@ namespace RestaurantPanel
                     MessageBox.Show("Please enter a valid number.");
                 }
             }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

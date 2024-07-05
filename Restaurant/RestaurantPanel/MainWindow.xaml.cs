@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using DBAccess;
+using Project_s_classes;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,5 +22,29 @@ namespace RestaurantPanel
         {
             InitializeComponent();
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+
+            DataAccess dataAccess = new DataAccess();
+
+            string sqlAdmin = "SELECT * FROM dbo.Restaurants WHERE UserName = @UserName AND Password = @Password";
+            List<Restaurants> restaurants = dataAccess.LoadData<Restaurants, dynamic>(sqlAdmin, new { UserName = username, Password = password });
+
+            if (restaurants.Count > 0)
+            {
+                Restaurants loginRestaurant = restaurants[0];
+
+                RestaurantsPanel panel = new RestaurantsPanel(loginRestaurant);
+                panel.Show();
+                this.Close();
+                return;
+            }
+
+            MessageBox.Show("Invalid username or password. Please try again.");
+        }
+
     }
 }
