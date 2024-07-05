@@ -27,7 +27,6 @@ namespace Project_s_classes
 
         }
 
-        public Comment() { }
 
         public Comment(int? menuID, int? userID, string userName, string content, float? rating, DateTime createdAt, bool edited)
         {
