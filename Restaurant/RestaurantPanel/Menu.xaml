@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantPanel"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="800">
+        Title="Menu" Height="450" Width="1200">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,8 +33,11 @@
                 <GridView>
                     <GridViewColumn Header="Item Name" DisplayMemberBinding="{Binding ItemName}" Width="120"/>
                     <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="80"/>
+                    <GridViewColumn Header="Ingredients" DisplayMemberBinding="{Binding Ingredients}" Width="200"/>
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="80"/>
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding QuantityAvailable}" Width="80"/>
+                    <GridViewColumn Header="Quantity Available" DisplayMemberBinding="{Binding QuantityAvailable}" Width="80"/>
+                    <GridViewColumn Header="Image URL" DisplayMemberBinding="{Binding ImageURL}" Width="200"/>
+                    <GridViewColumn Header="Average Rating" DisplayMemberBinding="{Binding AverageRating}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -29,8 +29,7 @@ namespace Project_s_classes
         static DataAccess dataAccess = new DataAccess();
 
 
-        public Menu(){        }
-
+        public Menu() { }
 
         public Menu(int? restaurantId, string? category, string? itemName, string? ingredients, decimal? price, string? imageURL, float? averageRating, int? quantityAvailable)
         {
@@ -44,8 +43,8 @@ namespace Project_s_classes
             QuantityAvailable = quantityAvailable;
 
 
-            string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuanntityAvailable)" +
-           " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuanntityAvailable);";
+            string sqlStatement = "INSERT INTO dbo.Menus (RestaurantId, Category, ItemName, Ingredients, Price, ImageURL, AverageRating, QuantityAvailable)" +
+           " VALUES(@RestaurantId, @Category, @ItemName, @Ingredients, @Price, @ImageURL, @AverageRating, @QuantityAvailable);";
             this.MenuID = dataAccess.SaveData(sqlStatement, this, true);
             LoadComments();
         }
