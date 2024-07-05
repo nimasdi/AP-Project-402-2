@@ -90,6 +90,12 @@ namespace Restaurant_pages
             mainWindow.Show();
             this.Close();
         }
+
+        private void ChangePasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePasswordUser changePasswordUser = new ChangePasswordUser(_currentUser);
+            changePasswordUser.Show();
+        }
     }
     
 }

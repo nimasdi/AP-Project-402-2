@@ -189,7 +189,7 @@ namespace Restaurant
             {
                 if (RestaurantListView.SelectedItem is Restaurants selectedRestaurant)
                 {
-                    // Go to restaurant details window
+                    //redirecting to the restaurant panel
                     var restaurantDetailsWindow = new RestaurantDetailsWindow(selectedRestaurant, _currentUser);
                     restaurantDetailsWindow.Show();
                     this.Close();

@@ -21,7 +21,7 @@
 
         <Border Grid.Row="1" Grid.Column="1" Background="#ECF0F1" Padding="20" CornerRadius="10">
             <StackPanel>
-                <TextBlock Text="Restaurant Admin Panel" FontSize="24" FontWeight="Bold" Foreground="#34495E" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="Login Panel" FontSize="24" FontWeight="Bold" Foreground="#34495E" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,10">
                     <TextBlock Text="Username:" VerticalAlignment="Center" Margin="0,0,0,5" FontSize="14" Foreground="#34495E"/>
