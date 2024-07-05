@@ -65,5 +65,20 @@ namespace Restaurant
             return _dataAccess.LoadData<Restaurants, dynamic>(sql, new { });
         }
 
+        private void ShowComplaintsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_userId.HasValue)
+            {
+                string sql = "SELECT * FROM dbo.Complaints WHERE UserID = @UserID";
+                var complaints = _dataAccess.LoadData<Complaint, dynamic>(sql, new { UserID = _userId });
+
+                ComplaintsListBox.ItemsSource = complaints;
+            }
+            else
+            {
+                MessageBox.Show("User ID is not available.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

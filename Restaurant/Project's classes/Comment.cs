@@ -23,6 +23,8 @@ namespace Project_s_classes
         static DataAccess dataAccess = new DataAccess();
 
 
+        public Comment() { }
+
         public Comment(int? menuID, int? userID, string userName, string content, float? rating, DateTime createdAt, bool edited)
         {
             MenuID = menuID;
@@ -61,6 +63,12 @@ namespace Project_s_classes
             CommentID = dataAccess.SaveData(sqlStatement, parameters, true);
         }
 
+        public static IEnumerable<Comment> GetCommentsForMenu(int menuID)
+        {
+            string sql = "SELECT * FROM dbo.Comments WHERE MenuID = @MenuID;";
+            var comments = dataAccess.LoadData<Comment, dynamic>(sql, new { MenuID = menuID });
+            return comments;
+        }
         public void Edit(string newContent)
         {
             Content = newContent;

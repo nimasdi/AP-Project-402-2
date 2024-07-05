@@ -32,6 +32,15 @@ namespace Restaurant
             _menuItem = menuItem;
             _currentUser = currentUser;
             DataContext = _menuItem;
+
+            LoadComments();
+        }
+
+        private void LoadComments()
+        {
+            _menuItem.Comments = Comment.GetCommentsForMenu((int)_menuItem.MenuID).ToList();
+
+            RefreshCommentList();
         }
 
         private void SubmitCommentButton_Click(object sender, RoutedEventArgs e)
