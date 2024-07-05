@@ -174,7 +174,7 @@ namespace Restaurant
                 OnlinePayment(newOrder);
             }
 
-            // Clear cart after checkout
+        
             CartItems.Clear();
             CartListBox.ItemsSource = null;
         }
@@ -240,7 +240,7 @@ namespace Restaurant
                 MessageBox.Show("Order placed successfully. Please pay in cash upon delivery.", "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
-                // Clear cart after checkout
+                
                 CartItems.Clear();
                 CartListBox.ItemsSource = null;
             }
@@ -254,7 +254,7 @@ namespace Restaurant
         {
             _restaurant.PenaltyRevenue += penaltyAmount;
 
-            // Update penalty revenue in the database
+           
             string updateSql = "UPDATE dbo.Restaurants SET PenaltyRevenue = @PenaltyRevenue WHERE RestaurantID = @RestaurantID";
             _dataAccess.SaveData(updateSql, new { PenaltyRevenue = _restaurant.PenaltyRevenue, RestaurantID = _restaurant.RestaurantID });
         }
@@ -382,11 +382,14 @@ namespace Restaurant
             {
                 CartItems.Remove(cartItem);
                 CartListBox.ItemsSource = null;
-                CartListBox.ItemsSource = CartItems; // Refresh the ListBox
+                CartListBox.ItemsSource = CartItems; 
             }
         }
 
+        private void MenuItemsListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
 
+        }
     }
     public class CartItem
     {
