@@ -1,0 +1,107 @@
+﻿<Window x:Class="Restaurant_Pages.ComplaintsSearch"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Restaurant_Pages"
+    mc:Ignorable="d"
+    Title="Complaints" Height="450" Width="800" Background="#2C3E50">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border 
+                                x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                                <ContentPresenter 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2980B9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1E4D6C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="#ECF0F1"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="#ECF0F1"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <!-- Search Section -->
+            <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                <ComboBox x:Name="ComplaintSearchCriteriaComboBox" Width="150" Margin="5" SelectionChanged="ComplaintSearchCriteriaComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Username"/>
+                    <ComboBoxItem Content="Title"/>
+                    <ComboBoxItem Content="First Name"/>
+                    <ComboBoxItem Content="Last Name"/>
+                    <ComboBoxItem Content="Restaurant Name"/>
+                    <ComboBoxItem Content="Status"/>
+                    <ComboBoxItem Content="Latest Complaint"/>
+                    <ComboBoxItem Content="All"/>
+                </ComboBox>
+                <TextBox x:Name="txtSearch" Width="200" Margin="5" TextChanged="txtSearch_TextChanged"/>
+                <Button Content="Search" Width="100" Margin="5" Click="ComplaintSearchButton_Click" Background="#2ECC71"/>
+                <Button Content="Exit" Width="100" Margin="5" Click="ExitButton_Click" Background="#E74C3C"/>
+            </StackPanel>
+
+            <!-- DataGrid to display search results -->
+            <DataGrid x:Name="ComplaintResultsDataGrid" AutoGenerateColumns="False" Margin="10" IsReadOnly="True" SelectionChanged="ComplaintResultsDataGrid_SelectionChanged" Height="283">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ComplaintID}"/>
+                    <DataGridTextColumn Header="User ID" Binding="{Binding UserId}"/>
+                    <DataGridTextColumn Header="Restaurant ID" Binding="{Binding RestaurantId}"/>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

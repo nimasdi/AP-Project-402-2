@@ -1,0 +1,57 @@
+﻿<Window x:Class="Restaurant.SearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Restaurant"
+        mc:Ignorable="d"
+        Title="SearchWindow" Height="500" Width="850"
+        Background="#2C3E50">
+    <Grid Margin="10">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20" Margin="12,10,12,14">
+            <StackPanel>
+                <TextBlock Text="Search Restaurants" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
+
+                
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
+                    <TextBlock Text="Filter:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox x:Name="ServiceTypeComboBox" Width="150" Margin="0,0,20,0">
+                        <ComboBoxItem Content="All" IsSelected="True"/>
+                        <ComboBoxItem Content="Delivery"/>
+                        <ComboBoxItem Content="Dine-In"/>
+                        <ComboBoxItem Content="Restaurant Name"/>
+                        <ComboBoxItem Content="Rating"/>
+                        <ComboBoxItem Content="City"/>
+                    </ComboBox>
+
+                    <Button Content="Search" Width="100" Click="SearchButton_Click" Background="#3498DB" Foreground="White"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Center">
+                    <TextBlock Text="City:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="CityTextBox" Width="150" Margin="0,0,20,0"/>
+
+                    <TextBlock Text="Restaurant Name:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="RestaurantNameTextBox" Width="150" Margin="0,0,20,0"/>
+
+                    <TextBlock Text="Rating:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="MinRatingTextBox" Width="50"/>
+                </StackPanel>
+
+                <ListView x:Name="RestaurantListView" SelectionChanged="RestaurantListView_SelectionChanged" Margin="0,20,0,0" Height="251" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding RestaurantID}" Width="50"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                            <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}" Width="100"/>
+                            <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="200"/>
+                            <GridViewColumn Header="Service Type" DisplayMemberBinding="{Binding ServiceType}" Width="100"/>
+                            <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding AverageRating}" Width="50"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

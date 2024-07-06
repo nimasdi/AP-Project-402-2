@@ -1,0 +1,34 @@
+﻿<Window x:Class="RestaurantPanel.UpdateAvailabilityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantPanel"
+        mc:Ignorable="d"
+        Title="UpdateAvailabilityWindow" Height="450" Width="800"
+        Background="#2C3E50">
+    <Grid Margin="20">
+        <Border Background="#ECF0F1" BorderThickness="1" CornerRadius="10" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Update Food Item Availability" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Content="Select Food Item:" VerticalAlignment="Center"/>
+                    <ListBox x:Name="FoodItemsListBox" SelectionChanged="FoodItemsListBox_SelectionChanged" DisplayMemberPath="ItemName" Width="200" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <TextBlock Text="Selected Item:" FontWeight="Bold" Margin="0,10,0,0"/>
+                <TextBlock Text="Item Name:"/>
+                <TextBox x:Name="ItemNameTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Current Quantity:"/>
+                <TextBox x:Name="CurrentQuantityTextBox" IsReadOnly="True" Margin="0,0,0,10"/>
+
+                <TextBlock Text="New Quantity:"/>
+                <TextBox x:Name="NewQuantityTextBox" Margin="0,0,0,10"/>
+
+                <Button Content="Update" Width="100" Click="UpdateButton_Click" Background="#3498DB" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
