@@ -24,6 +24,7 @@ namespace Restaurant
         private HubConnection _connection;
         private readonly string _sender;
 
+
         public ChatWindow(bool isAdmin)
         {
             InitializeComponent();

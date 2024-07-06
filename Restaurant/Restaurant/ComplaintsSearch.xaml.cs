@@ -27,9 +27,16 @@ namespace Restaurant_Pages
         public ComplaintsSearch()
         {
             InitializeComponent();
+            LoadComplaints();   
         }
 
         static DataAccess dataAccess = new DataAccess();
+
+        private void LoadComplaints()
+        {
+            var complaints = dataAccess.LoadData<Complaint, dynamic>("SELECT * FROM dbo.Complaints", new { });
+            ComplaintResultsDataGrid.ItemsSource = complaints;
+        }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
