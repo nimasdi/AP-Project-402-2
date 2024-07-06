@@ -106,7 +106,7 @@ namespace Restaurant
         }
 
         
-        /// TODO: also delete the respone to the comment.
+
         private void DeleteCommentButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;

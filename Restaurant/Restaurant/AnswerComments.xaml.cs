@@ -29,6 +29,7 @@ namespace Restaurant
         {
             InitializeComponent();
             dataAccess = new DataAccess();
+            UpdateDataGrid();
         }
 
         
@@ -37,7 +38,7 @@ namespace Restaurant
         {
 
             var comments = dataAccess.LoadData<Comment, dynamic>("SELECT * FROM dbo.Comments", new { })
-                .Where(comment => comment.AdminResponse == string.Empty);
+                .Where(comment => comment.AdminResponse == string.Empty || comment.AdminResponse == "");
 
             CommentsDataGrid.ItemsSource = comments;
         }

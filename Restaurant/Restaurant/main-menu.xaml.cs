@@ -59,24 +59,31 @@ namespace Restaurant_pages
 
         private async void OnlineSupportButton_Click(object sender, RoutedEventArgs e)
         {
-            var connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5290/chathub")
-                .Build();
-
-            await connection.StartAsync();
-            bool isAdminOnline = await connection.InvokeAsync<bool>("IsAdminOnline");
-
-            if (isAdminOnline)
+            try
             {
-                ChatWindow chatWindow = new ChatWindow(false);
-                chatWindow.Show();
-            }
-            else
-            {
-                MessageBox.Show("No admin is currently online. Please try again later.", "Admin Offline", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+                var connection = new HubConnectionBuilder()
+                    .WithUrl("http://localhost:5290/chathub")
+                    .Build();
 
-            await connection.StopAsync();
+                await connection.StartAsync();
+                bool isAdminOnline = await connection.InvokeAsync<bool>("IsAdminOnline");
+
+                if (isAdminOnline)
+                {
+                    ChatWindow chatWindow = new ChatWindow(false);
+                    chatWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("No admin is currently online. Please try again later.", "Admin Offline", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                await connection.StopAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void TrackButton_Click(object sender, RoutedEventArgs e)
