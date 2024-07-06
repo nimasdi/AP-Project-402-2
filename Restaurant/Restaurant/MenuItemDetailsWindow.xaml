@@ -129,14 +129,14 @@
 
             <GroupBox Header="Add/Edit Comment" Grid.Row="1" Grid.Column="0" Margin="0,20,0,0">
                 <StackPanel Margin="10">
-                    <TextBox x:Name="CommentTextBox" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10" Height="100" Background="{StaticResource SecondaryBrush}"/>
+                    <TextBox x:Name="CommentTextBox" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10" Height="100" Background="{StaticResource SecondaryBrush}" TextChanged="CommentTextBox_TextChanged"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                         <TextBlock Text="Rating:" VerticalAlignment="Center"/>
                         <Slider x:Name="RatingSlider" Width="100" Minimum="1" Maximum="5" TickFrequency="0.5" Value="5"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="SubmitCommentButton" Content="Submit" Width="100"/>
-                        <Button x:Name="SubmitEditedCommentButton" Content="Submit Edited Comment" Width="150"/>
+                        <Button x:Name="SubmitCommentButton" Content="Submit" Width="100" Click="SubmitCommentButton_Click"/>
+                        <Button x:Name="SubmitEditedCommentButton" Content="Submit Edited Comment" Width="150" Click="SubmitEditedCommentButton_Click"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

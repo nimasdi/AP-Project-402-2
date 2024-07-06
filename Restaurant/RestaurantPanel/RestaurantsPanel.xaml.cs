@@ -93,6 +93,12 @@ namespace RestaurantPanel
             mainWindow.Show();
             this.Close();
         }
+
+        private void ChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            RestaurantChangePassword changePassword = new RestaurantChangePassword(_currentRestaurant);
+            changePassword.Show();
+        }
     }
 }
 

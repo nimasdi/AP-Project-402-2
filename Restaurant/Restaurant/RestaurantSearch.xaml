@@ -91,33 +91,34 @@
     </Window.Resources>
 
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="10,10,10,10">
-            <!-- Search Section -->
+        <StackPanel Orientation="Vertical" Margin="24,14,24,20" Background="White">
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
-                <ComboBox x:Name="SearchCriteriaComboBox" Width="150" Margin="5">
+                <ComboBox x:Name="SearchCriteriaComboBox" Width="150" Margin="5" Height="24">
                     <ComboBoxItem Content="Name"/>
                     <ComboBoxItem Content="City"/>
                     <ComboBoxItem Content="Rating"/>
                     <ComboBoxItem Content="Have Complaints"/>
                 </ComboBox>
-                <TextBox x:Name="txtSearch" Width="200" Margin="5"/>
+                <TextBox x:Name="txtSearch" Width="200" Margin="5" Height="24"/>
                 <Button Content="Search" Width="100" Margin="5" Click="SearchButton_Click" Background="#3498DB" Foreground="White"/>
                 <Button Content="Exit" Width="100" Margin="5" Click="ExitButton_Click" Background="#E74C3C" Foreground="White"/>
             </StackPanel>
 
-            <!-- DataGrid to display search results -->
-            <DataGrid x:Name="ResultsDataGrid" AutoGenerateColumns="False" Margin="10" SelectionChanged="ResultsDataGrid_SelectionChanged" CellEditEnding="ResultsDataGrid_CellEditEnding" Height="313">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding RestaurantID}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="City" Binding="{Binding City}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Average Rating" Binding="{Binding AverageRating}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Username" Binding="{Binding UserName}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Password" Binding="{Binding Password}" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Header="Reservation Available" Binding="{Binding IsReservationEnabled}" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListView x:Name="RestaurantListView" SelectionChanged="RestaurantListView_SelectionChanged" Margin="0,20,0,0" Height="313" Background="Black" Width="748">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding RestaurantID}" Width="50"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}" Width="100"/>
+                        <GridViewColumn Header="User Name" DisplayMemberBinding="{Binding UserName}" Width="100"/>
+                        <GridViewColumn Header="Service Type" DisplayMemberBinding="{Binding ServiceType}" Width="100"/>
+                        <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding AverageRating}" Width="50"/>
+                        <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Password}" Width="70"/>
+                        <GridViewColumn Header="Reservation Enabled" DisplayMemberBinding="{Binding IsReservationEnabled}" Width="120"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
     </Grid>
 </Window>
