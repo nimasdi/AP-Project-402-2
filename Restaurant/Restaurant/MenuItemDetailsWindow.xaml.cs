@@ -106,6 +106,7 @@ namespace Restaurant
         }
 
         
+
         private void DeleteCommentButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
