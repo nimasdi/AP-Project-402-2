@@ -49,6 +49,8 @@ namespace RestaurantPanel
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            
             var restaurant = (Restaurants)DataContext; 
 
             string sql = "UPDATE dbo.Restaurants SET IsReservationEnabled = @IsReservationEnabled WHERE RestaurantID = @RestaurantID";

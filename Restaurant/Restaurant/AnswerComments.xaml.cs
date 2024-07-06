@@ -68,10 +68,8 @@ namespace Restaurant
                     {
                         using (var connection = new SqlConnection(dataAccess.ConnectionString))
                         {
-                            string updateQuery = @"UPDATE dbo.Comments 
-                                           SET AdminResponse = @AdminResponse, 
-                                               ResponseDate = @ResponseDate 
-                                           WHERE CommentID = @CommentID";
+                            string updateQuery = @"UPDATE dbo.Comments  SET AdminResponse = @AdminResponse, 
+                                               ResponseDate = @ResponseDate WHERE CommentID = @CommentID";
 
                             var parameters = new
                             {
