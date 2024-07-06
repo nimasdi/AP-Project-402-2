@@ -376,6 +376,11 @@ namespace Restaurant
                     return false;
             }
         }
+
+        private void MenuItemsListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class CartItem
