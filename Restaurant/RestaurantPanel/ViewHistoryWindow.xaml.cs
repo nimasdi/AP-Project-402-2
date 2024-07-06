@@ -38,18 +38,19 @@ namespace RestaurantPanel
         private void LoadHistory()
         {
             string sql = @"
-            SELECT 
-                o.OrderID AS ID, 
-                u.Username AS Username, 
-                o.OrderDate AS Date, 
-                'Order' AS Type, 
-                o.Status AS Status, 
-                o.PaymentMethod AS PaymentMethod, 
-                o.TotalAmount AS Price
-            FROM dbo.Orders o
-            INNER JOIN dbo.Users u ON o.UserID = u.UserID
-            WHERE o.RestaurantID = @RestaurantID
-            ORDER BY Date DESC;";
+    SELECT 
+        o.OrderID AS ID, 
+        u.Username AS Username, 
+        u.MobileNumber AS MobileNumber, 
+        o.OrderDate AS Date, 
+        CASE WHEN o.IsReservation = 1 THEN 'Reservation' ELSE 'Order' END AS Type, 
+        o.Status AS Status, 
+        o.PaymentMethod AS PaymentMethod, 
+        o.TotalAmount AS Price
+    FROM dbo.Orders o
+    INNER JOIN dbo.Users u ON o.UserID = u.UserID
+    WHERE o.RestaurantID = @RestaurantID
+    ORDER BY Date DESC;";
 
             _historyData = _dataAccess.LoadData<dynamic, dynamic>(sql, new { RestaurantID = _restaurantId });
 
@@ -57,6 +58,7 @@ namespace RestaurantPanel
 
             CalculateAndDisplayMetrics(_historyData);
         }
+
 
         private void LoadAdditionalMetrics()
         {
@@ -132,11 +134,11 @@ namespace RestaurantPanel
         private void ExportCSVButton_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder csvContent = new StringBuilder();
-            csvContent.AppendLine("ID,Username,Date,Type,Status,PaymentMethod,Price");
+            csvContent.AppendLine("ID,Username,MobileNumber,Date,Type,Status,PaymentMethod,Price");
 
             foreach (var item in _historyData)
             {
-                csvContent.AppendLine($"{item.ID},{item.Username},{item.Date},{item.Type},{item.Status},{item.PaymentMethod},{item.Price}");
+                csvContent.AppendLine($"{item.ID},{item.Username},{item.MobileNumber},{item.Date},{item.Type},{item.Status},{item.PaymentMethod},{item.Price}");
             }
 
             string csvFilePath = "C:\\Users\\s\\Desktop\\tet\\AP-Project-402-2\\history_report.csv";
@@ -151,6 +153,8 @@ namespace RestaurantPanel
                 MessageBox.Show($"Error exporting CSV file: {ex.Message}");
             }
         }
+
+
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
