@@ -54,9 +54,9 @@ namespace Restaurant
 
         private void CheckReservationEligibility()
         {
-            if (_restaurant.AverageRating < 4.5)
+            if (_restaurant.AverageRating < 4.5 || !_restaurant.IsReservationEnabled)
             {
-                _restaurant.IsReservationEnabled = false;
+                //_restaurant.IsReservationEnabled = false;
                 reservationEnabledCheckBox.IsChecked = false;
             }
             else

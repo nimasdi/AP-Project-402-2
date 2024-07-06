@@ -125,6 +125,12 @@ namespace Restaurant
             CommentListBox.ItemsSource = null;
             CommentListBox.ItemsSource = _menuItem.Comments;
         }
+
+
+        private void CommentTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
 

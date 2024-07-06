@@ -2,6 +2,7 @@
 using DBAccess;
 using Microsoft.Data.SqlClient;
 using Project_s_classes;
+using RestaurantPanel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -29,6 +30,7 @@ namespace Restaurant_Pages
         public RestaurantSearch()
         {
             InitializeComponent();
+            LoadRestaurants();  
         }
 
         DataAccess dataAccess = new DataAccess();
@@ -42,7 +44,7 @@ namespace Restaurant_Pages
         private void LoadRestaurants()
         {
             var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
-            ResultsDataGrid.ItemsSource = restaurants;
+            RestaurantListView.ItemsSource = restaurants;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -70,18 +72,18 @@ namespace Restaurant_Pages
                     {
                         case "Name":
                             var filter = Restaurants.Where(x => x.Name == Check);
-                            ResultsDataGrid.ItemsSource = filter;
+                            RestaurantListView.ItemsSource = filter;
                             break;
                         case "City":
                             filter = Restaurants.Where(x => x.City == Check);
-                            ResultsDataGrid.ItemsSource = filter;
+                            RestaurantListView.ItemsSource = filter;
                             break;
                         case "Rating":
                             try
                             {
                                 float rating = float.Parse(Check);
                                 filter = Restaurants.Where(x => x.AverageRating == rating);
-                                ResultsDataGrid.ItemsSource = filter;
+                                RestaurantListView.ItemsSource = filter;
                             }
                             catch(FormatException)
                             {
@@ -90,7 +92,7 @@ namespace Restaurant_Pages
                             break;
                         case "Have Complaints":
                             filter = Restaurants.Where(x => x.haveComplaints == true);  
-                            ResultsDataGrid.ItemsSource = filter;
+                            RestaurantListView.ItemsSource = filter;
                             break;
                         default:
                             break;
@@ -98,58 +100,20 @@ namespace Restaurant_Pages
                 }
             }
         }
-
-        private void ResultsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RestaurantListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-        }
-
-        private void ResultsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (e.Column.Header.ToString() == "Password")
+            try
             {
-                TextBox editedElement = e.EditingElement as TextBox;
-                if (editedElement != null)
+                if(RestaurantListView.SelectedItem is Restaurants selectedRestaurant)
                 {
-                    string newPassword = editedElement.Text;
-                    var selectedRestaurant = (Restaurants)e.Row.Item;
-
-                    bool isValidPassword = newPassword.Length == 8 && Regex.IsMatch(newPassword, @"^\d+$");
-
-                    if (isValidPassword)
-                    {
-                        bool isUniquePassword = true;
-                        var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
-
-                        foreach (var restaurant in restaurants)
-                        {
-                            if (restaurant.Password.ToString() == newPassword && restaurant.RestaurantID != selectedRestaurant.RestaurantID)
-                            {
-                                isUniquePassword = false;
-                                break;
-                            }
-                        }
-
-                        if (isUniquePassword)
-                        {
-                            using (SqlConnection conn = new SqlConnection(dataAccess.ConnectionString))
-                            {
-                                conn.Open();
-                                string query = "UPDATE Restaurants SET Password = @Password WHERE RestaurantID = @RestaurantID";
-                                conn.Execute(query, new { Password = newPassword, RestaurantID = selectedRestaurant.RestaurantID });
-                            }
-                            MessageBox.Show("The password of the restaurant was changed successfully.");
-                        }
-                        else
-                        {
-                            MessageBox.Show("This password has already been used by another restaurant.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("The new password does not meet the requirements (8 digits).");
-                    }
+                    RestaurantsPanel restaurantPanel = new RestaurantsPanel(selectedRestaurant);
+                    restaurantPanel.Show();
+                    this.Close();
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

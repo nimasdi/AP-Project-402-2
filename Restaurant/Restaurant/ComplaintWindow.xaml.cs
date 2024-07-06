@@ -54,6 +54,11 @@ namespace Restaurant
 
             var complaint = new Complaint(null,_userId, selectedRestaurant.RestaurantID, title, description);
 
+            /*
+             * I should put a place to count the complaints for the restuarant
+             */
+
+
 
             MessageBox.Show("Complaint submitted successfully.");
             this.Close();
