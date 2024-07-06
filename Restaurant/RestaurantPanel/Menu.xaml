@@ -19,7 +19,6 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Header Buttons -->
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
                 <Button Content="Add Item" Click="AddItemButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
                 <Button Content="Edit Item" Click="EditItemButton_Click" Width="120" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
@@ -29,13 +28,12 @@
                 <Button Content="Delete Category" Click="DeleteCategoryButton_Click" Width="140" Margin="10" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
             </StackPanel>
 
-            <!-- Menu Categories ListBox -->
             <ListBox x:Name="MenuCategoriesListBox" SelectionChanged="MenuCategoriesListBox_SelectionChanged" Grid.Row="1" Grid.Column="0" Margin="5"
                      Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
-                <!-- Style ListBox items if necessary -->
+
             </ListBox>
 
-            <!-- Menu Items ListView -->
+
             <ListView x:Name="MenuItemsListView" SelectionChanged="MenuItemsListView_SelectionChanged" Grid.Row="1" Grid.Column="1" Margin="5"
                       Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
                 <ListView.View>
@@ -51,7 +49,7 @@
                 </ListView.View>
             </ListView>
 
-            <!-- Comments ListBox -->
+
             <ListBox x:Name="CommentsListBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="5"
                      Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
             </ListBox>

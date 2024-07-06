@@ -66,22 +66,41 @@ namespace RestaurantPanel
                     {
                         if (password != CurrentPasswordTextBox.Text)
                         {
-                            try
-                            {
-                                int pass = int.Parse(password);
-                                _currentRestaurant.Password = pass;
-                                string sql = "UPDATE dbo.Restaurants SET Password = @Password WHERE RestaurantID = @RestaurantID";
-                                _dataAccess.SaveData(sql, new { Password = _currentRestaurant.Password, RestaurantID = _currentRestaurant.RestaurantID });
-                                MessageBox.Show("Password got updated successfully");
+                            bool available = false;
+                            var restaurants = _dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
 
-                            }
-                            catch(FormatException ex)
+                            foreach(var restaurant in restaurants)
                             {
-                                MessageBox.Show(ex.Message);
+                                if(restaurant.RestaurantID.ToString() == password)
+                                {
+                                    available = true;
+                                    break;
+                                }
                             }
-                            catch (Exception ex)
+
+                            if (!available) 
                             {
-                                MessageBox.Show(ex.Message);
+                                try
+                                {
+                                    int pass = int.Parse(password);
+                                    _currentRestaurant.Password = pass;
+                                    string sql = "UPDATE dbo.Restaurants SET Password = @Password WHERE RestaurantID = @RestaurantID";
+                                    _dataAccess.SaveData(sql, new { Password = _currentRestaurant.Password, RestaurantID = _currentRestaurant.RestaurantID });
+                                    MessageBox.Show("Password got updated successfully");
+
+                                }
+                                catch (FormatException ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("The new password has already been used by another restaurant, please try again");
                             }
                         }
                         else
