@@ -20,10 +20,15 @@ namespace Restaurant
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataAccess data;
         public MainWindow()
         {
+            data = new DataAccess();
             InitializeComponent();
+            
         }
+
+        
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {

@@ -14,9 +14,11 @@ using System.Windows.Shapes;
 using DBAccess;
 using Microsoft.Data.SqlClient;
 using Project_s_classes;
+using DBAccess;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Net.Mail;
 using System.Net;
+using System.Xml.Linq;
 
 namespace Restaurant
 {
@@ -32,7 +34,7 @@ namespace Restaurant
         public Dictionary<string, List<Project_s_classes.Menu>> MenuItemsByCategory { get; set; }
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
-        public bool IsReservationButtonVisible => _restaurant.AverageRating >= 4.5;
+        public bool IsReservationButtonVisible;
 
         public RestaurantDetailsWindow(Restaurants restaurant, Users currentUser)
         {
@@ -46,6 +48,8 @@ namespace Restaurant
             MenuCategoriesListBox.ItemsSource = MenuItemsByCategory.Keys;
 
             CheckReservationEligibility();
+            LoadInfo();
+
         }
 
         private void CheckReservationEligibility()
@@ -53,7 +57,20 @@ namespace Restaurant
             if (_restaurant.AverageRating < 4.5)
             {
                 _restaurant.IsReservationEnabled = false;
+                reservationEnabledCheckBox.IsChecked = false;
             }
+            else
+            {
+                reservationEnabledCheckBox.IsChecked = true;
+            }
+        }
+
+        private void LoadInfo()
+        {
+            txtName.Text = _restaurant.Name;
+            txtCity.Text = _restaurant.City;
+            txtAddress.Text = _restaurant.Address;
+            txtAverageRating.Text = _restaurant.AverageRating.ToString();
         }
 
         private Dictionary<string, List<Project_s_classes.Menu>> GetMenuItemsForRestaurant(int restaurantId)
@@ -111,8 +128,10 @@ namespace Restaurant
             {
                 var menuItemDetailsWindow = new MenuItemDetailsWindow(selectedMenu, _currentUser);
                 menuItemDetailsWindow.ShowDialog();
+
             }
         }
+
 
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
@@ -156,20 +175,52 @@ namespace Restaurant
                 OnlinePayment(newOrder);
             }
 
-            // Clear cart after checkout
             CartItems.Clear();
             CartListBox.ItemsSource = null;
         }
 
-        private void UpdateMenuItemQuantity(int menuID, int quantityPurchased)
+        private void UpdateMenuItemQuantity(int menuID, int quantityOrdered)
         {
-            var menuItem = MenuItemsByCategory.Values.SelectMany(list => list).FirstOrDefault(m => m.MenuID == menuID);
-            if (menuItem != null)
-            {
-                menuItem.QuantityAvailable -= quantityPurchased;
+            var sql = "UPDATE dbo.Menus SET QuantityAvailable = QuantityAvailable - @QuantityOrdered WHERE MenuID = @MenuID";
+            _dataAccess.SaveData(sql, new { QuantityOrdered = quantityOrdered, MenuID = menuID });
 
-                string updateSql = "UPDATE dbo.Menus SET QuantityAvailable = @QuantityAvailable WHERE MenuID = @MenuID";
-                _dataAccess.SaveData(updateSql, new { QuantityAvailable = menuItem.QuantityAvailable, MenuID = menuItem.MenuID });
+            foreach (var category in MenuItemsByCategory.Values)
+            {
+                var item = category.FirstOrDefault(menu => menu.MenuID == menuID);
+                if (item != null)
+                {
+                    item.QuantityAvailable -= quantityOrdered;
+                    break;
+                }
+            }
+        }
+
+
+        private decimal GetItemPrice(int menuID)
+        {
+            foreach (var category in MenuItemsByCategory.Values)
+            {
+                var item = category.FirstOrDefault(menu => menu.MenuID == menuID);
+                if (item != null)
+                {
+                    return item.Price ?? 0;
+                }
+            }
+            return 0;
+        }
+
+
+        private void OnlinePayment(Order order)
+        {
+            try
+            {
+                string verificationCode = GenerateOrderCode(_currentUser.UserID, _restaurant.RestaurantID);
+                SendEmail(_currentUser.Email, "Order Confirmation", verificationCode, order.TotalAmount, CartItems, out string emailMessage);
+                MessageBox.Show(emailMessage, "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to send payment instructions. Please try again.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -205,12 +256,8 @@ namespace Restaurant
 
                 MessageBox.Show("Order placed successfully. Please pay in cash upon delivery.", "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Clear cart after checkout
                 CartItems.Clear();
                 CartListBox.ItemsSource = null;
-
-                _currentUser.IncrementReservationCount();
-
             }
             else
             {
@@ -218,30 +265,88 @@ namespace Restaurant
             }
         }
 
-        private decimal GetItemPrice(int menuID)
+
+
+        public void HandleReservationCancellation(decimal penaltyAmount)
         {
-            foreach (var category in MenuItemsByCategory.Values)
-            {
-                var item = category.FirstOrDefault(menu => menu.MenuID == menuID);
-                if (item != null)
-                {
-                    return item.Price ?? 0;
-                }
-            }
-            return 0;
+            _restaurant.PenaltyRevenue += penaltyAmount;
+
+           
+            string updateSql = "UPDATE dbo.Restaurants SET PenaltyRevenue = @PenaltyRevenue WHERE RestaurantID = @RestaurantID";
+            _dataAccess.SaveData(updateSql, new { PenaltyRevenue = _restaurant.PenaltyRevenue, RestaurantID = _restaurant.RestaurantID });
         }
 
-        private void OnlinePayment(Order order)
+        private bool IsUserEligibleForReservation()
         {
+            var today = DateTime.Today;
+
+            if (_currentUser.ServiceExpiration == null || _currentUser.ServiceExpiration < today)
+            {
+                return false;
+            }
+
+            switch (_currentUser.UserType)
+            {
+                case "Bronze":
+                    return _currentUser.ReservationsMadeThisMonth < 2;
+                case "Silver":
+                    return _currentUser.ReservationsMadeThisMonth < 5;
+                case "Gold":
+                    return _currentUser.ReservationsMadeThisMonth < 15;
+                default:
+                    return false;
+            }
+        }
+
+        private string GenerateOrderCode(int? userId, int? restaurantId)
+        {
+            var random = new Random();
+            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            return $"{userId}-{restaurantId}-{timestamp}-{random.Next(1000, 9999)}";
+        }
+
+        private void SendEmail(string email, string subject, string code, decimal? totalAmount, List<CartItem> cartItems, out string message)
+        {
+            message = "";
             try
             {
-                string verificationCode = GenerateOrderCode(_currentUser.UserID, _restaurant.RestaurantID);
-                SendEmail(_currentUser.Email, "Order Confirmation", verificationCode, order.TotalAmount, CartItems, out string emailMessage);
-                MessageBox.Show(emailMessage, "Order Placed", MessageBoxButton.OK, MessageBoxImage.Information);
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("alexcruso84@gmail.com");
+                mail.To.Add(email);
+                mail.Subject = subject;
+
+
+                StringBuilder body = new StringBuilder();
+                body.AppendLine("Thank you for your order!");
+                body.AppendLine("Your order code is: " + code);
+                body.AppendLine();
+                body.AppendLine("Purchase Details:");
+                body.AppendLine("----------------------------");
+
+                foreach (var item in cartItems)
+                {
+                    body.AppendLine($"Item: {item.ItemName}, Quantity: {item.Quantity}, Price: {GetItemPrice(item.MenuID):C}");
+                }
+
+                body.AppendLine();
+                body.AppendLine($"Total Amount: {totalAmount:C}");
+
+                mail.Body = body.ToString();
+
+
+
+                smtpClient.Port = 587;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(mail);
+
+                message = "Order confirmation email sent.";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to send payment instructions. Please try again.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                message = "Error sending verification email: " + ex.Message;
             }
         }
 
@@ -288,96 +393,21 @@ namespace Restaurant
                 MessageBox.Show("Please enter a valid quantity.", "Invalid Quantity", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
         private void DeleteCartItemButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is CartItem cartItem)
             {
                 CartItems.Remove(cartItem);
                 CartListBox.ItemsSource = null;
-                CartListBox.ItemsSource = CartItems; // Refresh the ListBox
+                CartListBox.ItemsSource = CartItems; 
             }
         }
 
-        private string GenerateOrderCode(int? userId, int? restaurantId)
+        private void MenuItemsListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            var random = new Random();
-            var timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            return $"{userId}-{restaurantId}-{timestamp}-{random.Next(1000, 9999)}";
-        }
 
-        private void SendEmail(string email, string subject, string code, decimal? totalAmount, List<CartItem> cartItems, out string message)
-        {
-            message = "";
-            try
-            {
-                MailMessage mail = new MailMessage();
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("alexcruso84@gmail.com");
-                mail.To.Add(email);
-                mail.Subject = subject;
-
-                StringBuilder body = new StringBuilder();
-                body.AppendLine("Thank you for your order!");
-                body.AppendLine("Your order code is: " + code);
-                body.AppendLine();
-                body.AppendLine("Purchase Details:");
-                body.AppendLine("----------------------------");
-
-                foreach (var item in cartItems)
-                {
-                    body.AppendLine($"Item: {item.ItemName}, Quantity: {item.Quantity}, Price: {GetItemPrice(item.MenuID):C}");
-                }
-
-                body.AppendLine();
-                body.AppendLine($"Total Amount: {totalAmount:C}");
-
-                smtpClient.Port = 587;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("alexcruso84@gmail.com", "rycp jqwz hlib qpuk");
-                smtpClient.EnableSsl = true;
-                smtpClient.Send(mail);
-
-                message = "Order confirmation email sent.";
-            }
-            catch (Exception ex)
-            {
-                message = "Error sending verification email: " + ex.Message;
-            }
-        }
-
-        public void HandleReservationCancellation(decimal penaltyAmount)
-        {
-            _restaurant.PenaltyRevenue += penaltyAmount;
-
-            // Update penalty revenue in the database
-            string updateSql = "UPDATE dbo.Restaurants SET PenaltyRevenue = @PenaltyRevenue WHERE RestaurantID = @RestaurantID";
-            _dataAccess.SaveData(updateSql, new { PenaltyRevenue = _restaurant.PenaltyRevenue, RestaurantID = _restaurant.RestaurantID });
-        }
-
-        private bool IsUserEligibleForReservation()
-        {
-            var today = DateTime.Today;
-
-            if (_currentUser.ServiceExpiration == null || _currentUser.ServiceExpiration < today)
-            {
-                return false;
-            }
-
-            switch (_currentUser.UserType)
-            {
-                case "Bronze":
-                    return _currentUser.ReservationsMadeThisMonth < 2;
-                case "Silver":
-                    return _currentUser.ReservationsMadeThisMonth < 5;
-                case "Gold":
-                    return _currentUser.ReservationsMadeThisMonth < 15;
-                default:
-                    return false;
-            }
         }
     }
-
     public class CartItem
     {
         public int MenuID { get; set; }

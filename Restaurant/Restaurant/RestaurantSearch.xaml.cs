@@ -36,6 +36,13 @@ namespace Restaurant_Pages
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            LoadRestaurants();
+        }
+
+        private void LoadRestaurants()
+        {
+            var restaurants = dataAccess.LoadData<Restaurants, dynamic>("SELECT * FROM dbo.Restaurants", new { });
+            ResultsDataGrid.ItemsSource = restaurants;
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)

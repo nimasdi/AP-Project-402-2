@@ -43,11 +43,11 @@ namespace Restaurant
         {
             if (ComplaintsDataGrid.SelectedItem is Complaint selectedComplaint)
             {
-                MessageBox.Show($"Selected Complaint ID: {selectedComplaint.ComplaintID}");
+                //MessageBox.Show($"Selected Complaint ID: {selectedComplaint.ComplaintID}");
             }
             else
             {
-                MessageBox.Show("No item selected");
+                //
             }
         }
 

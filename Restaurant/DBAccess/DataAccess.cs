@@ -17,7 +17,7 @@ namespace DBAccess
     {
         string jsonFile = "appsetting.json";
         private readonly string _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\s\Desktop\tet\AP-Project-402-2\RestaurantDB\RestaurantDB.mdf;Integrated Security=True;Connect Timeout=30";
-        
+
         public string ConnectionString
         {
             get => this._connectionString;

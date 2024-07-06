@@ -69,6 +69,7 @@ namespace Restaurant_Pages
             ChatWindow chatWindow = new ChatWindow(isAdmin: true);
             chatWindow.Show();
         }
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
@@ -80,12 +81,14 @@ namespace Restaurant_Pages
                 MessageBox.Show($"Failed to set admin offline: {ex.Message}");
             }
         }
+        
 
         private void AnswerCommeentsButton_Click(object sender, RoutedEventArgs e)
         {
             AnswerComments commentTemplate = new AnswerComments();
             commentTemplate.Show();
         }
+        
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
@@ -93,5 +96,6 @@ namespace Restaurant_Pages
             mainWindow.Show();
             this.Close();
         }
+
     }
 }
