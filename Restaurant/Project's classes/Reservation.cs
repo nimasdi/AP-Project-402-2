@@ -19,6 +19,9 @@ namespace Project_s_classes
         public string ServiceType { get; set; }
         static DataAccess dataAccess = new DataAccess();
 
+
+        public Reservation() { }
+
         public Reservation(int? reservationId,int? userID, int? restaurantID, int duration, string status, string serviceType)
         {
             ReservationID = reservationId;

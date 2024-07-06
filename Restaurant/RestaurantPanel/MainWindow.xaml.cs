@@ -28,10 +28,16 @@ namespace RestaurantPanel
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
+            if (!int.TryParse(password, out int passwordAsInt))
+            {
+                MessageBox.Show("Password must be numeric. Please try again.", "Invalid Password", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             DataAccess dataAccess = new DataAccess();
 
             string sqlAdmin = "SELECT * FROM dbo.Restaurants WHERE UserName = @UserName AND Password = @Password";
-            List<Restaurants> restaurants = dataAccess.LoadData<Restaurants, dynamic>(sqlAdmin, new { UserName = username, Password = password });
+            List<Restaurants> restaurants = dataAccess.LoadData<Restaurants, dynamic>(sqlAdmin, new { UserName = username, Password = passwordAsInt });
 
             if (restaurants.Count > 0)
             {
@@ -45,6 +51,5 @@ namespace RestaurantPanel
 
             MessageBox.Show("Invalid username or password. Please try again.");
         }
-
     }
 }

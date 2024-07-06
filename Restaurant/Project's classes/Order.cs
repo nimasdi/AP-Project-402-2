@@ -40,5 +40,26 @@ namespace Project_s_classes
                                   " VALUES(@UserId , @RestaurantId, @OrderDate, @TotalAmount, @PaymentMethod, @Status, @Rating, @Comment, @IsReservation);";
             this.OrderId = dataAccess.SaveData(sqlStatement, this, true);
         }
+
+        public static List<Order> GetPendingReservations()
+        {
+            string sqlStatement = "SELECT * FROM dbo.Orders WHERE IsReservation = 1 AND Status <> 'canceled'";
+            return dataAccess.LoadData<Order, dynamic>(sqlStatement, new { });
+        }
+
+        public void Cancel()
+        {
+            if (Status != "canceled")
+            {
+                Status = "canceled";
+                decimal penalty = (decimal)(TotalAmount * 0.3m);
+
+                string updateOrderSql = "UPDATE dbo.Orders SET Status = 'canceled' WHERE OrderId = @OrderId";
+                dataAccess.SaveData(updateOrderSql, new { OrderId });
+
+                string updatePenaltySql = "UPDATE dbo.Restaurants SET PenaltyRevenue = PenaltyRevenue + @Penalty WHERE RestaurantId = @RestaurantId";
+                dataAccess.SaveData(updatePenaltySql, new { Penalty = penalty, RestaurantId });
+            }
+        }
     }
 }
