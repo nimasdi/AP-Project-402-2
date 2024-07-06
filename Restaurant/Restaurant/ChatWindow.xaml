@@ -6,34 +6,45 @@
         xmlns:local="clr-namespace:Restaurant"
         mc:Ignorable="d"
         Title="ChatWindow" Height="700" Width="1000">
-    <Grid>
+    <Grid Background="#F0F0F0">
         <TextBlock Text="Chat" 
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Margin="47,10,0,0"
-                   FontSize="24"
+                   Margin="20,10,0,0"
+                   FontSize="28"
                    FontWeight="Bold"/>
+
         <ListBox Name="ChatListBox"
-                 HorizontalAlignment="Left"
+                 HorizontalAlignment="Stretch"
                  VerticalAlignment="Top"
-                 Width="896"
-                 Height="366"
-                 Margin="47,53,0,0"/>
+                 Width="960"
+                 Height="500"
+                 Margin="20,50,20,0"
+                 Background="White"
+                 BorderBrush="#CCCCCC"
+                 BorderThickness="1"
+                 Padding="10"/>
 
         <TextBox Name="MessageTextBox" 
                  HorizontalAlignment="Left" 
-                 Height="100" 
                  VerticalAlignment="Top" 
-                 Width="580" 
-                 Margin="220,442,0,0" 
-                 TextWrapping="Wrap"/>
+                 Width="760" 
+                 Height="80" 
+                 Margin="20,570,0,0" 
+                 TextWrapping="Wrap"
+                 Padding="10"/>
+
         <Button Name="SendButton" 
                 Content="Send" 
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Width="580" 
-                Height="30" 
-                Margin="220,569,0,0" 
+                Width="160" 
+                Height="80" 
+                Margin="800,570,20,0"
+                Background="#007ACC"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="Bold"
                 Click="SendButton_Click"/>
     </Grid>
 </Window>

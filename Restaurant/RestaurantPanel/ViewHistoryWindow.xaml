@@ -13,14 +13,52 @@
                 <StackPanel>
                     <TextBlock Text="Order History" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center" Foreground="#34495E"/>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <Label Content="Filter:" VerticalAlignment="Center"/>
-                        <TextBox x:Name="FilterTextBox" Width="200" Margin="5"/>
-                        <Button Content="Apply Filter" Click="ApplyFilterButton_Click" Margin="5"/>
-                        <Button Content="Export CSV" Click="ExportCSVButton_Click" Margin="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center">
+                        <Label Content="Filter by:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="Username:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBox x:Name="UsernameFilterTextBox" Width="150" Margin="0,0,10,0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="Type:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <ComboBox x:Name="TypeFilterComboBox" Width="100" Margin="0,0,10,0">
+                                <ComboBoxItem Content="All"/>
+                                <ComboBoxItem Content="Order"/>
+                                <ComboBoxItem Content="Reservation"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="Start Date:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <DatePicker x:Name="StartDatePicker" Width="150" Margin="0,0,10,0" SelectedDate="{Binding StartDate, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Content="End Date:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <DatePicker x:Name="EndDatePicker" Width="150" Margin="0,0,10,0" SelectedDate="{Binding EndDate, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <Button Content="Apply Filter" Click="ApplyFilterButton_Click" Margin="10,0"/>
+
+                        <Button Content="Export CSV" Click="ExportCSVButton_Click" Margin="10,0"/>
                     </StackPanel>
 
-                    <TextBlock x:Name="MetricsTextBlock" Margin="0,0,0,10"/>
+                    <StackPanel Margin="0,20,0,10">
+                        <TextBlock x:Name="MetricsTextBlock" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Additional Metrics:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Min Priced Order: " VerticalAlignment="Center"/>
+                            <TextBlock x:Name="MinPricedOrderTextBlock" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Max Priced Order: " VerticalAlignment="Center"/>
+                            <TextBlock x:Name="MaxPricedOrderTextBlock" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
 
                     <DataGrid x:Name="HistoryDataGrid" AutoGenerateColumns="True" Margin="0,0,0,10"/>
 
