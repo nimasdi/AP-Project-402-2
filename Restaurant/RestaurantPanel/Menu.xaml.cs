@@ -23,6 +23,7 @@ namespace RestaurantPanel
     {
         private readonly int _restaurantId;
         private readonly DataAccess _dataAccess;
+        private Comment _selectedComment;
 
         public Menu(int restaurantId)
         {
@@ -72,6 +73,41 @@ namespace RestaurantPanel
 
             CommentsListBox.ItemsSource = comments;
         }
+
+        private void CommentsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CommentsListBox.SelectedItem is Comment selectedComment)
+            {
+                _selectedComment = selectedComment;
+                AdminResponseTextBox.Text = selectedComment.AdminResponse;
+            }
+        }
+
+        private void SaveResponseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedComment != null)
+            {
+                _selectedComment.AdminResponse = AdminResponseTextBox.Text;
+                _selectedComment.ResponseDate = DateTime.Now;
+
+                string sql = @"UPDATE dbo.Comments 
+                       SET AdminResponse = @AdminResponse, ResponseDate = @ResponseDate 
+                       WHERE CommentID = @CommentID";
+
+                _dataAccess.SaveData(sql, new
+                {
+                    _selectedComment.AdminResponse,
+                    _selectedComment.ResponseDate,
+                    _selectedComment.CommentID
+                });
+
+                LoadComments((int)_selectedComment.MenuID);
+                AdminResponseTextBox.Clear();
+            }
+        }
+
+
+
 
         private void AddItemButton_Click(object sender, RoutedEventArgs e)
         {

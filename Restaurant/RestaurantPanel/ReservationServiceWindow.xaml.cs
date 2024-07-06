@@ -43,15 +43,22 @@ namespace RestaurantPanel
             if (restaurant != null)
             {
                 AverageRatingTextBox.Text = restaurant.AverageRating.ToString();
-                DataContext = restaurant; 
+                EnableReservationCheckBox.IsChecked = restaurant.IsReservationEnabled;
+                DataContext = restaurant;
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            
-            var restaurant = (Restaurants)DataContext; 
+            var restaurant = (Restaurants)DataContext;
+
+            if (EnableReservationCheckBox.IsChecked == true && restaurant.AverageRating < MinRatingForReservation)
+            {
+                MessageBox.Show($"Cannot enable reservation service. The average rating must be at least {MinRatingForReservation}.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            restaurant.IsReservationEnabled = EnableReservationCheckBox.IsChecked == true;
 
             string sql = "UPDATE dbo.Restaurants SET IsReservationEnabled = @IsReservationEnabled WHERE RestaurantID = @RestaurantID";
             _dataAccess.SaveData(sql, new { IsReservationEnabled = restaurant.IsReservationEnabled, RestaurantID = _restaurantId });

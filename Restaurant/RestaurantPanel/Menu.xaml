@@ -13,6 +13,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -50,9 +51,27 @@
             </ListView>
 
 
-            <ListBox x:Name="CommentsListBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="5"
+            <ListBox x:Name="CommentsListBox" SelectionChanged="CommentsListBox_SelectionChanged" Grid.Row="2" Grid.ColumnSpan="2" Margin="5"
                      Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="{Binding UserName}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Content}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding CreatedAt, StringFormat=MM/dd/yyyy}" Foreground="Gray"/>
+                            <TextBlock Text="{Binding Rating, StringFormat=Rating: {0:N1}}" Foreground="Goldenrod"/>
+                            <TextBlock Text="Response: " Foreground="Black"/>
+                            <TextBlock Text="{Binding AdminResponse}" Foreground="Green"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
+
+            <!-- Admin Response TextBox and Button -->
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
+                <TextBox x:Name="AdminResponseTextBox" Width="400" Height="30" Margin="5" />
+                <Button Content="Save Response" Click="SaveResponseButton_Click" Width="120" Margin="5" Background="#3498DB" Foreground="White" FontWeight="Bold"/>
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 </Window>

@@ -60,7 +60,20 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <DataGrid x:Name="HistoryDataGrid" AutoGenerateColumns="True" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="HistoryDataGrid" AutoGenerateColumns="False" Margin="0,0,0,10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
+                            <DataGridTextColumn Header="Mobile Number" Binding="{Binding MobileNumber}"/>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                            <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod}"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
 
                     <Button Content="Close" Click="CloseButton_Click" Height="30" Width="100" Background="#3498DB" Foreground="White" HorizontalAlignment="Center"/>
                 </StackPanel>
