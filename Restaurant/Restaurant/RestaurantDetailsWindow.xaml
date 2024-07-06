@@ -66,7 +66,7 @@
 
 
             <GroupBox Header="Menu Items" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,10" Height="300" Foreground="White">
-                <ListView x:Name="MenuItemsListView" Margin="10" SelectionMode="Single" MouseDoubleClick="MenuItemsListView_MouseDoubleClick" SelectionChanged="MenuItemsListView_SelectionChanged_1">
+                <ListView x:Name="MenuItemsListView" Margin="10" SelectionMode="Single" MouseDoubleClick="MenuItemsListView_MouseDoubleClick" SelectionChanged="MenuItemsListView_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Item Name" Width="200" DisplayMemberBinding="{Binding ItemName}"/>
