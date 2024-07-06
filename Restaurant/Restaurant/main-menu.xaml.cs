@@ -96,6 +96,13 @@ namespace Restaurant_pages
             ChangePasswordUser changePasswordUser = new ChangePasswordUser(_currentUser);
             changePasswordUser.Show();
         }
+
+        private void ReservationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationWindow reservationWindow = new ReservationWindow((int)_currentUser.UserID);
+            reservationWindow.Show();
+        }
+    
     }
     
 }

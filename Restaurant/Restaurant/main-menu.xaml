@@ -21,13 +21,15 @@
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center" Width="480">
                     <Button Content="Complaint" Width="150" Height="40" Click="ComplaintButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold"/>
-                    <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <Button Content="Reservations" Width="150" Height="40" Margin="10" Click="ReservationsButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                     <Button Content="Change Password" Width="150" Height="40" Margin="10" Click="ChangePasswordButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
                 </StackPanel>
 
 
+                <Button Content="Online Support" Width="150" Height="40" Margin="10" Click="OnlineSupportButton_Click" Background="#2980B9" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
 
                 <Button Content="Login" Width="150" Height="40" Margin="10" Click="Login_Click" Background="ForestGreen" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
+
             </StackPanel>
         </Border>
     </Grid>
